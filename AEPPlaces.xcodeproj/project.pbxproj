@@ -9,8 +9,26 @@
 /* Begin PBXBuildFile section */
 		09F3D002F490B5D55CCF0DA7 /* Pods_AEPPlaces.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B564B4991C7921C27904C90 /* Pods_AEPPlaces.framework */; };
 		243AC695262A3A37006501EC /* AEPPlaces.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243AC68B262A3A36006501EC /* AEPPlaces.framework */; };
-		243AC6C2262A3F72006501EC /* AEPPlaces.h in Headers */ = {isa = PBXBuildFile; fileRef = 243AC6C0262A3F72006501EC /* AEPPlaces.h */; };
-		243AC6C9262A3F8B006501EC /* AEPPlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6C7262A3F8B006501EC /* AEPPlacesTests.swift */; };
+		243AC6C2262A3F72006501EC /* AEPPlaces.h in Headers */ = {isa = PBXBuildFile; fileRef = 243AC6C0262A3F72006501EC /* AEPPlaces.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		243AC6C9262A3F8B006501EC /* PlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6C7262A3F8B006501EC /* PlacesTests.swift */; };
+		243AC6E9262A41C0006501EC /* PlacesConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6E8262A41C0006501EC /* PlacesConfiguration.swift */; };
+		243AC6ED262A42E2006501EC /* PlacesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6EC262A42E2006501EC /* PlacesConstants.swift */; };
+		243AC6F1262A42FB006501EC /* PlacesDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6F0262A42FB006501EC /* PlacesDataObject.swift */; };
+		243AC6F5262A4304006501EC /* PlacesLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6F4262A4304006501EC /* PlacesLibrary.swift */; };
+		243AC6F9262A4316006501EC /* Places+PublicApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6F8262A4316006501EC /* Places+PublicApi.swift */; };
+		243AC6FD262A431E006501EC /* Places.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6FC262A431E006501EC /* Places.swift */; };
+		243AC701262A432B006501EC /* PlacesQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC700262A432B006501EC /* PlacesQueryService.swift */; };
+		243AC705262A4338006501EC /* Event+Places.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC704262A4338006501EC /* Event+Places.swift */; };
+		243AC709262A4345006501EC /* PlacesRegionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC708262A4345006501EC /* PlacesRegionEvent.swift */; };
+		243AC70D262A4355006501EC /* Places+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC70C262A4355006501EC /* Places+State.swift */; };
+		243AC715262A44EA006501EC /* Event+PlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC714262A44EA006501EC /* Event+PlacesTests.swift */; };
+		243AC720262A44F9006501EC /* PlacesConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC71F262A44F9006501EC /* PlacesConfigurationTests.swift */; };
+		243AC724262A450D006501EC /* PlacesDataObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC723262A450D006501EC /* PlacesDataObjectTests.swift */; };
+		243AC728262A4522006501EC /* PlacesLibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC727262A4522006501EC /* PlacesLibraryTests.swift */; };
+		243AC72C262A453D006501EC /* Places+PublicApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC72B262A453D006501EC /* Places+PublicApiTests.swift */; };
+		243AC732262A4553006501EC /* PlacesQueryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC731262A4553006501EC /* PlacesQueryServiceTests.swift */; };
+		243AC736262A4564006501EC /* PlacesRegionEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC735262A4564006501EC /* PlacesRegionEventTests.swift */; };
+		243AC73A262A4578006501EC /* Places+StateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC739262A4578006501EC /* Places+StateTests.swift */; };
 		96F0168F41745525FCC42141 /* Pods_AEPPlacesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E23679BD14AB1EC601C35131 /* Pods_AEPPlacesTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,7 +47,25 @@
 		243AC68B262A3A36006501EC /* AEPPlaces.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AEPPlaces.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		243AC694262A3A37006501EC /* AEPPlacesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AEPPlacesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		243AC6C0262A3F72006501EC /* AEPPlaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AEPPlaces.h; sourceTree = "<group>"; };
-		243AC6C7262A3F8B006501EC /* AEPPlacesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AEPPlacesTests.swift; sourceTree = "<group>"; };
+		243AC6C7262A3F8B006501EC /* PlacesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesTests.swift; sourceTree = "<group>"; };
+		243AC6E8262A41C0006501EC /* PlacesConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesConfiguration.swift; sourceTree = "<group>"; };
+		243AC6EC262A42E2006501EC /* PlacesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesConstants.swift; sourceTree = "<group>"; };
+		243AC6F0262A42FB006501EC /* PlacesDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesDataObject.swift; sourceTree = "<group>"; };
+		243AC6F4262A4304006501EC /* PlacesLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesLibrary.swift; sourceTree = "<group>"; };
+		243AC6F8262A4316006501EC /* Places+PublicApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Places+PublicApi.swift"; sourceTree = "<group>"; };
+		243AC6FC262A431E006501EC /* Places.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Places.swift; sourceTree = "<group>"; };
+		243AC700262A432B006501EC /* PlacesQueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesQueryService.swift; sourceTree = "<group>"; };
+		243AC704262A4338006501EC /* Event+Places.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+Places.swift"; sourceTree = "<group>"; };
+		243AC708262A4345006501EC /* PlacesRegionEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesRegionEvent.swift; sourceTree = "<group>"; };
+		243AC70C262A4355006501EC /* Places+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Places+State.swift"; sourceTree = "<group>"; };
+		243AC714262A44EA006501EC /* Event+PlacesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+PlacesTests.swift"; sourceTree = "<group>"; };
+		243AC71F262A44F9006501EC /* PlacesConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesConfigurationTests.swift; sourceTree = "<group>"; };
+		243AC723262A450D006501EC /* PlacesDataObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesDataObjectTests.swift; sourceTree = "<group>"; };
+		243AC727262A4522006501EC /* PlacesLibraryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesLibraryTests.swift; sourceTree = "<group>"; };
+		243AC72B262A453D006501EC /* Places+PublicApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Places+PublicApiTests.swift"; sourceTree = "<group>"; };
+		243AC731262A4553006501EC /* PlacesQueryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesQueryServiceTests.swift; sourceTree = "<group>"; };
+		243AC735262A4564006501EC /* PlacesRegionEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesRegionEventTests.swift; sourceTree = "<group>"; };
+		243AC739262A4578006501EC /* Places+StateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Places+StateTests.swift"; sourceTree = "<group>"; };
 		30BB65E08B61F324815FE3CB /* Pods-AEPPlacesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AEPPlacesTests.debug.xcconfig"; path = "Target Support Files/Pods-AEPPlacesTests/Pods-AEPPlacesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6B49742CE92BC0602C8E1C39 /* Pods-AEPPlaces.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AEPPlaces.release.xcconfig"; path = "Target Support Files/Pods-AEPPlaces/Pods-AEPPlaces.release.xcconfig"; sourceTree = "<group>"; };
 		E23679BD14AB1EC601C35131 /* Pods_AEPPlacesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AEPPlacesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +126,16 @@
 			isa = PBXGroup;
 			children = (
 				243AC6C0262A3F72006501EC /* AEPPlaces.h */,
+				243AC704262A4338006501EC /* Event+Places.swift */,
+				243AC6E8262A41C0006501EC /* PlacesConfiguration.swift */,
+				243AC6EC262A42E2006501EC /* PlacesConstants.swift */,
+				243AC6F0262A42FB006501EC /* PlacesDataObject.swift */,
+				243AC6F4262A4304006501EC /* PlacesLibrary.swift */,
+				243AC6FC262A431E006501EC /* Places.swift */,
+				243AC6F8262A4316006501EC /* Places+PublicApi.swift */,
+				243AC70C262A4355006501EC /* Places+State.swift */,
+				243AC700262A432B006501EC /* PlacesQueryService.swift */,
+				243AC708262A4345006501EC /* PlacesRegionEvent.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -97,7 +143,15 @@
 		243AC6C6262A3F8B006501EC /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				243AC6C7262A3F8B006501EC /* AEPPlacesTests.swift */,
+				243AC714262A44EA006501EC /* Event+PlacesTests.swift */,
+				243AC71F262A44F9006501EC /* PlacesConfigurationTests.swift */,
+				243AC723262A450D006501EC /* PlacesDataObjectTests.swift */,
+				243AC727262A4522006501EC /* PlacesLibraryTests.swift */,
+				243AC6C7262A3F8B006501EC /* PlacesTests.swift */,
+				243AC72B262A453D006501EC /* Places+PublicApiTests.swift */,
+				243AC739262A4578006501EC /* Places+StateTests.swift */,
+				243AC731262A4553006501EC /* PlacesQueryServiceTests.swift */,
+				243AC735262A4564006501EC /* PlacesRegionEventTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -186,6 +240,7 @@
 				TargetAttributes = {
 					243AC68A262A3A36006501EC = {
 						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1230;
 					};
 					243AC693262A3A37006501EC = {
 						CreatedOnToolsVersion = 12.3;
@@ -297,6 +352,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				243AC6F9262A4316006501EC /* Places+PublicApi.swift in Sources */,
+				243AC6E9262A41C0006501EC /* PlacesConfiguration.swift in Sources */,
+				243AC705262A4338006501EC /* Event+Places.swift in Sources */,
+				243AC70D262A4355006501EC /* Places+State.swift in Sources */,
+				243AC709262A4345006501EC /* PlacesRegionEvent.swift in Sources */,
+				243AC6ED262A42E2006501EC /* PlacesConstants.swift in Sources */,
+				243AC6F1262A42FB006501EC /* PlacesDataObject.swift in Sources */,
+				243AC6F5262A4304006501EC /* PlacesLibrary.swift in Sources */,
+				243AC701262A432B006501EC /* PlacesQueryService.swift in Sources */,
+				243AC6FD262A431E006501EC /* Places.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +369,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				243AC6C9262A3F8B006501EC /* AEPPlacesTests.swift in Sources */,
+				243AC736262A4564006501EC /* PlacesRegionEventTests.swift in Sources */,
+				243AC720262A44F9006501EC /* PlacesConfigurationTests.swift in Sources */,
+				243AC72C262A453D006501EC /* Places+PublicApiTests.swift in Sources */,
+				243AC73A262A4578006501EC /* Places+StateTests.swift in Sources */,
+				243AC728262A4522006501EC /* PlacesLibraryTests.swift in Sources */,
+				243AC715262A44EA006501EC /* Event+PlacesTests.swift in Sources */,
+				243AC724262A450D006501EC /* PlacesDataObjectTests.swift in Sources */,
+				243AC6C9262A3F8B006501EC /* PlacesTests.swift in Sources */,
+				243AC732262A4553006501EC /* PlacesQueryServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +519,7 @@
 			baseConfigurationReference = F3992AC0FCB3C573B131885F /* Pods-AEPPlaces.debug.xcconfig */;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -465,6 +539,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -475,6 +550,7 @@
 			baseConfigurationReference = 6B49742CE92BC0602C8E1C39 /* Pods-AEPPlaces.release.xcconfig */;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -503,6 +579,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 30BB65E08B61F324815FE3CB /* Pods-AEPPlacesTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U7WJX8Z527;
 				INFOPLIST_FILE = AEPPlaces/Tests/Info.plist;
@@ -522,6 +599,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EB545F55501D04EF2DC63AED /* Pods-AEPPlacesTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U7WJX8Z527;
 				INFOPLIST_FILE = AEPPlaces/Tests/Info.plist;

@@ -10,14 +10,11 @@
  governing permissions and limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
+import Foundation
 
-//! Project version number for AEPPlaces.
-FOUNDATION_EXPORT double AEPPlacesVersionNumber;
-
-//! Project version string for AEPPlaces.
-FOUNDATION_EXPORT const unsigned char AEPPlacesVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <AEPPlaces/PublicHeader.h>
-
-
+enum PlacesConstants {
+    static let LOG_TAG = "Places"
+    static let EXTENSION_NAME = "com.adobe.aep.places"
+    static let EXTENSION_VERSION = "3.0.0-alpha-1"
+    static let FRIENDLY_NAME = EXTENSION_NAME
+}

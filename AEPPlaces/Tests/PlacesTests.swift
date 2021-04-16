@@ -10,14 +10,21 @@
  governing permissions and limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
+import XCTest
+@testable import AEPPlaces
 
-//! Project version number for AEPPlaces.
-FOUNDATION_EXPORT double AEPPlacesVersionNumber;
+class PlacesTests: XCTestCase {
 
-//! Project version string for AEPPlaces.
-FOUNDATION_EXPORT const unsigned char AEPPlacesVersionString[];
+    override func setUpWithError() throws {
+        // Put setup code here. This method is called before the invocation of each test method in the class.
+    }
 
-// In this header, you should import all the public headers of your framework using statements like #import <AEPPlaces/PublicHeader.h>
+    override func tearDownWithError() throws {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    }
 
-
+    func testExample() throws {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    }
+}

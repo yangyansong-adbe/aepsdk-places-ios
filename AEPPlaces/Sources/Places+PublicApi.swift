@@ -10,14 +10,9 @@
  governing permissions and limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
+import Foundation
 
-//! Project version number for AEPPlaces.
-FOUNDATION_EXPORT double AEPPlacesVersionNumber;
-
-//! Project version string for AEPPlaces.
-FOUNDATION_EXPORT const unsigned char AEPPlacesVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <AEPPlaces/PublicHeader.h>
-
-
+@objc
+public extension Places {
+    
+}
