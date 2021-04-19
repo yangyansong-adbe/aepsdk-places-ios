@@ -15,6 +15,9 @@ import XCTest
 
 class PlacesLibraryTests: XCTestCase {
     
+    static let mockLibraryId = "552"
+    static let mockLibraryName = "myLibrary"
+    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -23,8 +26,93 @@ class PlacesLibraryTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    // MARK: - Helpers
+    func getMockLibrary(libraryId: String = mockLibraryId, name: String = mockLibraryName) -> PlacesLibrary {
+        return PlacesLibrary(libraryId: libraryId, name: name)
+    }
+    
+    // MARK: - Tests
+    func testConstructor() throws {
+        // setup
+        let library = PlacesLibrary(libraryId: "1234", name: "niner")
+        
+        // verify
+        XCTAssertNotNil(library)
+        XCTAssertEqual("1234", library.libraryId)
+        XCTAssertEqual("niner", library.name)
+    }
+    
+    func testGetLibrary() throws {
+        // setup
+        let library = getMockLibrary()
+        
+        // verify
+        XCTAssertEqual(PlacesLibraryTests.mockLibraryId, library.libraryId)
+    }
+    
+    func testGetName() throws {
+        // setup
+        let library = getMockLibrary()
+        
+        // verify
+        XCTAssertEqual(PlacesLibraryTests.mockLibraryName, library.name)
+    }
+    
+    func testPlacesLibraryFromJsonStringHappy() throws {
+        // setup
+        let jsonString = "{\"id\":\"\(PlacesLibraryTests.mockLibraryId)\", \"name\":\"\(PlacesLibraryTests.mockLibraryName)\"}"
+        
+        // test
+        let library = PlacesLibrary.fromJsonString(jsonString)
+        
+        // verify
+        XCTAssertNotNil(library)
+        XCTAssertEqual(PlacesLibraryTests.mockLibraryId, library?.libraryId)
+        XCTAssertEqual(PlacesLibraryTests.mockLibraryName, library?.name)
+    }
+    
+    func testPlacesLibraryFromJsonStringBadJson() throws {
+        // setup
+        let jsonString = "i'm not json"
+        
+        // test
+        let library = PlacesLibrary.fromJsonString(jsonString)
+        
+        // verify
+        XCTAssertNil(library)
+    }
+    
+    func testPlacesLibraryFromJsonStringMissingLibraryId() throws {
+        // setup
+        let jsonString = "{\"name\":\"\(PlacesLibraryTests.mockLibraryName)\"}"
+        
+        // test
+        let library = PlacesLibrary.fromJsonString(jsonString)
+        
+        // verify
+        XCTAssertNil(library)
+    }
+    
+    func testPlacesLibraryFromJsonStringMissingName() throws {
+        // setup
+        let jsonString = "{\"id\":\"\(PlacesLibraryTests.mockLibraryId)\"}"
+        
+        // test
+        let library = PlacesLibrary.fromJsonString(jsonString)
+        
+        // verify
+        XCTAssertNil(library)
+    }
+    
+    func testToJsonString() throws {
+        // setup
+        let library = getMockLibrary()
+        let expectedString = "{ \"id\":\"552\", \"name\":\"myLibrary\""
+        
+        // test
+        let jsonString = library.toJsonString()
+        
+        // verify
+        XCTAssertEqual(expectedString, jsonString)
     }
 }
