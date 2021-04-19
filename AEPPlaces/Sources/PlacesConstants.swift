@@ -13,8 +13,119 @@
 import Foundation
 
 enum PlacesConstants {
-    static let LOG_TAG = "Places"
     static let EXTENSION_NAME = "com.adobe.aep.places"
     static let EXTENSION_VERSION = "3.0.0-alpha-1"
     static let FRIENDLY_NAME = EXTENSION_NAME
+    static let LOG_TAG = "Places"
+    
+    enum DefaultValues {
+        static let DEFAULT_MEMBERSHIP_TTL      = 60 * 60  // 1 hour in seconds
+        static let DEFAULT_NEARBY_POI_COUNT    = 10
+        static let DEFAULT_RADIUS              = 1000     // 1 km
+        static let INVALID_LAT_LON             = 999.999
+    }
+    
+    enum UserDefaults {
+        static let PLACES_DATA_STORE_NAME = "PlacesDataStore"
+        
+        static let PERSISTED_AUTH_STATUS = "places_auth_status"
+        static let PERSISTED_CURRENT_POI = "places_current_poi"
+        static let PERSISTED_LAST_ENTERED_POI = "places_last_entered_poi"
+        static let PERSISTED_LAST_EXITED_POI = "places_last_exited_poi"
+        static let PERSISTED_LATITUDE = "places_last_known_latitude"
+        static let PERSISTED_LONGITUDE = "places_last_known_longitude"
+        static let PERSISTED_MEMBERSHIP_VALID_UNTIL = "places_membership_valid_until"
+        static let PERSISTED_NEARBY_POIS = "places_nearby_pois"
+        static let PERSISTED_USER_WITHIN_POIS = "places_user_within_pois"
+    }
+    
+    enum QueryService {
+        static let PLACES_EDGE_QUERY = "placesedgequery"
+        static let REQUEST_TIMEOUT = 5
+        
+        enum Json {
+            static let INPUT = "input"
+            static let LATITUDE = "latitude"
+            static let LIMIT = "limit"
+            static let LONGITUDE = "longitude"
+            static let META_DATA = "x"
+            static let PLACES = "places"
+            static let POI = "p"
+            static let POIS = "pois"
+            static let USERS_WITHIN = "userWithin"
+        }
+    }
+    
+    enum SharedStateKey {
+        static let AUTH_STATUS = "authstatus"
+        static let CURRENT_POI = "currentpoi"
+        static let LAST_ENTERED_POI = "lastenteredpoi"
+        static let LAST_EXITED_POI = "lastexitedpoi"
+        static let NEARBY_POIS = "nearbypois"
+        static let USER_WITHIN_POIS = "userwithinpois"
+        static let VALID_UNTIL = "validuntil"
+    }
+    
+    enum EventName {
+        enum Request {
+            static let GET_LAST_KNOWN_LOCATION = "requestgetlastknownlocation"
+            static let GET_NEARBY_PLACES = "requestgetnearbyplaces"
+            static let GET_USER_WITHIN_PLACES = "requestgetuserwithinplaces"
+            static let PROCESS_REGION_EVENT = "requestprocessregionevent"
+            static let RESET = "requestreset"
+            static let SET_AUTHORIZATION_STATUS = "requestsetauthorizationstatus"
+        }
+        
+        enum Response {
+            static let GET_LAST_KNOWN_LOCATION = "responsegetlastknownlocation"
+            static let GET_NEARBY_PLACES = "responsegetnearbyplaces"
+            static let GET_USER_WITHIN_PLACES = "responsegetuserwithinplaces"
+            static let PROCESS_REGION_EVENT = "responseprocessregionevent"
+        }
+    }
+    
+    enum EventDataKey {
+        static let SHARED_STATE_OWNER = "stateowner"
+        
+        enum Configuration {
+            static let SHARED_STATE_NAME = "com.adobe.module.configuration"
+            
+            static let BUILD_ENVIRONMENT = "build.environment"
+            static let GLOBAL_CONFIG_PRIVACY = "global.privacy"
+            static let PLACES_ENDPOINT = "places.endpoint"
+            static let PLACES_LIBRARIES = "places.libraries"
+            static let PLACES_LIBRARY_ID = "id"
+            static let PLACES_MEMBERSHIP_TTL = "places.membershipttl"
+        }
+        
+        enum Places {
+            static let SHARED_STATE_NAME = "com.adobe.module.places"
+            
+            static let AUTH_STATUS = "authstatus"
+            static let COUNT = "count"
+            static let LATITUDE = "latitude"
+            static let LIBRARY_ID = "libraryid"
+            static let LONGITUDE = "longitude"
+            static let POI = "poi"
+            static let RADIUS = "radius"
+            static let REGION_EVENT_TYPE = "regioneventtype"
+            static let REGION_ID = "regionid"
+            static let REGION_META_DATA = "regionmetadata"
+            static let REGION_NAME = "regionname"
+            static let REQUEST_TYPE = "requesttype"
+            static let RESPONSE_STATUS = "status"
+            static let TRIGGERING_REGION = "triggeringregion"
+            static let USER_IS_WITHIN = "useriswithin"
+            static let WEIGHT = "weight"
+            
+            enum RequestType {
+                static let GET_LAST_KNOWN_LOCATION = "requestgetlastknownlocation"
+                static let GET_NEARBY_PLACES = "requestgetnearbyplaces"
+                static let GET_USER_WITHIN_PLACES = "requestgetuserwithinplaces"
+                static let PROCESS_REGION_EVENT = "requestprocessregionevent"
+                static let RESET = "requestreset"
+                static let SET_AUTHORIZATION_STATUS = "requestsetauthorizationstatus"
+            }
+        }
+    }
 }
