@@ -54,6 +54,17 @@ enum PlacesConstants {
             static let POIS = "pois"
             static let USERS_WITHIN = "userWithin"
         }
+        
+        static let EXPECTED_ARRAY_LENGTH = 7
+        enum Index {
+            static let ID = 0
+            static let NAME = 1
+            static let LATITUDE = 2
+            static let LONGITUDE = 3
+            static let RADIUS = 4
+            static let LIBRARY_ID = 5
+            static let WEIGHT = 6
+        }
     }
     
     enum SharedStateKey {

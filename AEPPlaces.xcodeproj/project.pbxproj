@@ -13,7 +13,7 @@
 		243AC6C9262A3F8B006501EC /* PlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6C7262A3F8B006501EC /* PlacesTests.swift */; };
 		243AC6E9262A41C0006501EC /* PlacesConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6E8262A41C0006501EC /* PlacesConfiguration.swift */; };
 		243AC6ED262A42E2006501EC /* PlacesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6EC262A42E2006501EC /* PlacesConstants.swift */; };
-		243AC6F1262A42FB006501EC /* PlacesDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6F0262A42FB006501EC /* PlacesDataObject.swift */; };
+		243AC6F1262A42FB006501EC /* PointOfInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6F0262A42FB006501EC /* PointOfInterest.swift */; };
 		243AC6F5262A4304006501EC /* PlacesLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6F4262A4304006501EC /* PlacesLibrary.swift */; };
 		243AC6F9262A4316006501EC /* Places+PublicApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6F8262A4316006501EC /* Places+PublicApi.swift */; };
 		243AC6FD262A431E006501EC /* Places.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6FC262A431E006501EC /* Places.swift */; };
@@ -23,7 +23,7 @@
 		243AC70D262A4355006501EC /* Places+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC70C262A4355006501EC /* Places+State.swift */; };
 		243AC715262A44EA006501EC /* Event+PlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC714262A44EA006501EC /* Event+PlacesTests.swift */; };
 		243AC720262A44F9006501EC /* PlacesConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC71F262A44F9006501EC /* PlacesConfigurationTests.swift */; };
-		243AC724262A450D006501EC /* PlacesDataObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC723262A450D006501EC /* PlacesDataObjectTests.swift */; };
+		243AC724262A450D006501EC /* PointOfInterestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC723262A450D006501EC /* PointOfInterestTests.swift */; };
 		243AC728262A4522006501EC /* PlacesLibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC727262A4522006501EC /* PlacesLibraryTests.swift */; };
 		243AC72C262A453D006501EC /* Places+PublicApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC72B262A453D006501EC /* Places+PublicApiTests.swift */; };
 		243AC732262A4553006501EC /* PlacesQueryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC731262A4553006501EC /* PlacesQueryServiceTests.swift */; };
@@ -50,7 +50,7 @@
 		243AC6C7262A3F8B006501EC /* PlacesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesTests.swift; sourceTree = "<group>"; };
 		243AC6E8262A41C0006501EC /* PlacesConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesConfiguration.swift; sourceTree = "<group>"; };
 		243AC6EC262A42E2006501EC /* PlacesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesConstants.swift; sourceTree = "<group>"; };
-		243AC6F0262A42FB006501EC /* PlacesDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesDataObject.swift; sourceTree = "<group>"; };
+		243AC6F0262A42FB006501EC /* PointOfInterest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterest.swift; sourceTree = "<group>"; };
 		243AC6F4262A4304006501EC /* PlacesLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesLibrary.swift; sourceTree = "<group>"; };
 		243AC6F8262A4316006501EC /* Places+PublicApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Places+PublicApi.swift"; sourceTree = "<group>"; };
 		243AC6FC262A431E006501EC /* Places.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Places.swift; sourceTree = "<group>"; };
@@ -60,7 +60,7 @@
 		243AC70C262A4355006501EC /* Places+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Places+State.swift"; sourceTree = "<group>"; };
 		243AC714262A44EA006501EC /* Event+PlacesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+PlacesTests.swift"; sourceTree = "<group>"; };
 		243AC71F262A44F9006501EC /* PlacesConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesConfigurationTests.swift; sourceTree = "<group>"; };
-		243AC723262A450D006501EC /* PlacesDataObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesDataObjectTests.swift; sourceTree = "<group>"; };
+		243AC723262A450D006501EC /* PointOfInterestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterestTests.swift; sourceTree = "<group>"; };
 		243AC727262A4522006501EC /* PlacesLibraryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesLibraryTests.swift; sourceTree = "<group>"; };
 		243AC72B262A453D006501EC /* Places+PublicApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Places+PublicApiTests.swift"; sourceTree = "<group>"; };
 		243AC731262A4553006501EC /* PlacesQueryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesQueryServiceTests.swift; sourceTree = "<group>"; };
@@ -129,13 +129,13 @@
 				243AC704262A4338006501EC /* Event+Places.swift */,
 				243AC6E8262A41C0006501EC /* PlacesConfiguration.swift */,
 				243AC6EC262A42E2006501EC /* PlacesConstants.swift */,
-				243AC6F0262A42FB006501EC /* PlacesDataObject.swift */,
 				243AC6F4262A4304006501EC /* PlacesLibrary.swift */,
 				243AC6FC262A431E006501EC /* Places.swift */,
 				243AC6F8262A4316006501EC /* Places+PublicApi.swift */,
 				243AC70C262A4355006501EC /* Places+State.swift */,
 				243AC700262A432B006501EC /* PlacesQueryService.swift */,
 				243AC708262A4345006501EC /* PlacesRegionEvent.swift */,
+				243AC6F0262A42FB006501EC /* PointOfInterest.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -145,13 +145,13 @@
 			children = (
 				243AC714262A44EA006501EC /* Event+PlacesTests.swift */,
 				243AC71F262A44F9006501EC /* PlacesConfigurationTests.swift */,
-				243AC723262A450D006501EC /* PlacesDataObjectTests.swift */,
 				243AC727262A4522006501EC /* PlacesLibraryTests.swift */,
 				243AC6C7262A3F8B006501EC /* PlacesTests.swift */,
 				243AC72B262A453D006501EC /* Places+PublicApiTests.swift */,
 				243AC739262A4578006501EC /* Places+StateTests.swift */,
 				243AC731262A4553006501EC /* PlacesQueryServiceTests.swift */,
 				243AC735262A4564006501EC /* PlacesRegionEventTests.swift */,
+				243AC723262A450D006501EC /* PointOfInterestTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -358,7 +358,7 @@
 				243AC70D262A4355006501EC /* Places+State.swift in Sources */,
 				243AC709262A4345006501EC /* PlacesRegionEvent.swift in Sources */,
 				243AC6ED262A42E2006501EC /* PlacesConstants.swift in Sources */,
-				243AC6F1262A42FB006501EC /* PlacesDataObject.swift in Sources */,
+				243AC6F1262A42FB006501EC /* PointOfInterest.swift in Sources */,
 				243AC6F5262A4304006501EC /* PlacesLibrary.swift in Sources */,
 				243AC701262A432B006501EC /* PlacesQueryService.swift in Sources */,
 				243AC6FD262A431E006501EC /* Places.swift in Sources */,
@@ -375,7 +375,7 @@
 				243AC73A262A4578006501EC /* Places+StateTests.swift in Sources */,
 				243AC728262A4522006501EC /* PlacesLibraryTests.swift in Sources */,
 				243AC715262A44EA006501EC /* Event+PlacesTests.swift in Sources */,
-				243AC724262A450D006501EC /* PlacesDataObjectTests.swift in Sources */,
+				243AC724262A450D006501EC /* PointOfInterestTests.swift in Sources */,
 				243AC6C9262A3F8B006501EC /* PlacesTests.swift in Sources */,
 				243AC732262A4553006501EC /* PlacesQueryServiceTests.swift in Sources */,
 			);

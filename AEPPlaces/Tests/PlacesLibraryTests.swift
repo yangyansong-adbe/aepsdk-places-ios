@@ -17,28 +17,20 @@ class PlacesLibraryTests: XCTestCase {
     
     static let mockLibraryId = "552"
     static let mockLibraryName = "myLibrary"
-    
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-    
+       
     // MARK: - Helpers
     func getMockLibrary(libraryId: String = mockLibraryId, name: String = mockLibraryName) -> PlacesLibrary {
-        return PlacesLibrary(libraryId: libraryId, name: name)
+        return PlacesLibrary(id: libraryId, name: name)
     }
     
     // MARK: - Tests
     func testConstructor() throws {
         // setup
-        let library = PlacesLibrary(libraryId: "1234", name: "niner")
+        let library = PlacesLibrary(id: "1234", name: "niner")
         
         // verify
         XCTAssertNotNil(library)
-        XCTAssertEqual("1234", library.libraryId)
+        XCTAssertEqual("1234", library.id)
         XCTAssertEqual("niner", library.name)
     }
     
@@ -47,7 +39,7 @@ class PlacesLibraryTests: XCTestCase {
         let library = getMockLibrary()
         
         // verify
-        XCTAssertEqual(PlacesLibraryTests.mockLibraryId, library.libraryId)
+        XCTAssertEqual(PlacesLibraryTests.mockLibraryId, library.id)
     }
     
     func testGetName() throws {
@@ -67,7 +59,7 @@ class PlacesLibraryTests: XCTestCase {
         
         // verify
         XCTAssertNotNil(library)
-        XCTAssertEqual(PlacesLibraryTests.mockLibraryId, library?.libraryId)
+        XCTAssertEqual(PlacesLibraryTests.mockLibraryId, library?.id)
         XCTAssertEqual(PlacesLibraryTests.mockLibraryName, library?.name)
     }
     
@@ -107,7 +99,7 @@ class PlacesLibraryTests: XCTestCase {
     func testToJsonString() throws {
         // setup
         let library = getMockLibrary()
-        let expectedString = "{ \"id\":\"552\", \"name\":\"myLibrary\""
+        let expectedString = "{\"id\":\"552\",\"name\":\"myLibrary\"}"
         
         // test
         let jsonString = library.toJsonString()
