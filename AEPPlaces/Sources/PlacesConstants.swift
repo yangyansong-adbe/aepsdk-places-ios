@@ -95,6 +95,7 @@ enum PlacesConstants {
             static let PLACES_ENDPOINT = "places.endpoint"
             static let PLACES_LIBRARIES = "places.libraries"
             static let PLACES_LIBRARY_ID = "id"
+            static let PLACES_LIBRARY_NAME = "name"
             static let PLACES_MEMBERSHIP_TTL = "places.membershipttl"
         }
         
