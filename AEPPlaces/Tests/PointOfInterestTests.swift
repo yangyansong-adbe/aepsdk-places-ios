@@ -200,7 +200,7 @@ class PointOfInterestTests: XCTestCase {
         XCTAssertEqual(eMeta?["key1"] as? String, rMeta?["key1"] as? String)
     }
     
-    func testEqualsTrue() throws {
+    func testEqualsSameIdentifier() throws {
         // setup
         let poi1 = try PointOfInterest(jsonString: PointOfInterestTests.JSON_STRING)
         let poi2 = try PointOfInterest(jsonObject: PointOfInterestTests.EDGE_RESPONSE_MAP)
@@ -210,7 +210,7 @@ class PointOfInterestTests: XCTestCase {
         XCTAssertTrue(poi2.equals(poi1))
     }
     
-    func testEqualsFalse() throws {
+    func testEqualsDifferentIdentifiers() throws {
         // setup
         let poi1 = try PointOfInterest(jsonString: PointOfInterestTests.JSON_STRING)
         poi1.identifier = "something else"
