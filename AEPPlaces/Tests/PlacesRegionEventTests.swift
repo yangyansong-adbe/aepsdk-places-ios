@@ -14,17 +14,77 @@ import XCTest
 @testable import AEPPlaces
 
 class PlacesRegionEventTests: XCTestCase {
+   
+    // MARK: - Tests
     
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testConstructorRawValuesEntry() throws {
+        // setup
+        let entryEvent = PlacesRegionEvent(rawValue: "entry")
+        
+        // verify
+        XCTAssertEqual("entry", entryEvent?.rawValue)
     }
     
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testConstructorRawValuesExit() throws {
+        // setup
+        let exitEvent = PlacesRegionEvent(rawValue: "exit")
+        
+        // verify
+        XCTAssertEqual("exit", exitEvent?.rawValue)
     }
     
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testConstructorRawValuesNone() throws {
+        // setup
+        let noneEvent = PlacesRegionEvent(rawValue: "none")
+        
+        // verify
+        XCTAssertEqual("none", noneEvent?.rawValue)
+    }
+    
+    func testConstructorRawValuesInvalid() throws {
+        // setup
+        let unmatchedEvent = PlacesRegionEvent(rawValue: "i don't match anything")
+        
+        // verify
+        XCTAssertNil(unmatchedEvent)
+    }
+    
+    func testFromStringEntry() throws {
+        // setup
+        let entry = PlacesRegionEvent.fromString("entry")
+        
+        // verify
+        XCTAssertEqual(PlacesRegionEvent.entry, entry)
+    }
+    
+    func testFromStringExit() throws {
+        // setup
+        let exit = PlacesRegionEvent.fromString("exit")
+        
+        // verify
+        XCTAssertEqual(PlacesRegionEvent.exit, exit)
+    }
+    
+    func testFromStringNone() throws {
+        // setup
+        let none = PlacesRegionEvent.fromString("none")
+        
+        // verify
+        XCTAssertEqual(PlacesRegionEvent.none, none)
+    }
+    
+    func testFromStringInvalid() throws {
+        // setup
+        let invalid = PlacesRegionEvent.fromString("i don't match anything")
+        
+        // verify
+        XCTAssertEqual(PlacesRegionEvent.none, invalid)
+    }
+        
+    func testStringValues() throws {
+        // verify
+        XCTAssertEqual("entry", PlacesRegionEvent.entry.rawValue)
+        XCTAssertEqual("exit", PlacesRegionEvent.exit.rawValue)
+        XCTAssertEqual("none", PlacesRegionEvent.none.rawValue)
     }
 }

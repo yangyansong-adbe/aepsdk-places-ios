@@ -60,7 +60,7 @@ class PlacesConfigurationTests: XCTestCase {
         return data
     }
     
-    // MARK: - tests
+    // MARK: - Tests
     
     func testEventDataConstructorHappy() throws {
         // setup
