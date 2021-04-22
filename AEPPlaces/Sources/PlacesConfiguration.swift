@@ -11,7 +11,42 @@
  */
 
 import Foundation
+import AEPServices
 
-class PlacesConfiguration {
+struct PlacesConfiguration: Codable {
+    private(set) var libraries: [PlacesLibrary]
+    private(set) var endpoint: String
+    private(set) var membershipTtl: Int64
     
+    static func withEventData(_ eventData: [String: Any]) -> PlacesConfiguration? {
+        guard let eventLibrariesData = eventData[PlacesConstants.EventDataKey.Configuration.PLACES_LIBRARIES] as? [[String: Any]] else {
+            Log.debug(label: PlacesConstants.LOG_TAG, "Unable to create a PlacesConfiguration object - no libraries were found in the configuration Event Data.")
+            return nil
+        }
+        
+        // pull out our list of libraries
+        var libraries: [PlacesLibrary] = []
+        for currentLibrary in eventLibrariesData {
+            // library 'id' is required
+            guard let libraryId = currentLibrary[PlacesConstants.EventDataKey.Configuration.PLACES_LIBRARY_ID] as? String else {
+                Log.debug(label: PlacesConstants.LOG_TAG, "Unable to create a PlacesLibrary - 'id' is required in configuration, but was not found")
+                continue
+            }
+            
+            // get optional 'name'
+            let libraryName = currentLibrary[PlacesConstants.EventDataKey.Configuration.PLACES_LIBRARY_NAME] as? String ?? ""
+            
+            // add a new library to the array
+            let placeLibrary = PlacesLibrary(id: libraryId, name: libraryName)
+            libraries.append(placeLibrary)
+        }
+        
+        // get the endpoint for Places Edge query requests
+        let endpoint = eventData[PlacesConstants.EventDataKey.Configuration.PLACES_ENDPOINT] as? String ?? ""
+        
+        // get membership TTL setting
+        let ttl = eventData[PlacesConstants.EventDataKey.Configuration.PLACES_MEMBERSHIP_TTL] as? Int64 ?? PlacesConstants.DefaultValues.MEMBERSHIP_TTL
+        
+        return PlacesConfiguration(libraries: libraries, endpoint: endpoint, membershipTtl: ttl)
+    }
 }
