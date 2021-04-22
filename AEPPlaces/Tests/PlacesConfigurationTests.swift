@@ -105,4 +105,28 @@ class PlacesConfigurationTests: XCTestCase {
         XCTAssertEqual("", placesConfig?.endpoint)
         XCTAssertEqual(PlacesConstants.DefaultValues.MEMBERSHIP_TTL, placesConfig?.membershipTtl)
     }
+    
+    func testIsValidHappy() throws {
+        // setup
+        let placesConfig = PlacesConfiguration.withEventData(getEventData())
+        
+        // verify
+        XCTAssertTrue(placesConfig!.isValid)
+    }
+    
+    func testIsValidNoLibraries() throws {
+        // setup
+        let placesConfig = PlacesConfiguration.withEventData(getEventData(libraries:[["noId":"in the map"]]))
+        
+        // verify
+        XCTAssertFalse(placesConfig!.isValid)
+    }
+    
+    func testIsValidNoEndpoint() throws {
+        // setup
+        let placesConfig = PlacesConfiguration.withEventData(getEventData(endpoint: nil))
+        
+        // verify
+        XCTAssertFalse(placesConfig!.isValid)
+    }
 }
