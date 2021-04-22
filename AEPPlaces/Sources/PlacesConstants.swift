@@ -19,10 +19,10 @@ enum PlacesConstants {
     static let LOG_TAG = "Places"
     
     enum DefaultValues {
-        static let DEFAULT_MEMBERSHIP_TTL      = 60 * 60  // 1 hour in seconds
-        static let DEFAULT_NEARBY_POI_COUNT    = 10
-        static let DEFAULT_RADIUS              = 1000     // 1 km
-        static let INVALID_LAT_LON             = 999.999
+        static let MEMBERSHIP_TTL: Int64 = 60 * 60  // 1 hour in seconds
+        static let NEARBY_POI_COUNT      = 10
+        static let RADIUS                = 1000     // 1 km
+        static let INVALID_LAT_LON       = 999.999
     }
     
     enum UserDefaults {
