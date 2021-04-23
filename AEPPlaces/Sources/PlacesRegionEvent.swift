@@ -19,16 +19,10 @@ enum PlacesRegionEvent: String {
     case none = "none"
     
     /// Converts a `String` to its respective `PlacesRegionEvent`
-    /// If `type` is not a valid `PlacesRegionEvent`, calling this method will return `PlacesRegionEvent.none`
-    /// - Parameter type: a `String` representation of a `PlacesRegionEvent`
+    /// If `fromRawValue` is not a valid `PlacesRegionEvent`, calling this method will return `PlacesRegionEvent.none`
+    /// - Parameter fromRawValue: a `String` representation of a `PlacesRegionEvent`
     /// - Returns: a `PlacesRegionEvent` representing the passed-in `String`
-    static func fromString(_ type: String) -> PlacesRegionEvent {
-        if type == "entry" {
-            return .entry
-        } else if type == "exit" {
-            return .exit
-        } else {
-            return .none
-        }
+    init(fromRawValue: String) {
+        self = PlacesRegionEvent(rawValue: fromRawValue) ?? .none
     }
 }

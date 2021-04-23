@@ -106,14 +106,7 @@ public class PointOfInterest: NSObject {
         
         return ""
     }
-    
-    /// Determines if two `PointOfInterest` objects have the same identifier.
-    /// - Parameter rhs: the other `PointOfInterest` object to compare against
-    /// - Returns: true if both objects have the same value for `identifier`
-    internal func equals(_ rhs: PointOfInterest) -> Bool {
-        return identifier == rhs.identifier
-    }
-    
+        
     /// Check if the current PointOfInterest has priority over the provided object.
     /// Priority is measured by weight - the lower the weight, the higher the priority.
     /// In the case that both weights are the same, the PointOfInterest with a smaller radius has priority.
@@ -128,6 +121,14 @@ public class PointOfInterest: NSObject {
         }
         
         return true
+    }
+}
+
+extension PointOfInterest {
+    /// Determines if two `PointOfInterest` objects have the same identifier.
+    /// - Returns: true if both objects have the same value for `identifier`
+    static func == (lhs: PointOfInterest, rhs: PointOfInterest) -> Bool {
+        return lhs.identifier == rhs.identifier
     }
 }
 

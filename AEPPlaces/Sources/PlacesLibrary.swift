@@ -14,8 +14,8 @@ import Foundation
 import AEPServices
 
 struct PlacesLibrary: Codable {
-    private(set) var id: String
-    private(set) var name: String
+    let id: String
+    let name: String
 
     static func fromJsonString(_ jsonString: String) -> PlacesLibrary? {
         if let jsonStringAsData = jsonString.data(using: .utf8) {

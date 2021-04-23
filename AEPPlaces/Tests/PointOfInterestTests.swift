@@ -198,8 +198,8 @@ class PointOfInterestTests: XCTestCase {
         let poi2 = try PointOfInterest(jsonObject: PointOfInterestTests.EDGE_RESPONSE_MAP)
         
         // verify
-        XCTAssertTrue(poi1.equals(poi2))
-        XCTAssertTrue(poi2.equals(poi1))
+        XCTAssertTrue(poi1 == poi2)
+        XCTAssertTrue(poi2 == poi1)
     }
     
     func testEqualsDifferentIdentifiers() throws {
@@ -209,8 +209,8 @@ class PointOfInterestTests: XCTestCase {
         let poi2 = try PointOfInterest(jsonObject: PointOfInterestTests.EDGE_RESPONSE_MAP)
         
         // verify
-        XCTAssertFalse(poi1.equals(poi2))
-        XCTAssertFalse(poi2.equals(poi1))
+        XCTAssertFalse(poi1 == poi2)
+        XCTAssertFalse(poi2 == poi1)
     }
     
     func testHasPriorityOverLHSWeightPriority() throws {
