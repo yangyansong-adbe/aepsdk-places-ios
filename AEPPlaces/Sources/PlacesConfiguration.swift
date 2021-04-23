@@ -18,6 +18,10 @@ struct PlacesConfiguration: Codable {
     private(set) var endpoint: String
     private(set) var membershipTtl: Int64
     
+    /// Creates a PlacesConfiguration object using EventData from the Configuration shared state.
+    /// If `eventData` does not contain an entry for `places.libraries`, calling this method will return `nil`.
+    /// - Parameter eventData: a map containing configuration variables
+    /// - Returns: A `PlacesConfiguration` object represented by the `eventData` passed in
     static func withEventData(_ eventData: [String: Any]) -> PlacesConfiguration? {
         guard let eventLibrariesData = eventData[PlacesConstants.EventDataKey.Configuration.PLACES_LIBRARIES] as? [[String: Any]] else {
             Log.debug(label: PlacesConstants.LOG_TAG, "Unable to create a PlacesConfiguration object - no libraries were found in the configuration Event Data.")
@@ -48,5 +52,12 @@ struct PlacesConfiguration: Codable {
         let ttl = eventData[PlacesConstants.EventDataKey.Configuration.PLACES_MEMBERSHIP_TTL] as? Int64 ?? PlacesConstants.DefaultValues.MEMBERSHIP_TTL
         
         return PlacesConfiguration(libraries: libraries, endpoint: endpoint, membershipTtl: ttl)
+    }
+}
+
+extension PlacesConfiguration {
+    /// PlacesConfiguration is valid if it contains at least one library and an endpoint
+    var isValid: Bool {
+        return !libraries.isEmpty && !endpoint.isEmpty
     }
 }
