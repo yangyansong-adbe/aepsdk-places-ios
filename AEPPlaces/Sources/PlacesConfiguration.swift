@@ -16,7 +16,7 @@ import AEPServices
 struct PlacesConfiguration: Codable {
     private(set) var libraries: [PlacesLibrary]
     private(set) var endpoint: String
-    private(set) var membershipTtl: Int64
+    private(set) var membershipTtl: TimeInterval
     
     /// Creates a PlacesConfiguration object using EventData from the Configuration shared state.
     /// If `eventData` does not contain an entry for `places.libraries`, calling this method will return `nil`.
@@ -49,7 +49,7 @@ struct PlacesConfiguration: Codable {
         let endpoint = eventData[PlacesConstants.EventDataKey.Configuration.PLACES_ENDPOINT] as? String ?? ""
         
         // get membership TTL setting
-        let ttl = eventData[PlacesConstants.EventDataKey.Configuration.PLACES_MEMBERSHIP_TTL] as? Int64 ?? PlacesConstants.DefaultValues.MEMBERSHIP_TTL
+        let ttl = eventData[PlacesConstants.EventDataKey.Configuration.PLACES_MEMBERSHIP_TTL] as? TimeInterval ?? PlacesConstants.DefaultValues.MEMBERSHIP_TTL
         
         return PlacesConfiguration(libraries: libraries, endpoint: endpoint, membershipTtl: ttl)
     }

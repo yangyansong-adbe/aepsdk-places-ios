@@ -29,6 +29,21 @@
 		243AC732262A4553006501EC /* PlacesQueryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC731262A4553006501EC /* PlacesQueryServiceTests.swift */; };
 		243AC736262A4564006501EC /* PlacesRegionEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC735262A4564006501EC /* PlacesRegionEventTests.swift */; };
 		243AC73A262A4578006501EC /* Places+StateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC739262A4578006501EC /* Places+StateTests.swift */; };
+		243AC74F2633462B006501EC /* PlacesQueryServiceResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC74E2633462A006501EC /* PlacesQueryServiceResult.swift */; };
+		243AC75526334991006501EC /* PlacesQueryResponseCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC75426334991006501EC /* PlacesQueryResponseCode.swift */; };
+		243AC75B2633774F006501EC /* PlacesQueryResponseCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC75A2633774E006501EC /* PlacesQueryResponseCodeTests.swift */; };
+		243AC75F26337774006501EC /* PlacesQueryServiceResultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC75E26337774006501EC /* PlacesQueryServiceResultTests.swift */; };
+		243AC76826371C9E006501EC /* TestableExtensionRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC76726371C9E006501EC /* TestableExtensionRuntime.swift */; };
+		243AC78326371E6C006501EC /* TestableNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC78226371E6C006501EC /* TestableNetworkService.swift */; };
+		243AC79526372BC4006501EC /* onePoiUserWithin.json in Resources */ = {isa = PBXBuildFile; fileRef = 243AC78D26372BC4006501EC /* onePoiUserWithin.json */; };
+		243AC79626372BC4006501EC /* twoPoiNearby.json in Resources */ = {isa = PBXBuildFile; fileRef = 243AC78E26372BC4006501EC /* twoPoiNearby.json */; };
+		243AC79726372BC4006501EC /* noNearbyPoiInJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 243AC78F26372BC4006501EC /* noNearbyPoiInJson.json */; };
+		243AC79826372BC4006501EC /* onePoiNearby.json in Resources */ = {isa = PBXBuildFile; fileRef = 243AC79026372BC4006501EC /* onePoiNearby.json */; };
+		243AC79926372BC4006501EC /* noUserWithinPoiInJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 243AC79126372BC4006501EC /* noUserWithinPoiInJson.json */; };
+		243AC79A26372BC4006501EC /* onePoiUserWithinOneNearby.json in Resources */ = {isa = PBXBuildFile; fileRef = 243AC79226372BC4006501EC /* onePoiUserWithinOneNearby.json */; };
+		243AC79B26372BC4006501EC /* noPlaces.json in Resources */ = {isa = PBXBuildFile; fileRef = 243AC79326372BC4006501EC /* noPlaces.json */; };
+		243AC79C26372BC4006501EC /* twoPoiUserWithin.json in Resources */ = {isa = PBXBuildFile; fileRef = 243AC79426372BC4006501EC /* twoPoiUserWithin.json */; };
+		243AC7A426375EE7006501EC /* badJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 243AC7A326375EE7006501EC /* badJson.json */; };
 		96F0168F41745525FCC42141 /* Pods_AEPPlacesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E23679BD14AB1EC601C35131 /* Pods_AEPPlacesTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +81,21 @@
 		243AC731262A4553006501EC /* PlacesQueryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesQueryServiceTests.swift; sourceTree = "<group>"; };
 		243AC735262A4564006501EC /* PlacesRegionEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesRegionEventTests.swift; sourceTree = "<group>"; };
 		243AC739262A4578006501EC /* Places+StateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Places+StateTests.swift"; sourceTree = "<group>"; };
+		243AC74E2633462A006501EC /* PlacesQueryServiceResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesQueryServiceResult.swift; sourceTree = "<group>"; };
+		243AC75426334991006501EC /* PlacesQueryResponseCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesQueryResponseCode.swift; sourceTree = "<group>"; };
+		243AC75A2633774E006501EC /* PlacesQueryResponseCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesQueryResponseCodeTests.swift; sourceTree = "<group>"; };
+		243AC75E26337774006501EC /* PlacesQueryServiceResultTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesQueryServiceResultTests.swift; sourceTree = "<group>"; };
+		243AC76726371C9E006501EC /* TestableExtensionRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableExtensionRuntime.swift; sourceTree = "<group>"; };
+		243AC78226371E6C006501EC /* TestableNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableNetworkService.swift; sourceTree = "<group>"; };
+		243AC78D26372BC4006501EC /* onePoiUserWithin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onePoiUserWithin.json; sourceTree = "<group>"; };
+		243AC78E26372BC4006501EC /* twoPoiNearby.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = twoPoiNearby.json; sourceTree = "<group>"; };
+		243AC78F26372BC4006501EC /* noNearbyPoiInJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = noNearbyPoiInJson.json; sourceTree = "<group>"; };
+		243AC79026372BC4006501EC /* onePoiNearby.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onePoiNearby.json; sourceTree = "<group>"; };
+		243AC79126372BC4006501EC /* noUserWithinPoiInJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = noUserWithinPoiInJson.json; sourceTree = "<group>"; };
+		243AC79226372BC4006501EC /* onePoiUserWithinOneNearby.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onePoiUserWithinOneNearby.json; sourceTree = "<group>"; };
+		243AC79326372BC4006501EC /* noPlaces.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = noPlaces.json; sourceTree = "<group>"; };
+		243AC79426372BC4006501EC /* twoPoiUserWithin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = twoPoiUserWithin.json; sourceTree = "<group>"; };
+		243AC7A326375EE7006501EC /* badJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = badJson.json; sourceTree = "<group>"; };
 		30BB65E08B61F324815FE3CB /* Pods-AEPPlacesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AEPPlacesTests.debug.xcconfig"; path = "Target Support Files/Pods-AEPPlacesTests/Pods-AEPPlacesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6B49742CE92BC0602C8E1C39 /* Pods-AEPPlaces.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AEPPlaces.release.xcconfig"; path = "Target Support Files/Pods-AEPPlaces/Pods-AEPPlaces.release.xcconfig"; sourceTree = "<group>"; };
 		E23679BD14AB1EC601C35131 /* Pods_AEPPlacesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AEPPlacesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,7 +163,9 @@
 				243AC6FC262A431E006501EC /* Places.swift */,
 				243AC6F8262A4316006501EC /* Places+PublicApi.swift */,
 				243AC70C262A4355006501EC /* Places+State.swift */,
+				243AC75426334991006501EC /* PlacesQueryResponseCode.swift */,
 				243AC700262A432B006501EC /* PlacesQueryService.swift */,
+				243AC74E2633462A006501EC /* PlacesQueryServiceResult.swift */,
 				243AC708262A4345006501EC /* PlacesRegionEvent.swift */,
 				243AC6F0262A42FB006501EC /* PointOfInterest.swift */,
 			);
@@ -143,17 +175,46 @@
 		243AC6C6262A3F8B006501EC /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				243AC78626371FF2006501EC /* Assets */,
+				243AC76626371C7A006501EC /* Utils */,
 				243AC714262A44EA006501EC /* Event+PlacesTests.swift */,
 				243AC71F262A44F9006501EC /* PlacesConfigurationTests.swift */,
 				243AC727262A4522006501EC /* PlacesLibraryTests.swift */,
 				243AC6C7262A3F8B006501EC /* PlacesTests.swift */,
 				243AC72B262A453D006501EC /* Places+PublicApiTests.swift */,
 				243AC739262A4578006501EC /* Places+StateTests.swift */,
+				243AC75A2633774E006501EC /* PlacesQueryResponseCodeTests.swift */,
 				243AC731262A4553006501EC /* PlacesQueryServiceTests.swift */,
+				243AC75E26337774006501EC /* PlacesQueryServiceResultTests.swift */,
 				243AC735262A4564006501EC /* PlacesRegionEventTests.swift */,
 				243AC723262A450D006501EC /* PointOfInterestTests.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		243AC76626371C7A006501EC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				243AC76726371C9E006501EC /* TestableExtensionRuntime.swift */,
+				243AC78226371E6C006501EC /* TestableNetworkService.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		243AC78626371FF2006501EC /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				243AC7A326375EE7006501EC /* badJson.json */,
+				243AC78F26372BC4006501EC /* noNearbyPoiInJson.json */,
+				243AC79326372BC4006501EC /* noPlaces.json */,
+				243AC79126372BC4006501EC /* noUserWithinPoiInJson.json */,
+				243AC79026372BC4006501EC /* onePoiNearby.json */,
+				243AC78D26372BC4006501EC /* onePoiUserWithin.json */,
+				243AC79226372BC4006501EC /* onePoiUserWithinOneNearby.json */,
+				243AC78E26372BC4006501EC /* twoPoiNearby.json */,
+				243AC79426372BC4006501EC /* twoPoiUserWithin.json */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		DF5EB3AD0F6BA7612343B983 /* Frameworks */ = {
@@ -278,6 +339,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				243AC79626372BC4006501EC /* twoPoiNearby.json in Resources */,
+				243AC79926372BC4006501EC /* noUserWithinPoiInJson.json in Resources */,
+				243AC79C26372BC4006501EC /* twoPoiUserWithin.json in Resources */,
+				243AC79B26372BC4006501EC /* noPlaces.json in Resources */,
+				243AC79A26372BC4006501EC /* onePoiUserWithinOneNearby.json in Resources */,
+				243AC79726372BC4006501EC /* noNearbyPoiInJson.json in Resources */,
+				243AC7A426375EE7006501EC /* badJson.json in Resources */,
+				243AC79826372BC4006501EC /* onePoiNearby.json in Resources */,
+				243AC79526372BC4006501EC /* onePoiUserWithin.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,10 +426,12 @@
 				243AC6E9262A41C0006501EC /* PlacesConfiguration.swift in Sources */,
 				243AC705262A4338006501EC /* Event+Places.swift in Sources */,
 				243AC70D262A4355006501EC /* Places+State.swift in Sources */,
+				243AC75526334991006501EC /* PlacesQueryResponseCode.swift in Sources */,
 				243AC709262A4345006501EC /* PlacesRegionEvent.swift in Sources */,
 				243AC6ED262A42E2006501EC /* PlacesConstants.swift in Sources */,
 				243AC6F1262A42FB006501EC /* PointOfInterest.swift in Sources */,
 				243AC6F5262A4304006501EC /* PlacesLibrary.swift in Sources */,
+				243AC74F2633462B006501EC /* PlacesQueryServiceResult.swift in Sources */,
 				243AC701262A432B006501EC /* PlacesQueryService.swift in Sources */,
 				243AC6FD262A431E006501EC /* Places.swift in Sources */,
 			);
@@ -372,9 +444,13 @@
 				243AC736262A4564006501EC /* PlacesRegionEventTests.swift in Sources */,
 				243AC720262A44F9006501EC /* PlacesConfigurationTests.swift in Sources */,
 				243AC72C262A453D006501EC /* Places+PublicApiTests.swift in Sources */,
+				243AC78326371E6C006501EC /* TestableNetworkService.swift in Sources */,
 				243AC73A262A4578006501EC /* Places+StateTests.swift in Sources */,
 				243AC728262A4522006501EC /* PlacesLibraryTests.swift in Sources */,
 				243AC715262A44EA006501EC /* Event+PlacesTests.swift in Sources */,
+				243AC76826371C9E006501EC /* TestableExtensionRuntime.swift in Sources */,
+				243AC75B2633774F006501EC /* PlacesQueryResponseCodeTests.swift in Sources */,
+				243AC75F26337774006501EC /* PlacesQueryServiceResultTests.swift in Sources */,
 				243AC724262A450D006501EC /* PointOfInterestTests.swift in Sources */,
 				243AC6C9262A3F8B006501EC /* PlacesTests.swift in Sources */,
 				243AC732262A4553006501EC /* PlacesQueryServiceTests.swift in Sources */,

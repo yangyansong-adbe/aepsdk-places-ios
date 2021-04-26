@@ -23,8 +23,8 @@ public class PointOfInterest: NSObject {
     var metaData: [String: String]
     var userIsWithin: Bool
     
-    private var libraryId: String
-    private var weight: Int
+    private(set) var libraryId: String
+    private(set) var weight: Int
     
     /// Initializes a `PointOfInterest` object from a JSON String.
     ///

@@ -17,7 +17,7 @@ class PlacesConfigurationTests: XCTestCase {
     
     static var mockLibraries: [[String: Any]] = []
     static var mockEndpoint = "placesEdgeEndpoint"
-    static var mockTtl: Int64 = 552
+    static var mockTtl: TimeInterval = 552
     
     // json is not used, but shows an example of what the data will look like in the configuration eventData
     let json = """
@@ -46,7 +46,7 @@ class PlacesConfigurationTests: XCTestCase {
     
     func getEventData(libraries: [[String: Any]]? = mockLibraries,
                       endpoint: String? = mockEndpoint,
-                      membershipTtl: Int64? = mockTtl) -> [String: Any] {
+                      membershipTtl: TimeInterval? = mockTtl) -> [String: Any] {
         var data: [String: Any] = [:]
         if libraries != nil {
             data[PlacesConstants.EventDataKey.Configuration.PLACES_LIBRARIES] = libraries
