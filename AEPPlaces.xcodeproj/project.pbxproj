@@ -44,6 +44,8 @@
 		243AC79B26372BC4006501EC /* noPlaces.json in Resources */ = {isa = PBXBuildFile; fileRef = 243AC79326372BC4006501EC /* noPlaces.json */; };
 		243AC79C26372BC4006501EC /* twoPoiUserWithin.json in Resources */ = {isa = PBXBuildFile; fileRef = 243AC79426372BC4006501EC /* twoPoiUserWithin.json */; };
 		243AC7A426375EE7006501EC /* badJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 243AC7A326375EE7006501EC /* badJson.json */; };
+		243AC7AC263885CD006501EC /* SharedStateResult+Places.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC7AB263885CC006501EC /* SharedStateResult+Places.swift */; };
+		243AC7B026389870006501EC /* SharedStateResult+Places.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC7AF2638986F006501EC /* SharedStateResult+Places.swift */; };
 		96F0168F41745525FCC42141 /* Pods_AEPPlacesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E23679BD14AB1EC601C35131 /* Pods_AEPPlacesTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +98,8 @@
 		243AC79326372BC4006501EC /* noPlaces.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = noPlaces.json; sourceTree = "<group>"; };
 		243AC79426372BC4006501EC /* twoPoiUserWithin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = twoPoiUserWithin.json; sourceTree = "<group>"; };
 		243AC7A326375EE7006501EC /* badJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = badJson.json; sourceTree = "<group>"; };
+		243AC7AB263885CC006501EC /* SharedStateResult+Places.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedStateResult+Places.swift"; sourceTree = "<group>"; };
+		243AC7AF2638986F006501EC /* SharedStateResult+Places.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedStateResult+Places.swift"; sourceTree = "<group>"; };
 		30BB65E08B61F324815FE3CB /* Pods-AEPPlacesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AEPPlacesTests.debug.xcconfig"; path = "Target Support Files/Pods-AEPPlacesTests/Pods-AEPPlacesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6B49742CE92BC0602C8E1C39 /* Pods-AEPPlaces.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AEPPlaces.release.xcconfig"; path = "Target Support Files/Pods-AEPPlaces/Pods-AEPPlaces.release.xcconfig"; sourceTree = "<group>"; };
 		E23679BD14AB1EC601C35131 /* Pods_AEPPlacesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AEPPlacesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,6 +172,7 @@
 				243AC74E2633462A006501EC /* PlacesQueryServiceResult.swift */,
 				243AC708262A4345006501EC /* PlacesRegionEvent.swift */,
 				243AC6F0262A42FB006501EC /* PointOfInterest.swift */,
+				243AC7AB263885CC006501EC /* SharedStateResult+Places.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -188,6 +193,7 @@
 				243AC75E26337774006501EC /* PlacesQueryServiceResultTests.swift */,
 				243AC735262A4564006501EC /* PlacesRegionEventTests.swift */,
 				243AC723262A450D006501EC /* PointOfInterestTests.swift */,
+				243AC7AF2638986F006501EC /* SharedStateResult+Places.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -432,6 +438,7 @@
 				243AC6F1262A42FB006501EC /* PointOfInterest.swift in Sources */,
 				243AC6F5262A4304006501EC /* PlacesLibrary.swift in Sources */,
 				243AC74F2633462B006501EC /* PlacesQueryServiceResult.swift in Sources */,
+				243AC7AC263885CD006501EC /* SharedStateResult+Places.swift in Sources */,
 				243AC701262A432B006501EC /* PlacesQueryService.swift in Sources */,
 				243AC6FD262A431E006501EC /* Places.swift in Sources */,
 			);
@@ -454,6 +461,7 @@
 				243AC724262A450D006501EC /* PointOfInterestTests.swift in Sources */,
 				243AC6C9262A3F8B006501EC /* PlacesTests.swift in Sources */,
 				243AC732262A4553006501EC /* PlacesQueryServiceTests.swift in Sources */,
+				243AC7B026389870006501EC /* SharedStateResult+Places.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

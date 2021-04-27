@@ -49,7 +49,7 @@ class PlacesQueryServiceTests: XCTestCase {
         // test
         queryService.getNearbyPlaces(lat: mockLat, lon: mockLon, count: mockCount, configuration: invalidConfiguration) { (result) in
             XCTAssertNotNil(result)
-            XCTAssertEqual(PlacesQueryResponseCode.queryServiceUnavailable, result.response)
+            XCTAssertEqual(PlacesQueryResponseCode.configurationError, result.response)
             XCTAssertNil(result.pois)
             
             expectation.fulfill()
@@ -70,7 +70,7 @@ class PlacesQueryServiceTests: XCTestCase {
         // test
         queryService.getNearbyPlaces(lat: mockLat, lon: mockLon, count: mockCount, configuration: invalidConfiguration) { (result) in
             XCTAssertNotNil(result)
-            XCTAssertEqual(PlacesQueryResponseCode.connectivityError, result.response)
+            XCTAssertEqual(PlacesQueryResponseCode.configurationError, result.response)
             XCTAssertNil(result.pois)
             
             expectation.fulfill()

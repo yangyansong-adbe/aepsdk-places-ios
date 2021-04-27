@@ -23,8 +23,8 @@ struct PlacesConfiguration: Codable {
     /// If `event.data` does not contain an entry for `places.libraries`, calling this method will return `nil`.
     /// - Parameter event: an `Event` containing configuration variables
     /// - Returns: A `PlacesConfiguration` object represented by the `event` passed in
-    static func fromEvent(_ event: Event) -> PlacesConfiguration? {
-        guard let eventLibrariesData = event.configurationPlacesLibraries else {
+    static func fromSharedState(_ sharedState: SharedStateResult) -> PlacesConfiguration? {
+        guard let eventLibrariesData = sharedState.placesLibraries else {
             Log.debug(label: PlacesConstants.LOG_TAG, "Unable to create a PlacesConfiguration object - no libraries were found in the configuration Event Data.")
             return nil
         }
@@ -47,10 +47,10 @@ struct PlacesConfiguration: Codable {
         }
         
         // get the endpoint for Places Edge query requests
-        let endpoint = event.configurationPlacesEndpoint ?? ""
+        let endpoint = sharedState.placesEndpoint ?? ""
         
         // get membership TTL setting
-        let ttl = event.configurationPlacesMembershipTtl ?? PlacesConstants.DefaultValues.MEMBERSHIP_TTL
+        let ttl = sharedState.placesMembershipTtl ?? PlacesConstants.DefaultValues.MEMBERSHIP_TTL
         
         return PlacesConfiguration(libraries: libraries, endpoint: endpoint, membershipTtl: ttl)
     }

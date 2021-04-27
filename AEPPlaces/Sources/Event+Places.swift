@@ -28,18 +28,6 @@ extension Event {
         return data?[PlacesConstants.EventDataKey.SHARED_STATE_OWNER] as? String
     }
     
-    var configurationPlacesLibraries: [[String: Any]]? {
-        return data?[PlacesConstants.EventDataKey.Configuration.PLACES_LIBRARIES] as? [[String: Any]]
-    }
-    
-    var configurationPlacesEndpoint: String? {
-        return data?[PlacesConstants.EventDataKey.Configuration.PLACES_ENDPOINT] as? String
-    }
-    
-    var configurationPlacesMembershipTtl: TimeInterval? {
-        return data?[PlacesConstants.EventDataKey.Configuration.PLACES_MEMBERSHIP_TTL] as? TimeInterval
-    }
-    
     var privacyStatus: String? {
         return data?[PlacesConstants.EventDataKey.Configuration.GLOBAL_CONFIG_PRIVACY] as? String
     }

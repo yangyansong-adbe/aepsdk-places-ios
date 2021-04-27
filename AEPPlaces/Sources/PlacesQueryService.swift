@@ -14,12 +14,24 @@ import Foundation
 import AEPServices
 
 class PlacesQueryService {
-        
+
+    /// Retrieves a list of nearby `PointsOfInterest` from the Places Edge Query Service.
+    ///
+    /// The `PlacesQueryServiceResult` passed to the closure will contain a `PlacesQueryResponseCode` value as well as
+    /// an array of `PointOfInterest` objects. If the array is empty, consult the `PlacesQueryResponseCode` for more
+    /// information.
+    ///
+    /// - Parameters:
+    ///   - lat: the latitude (in degrees) of the device
+    ///   - lon: the longitude (in degrees) of the device
+    ///   - count: the maximum number of `PointOfInterest` objects to return in the `PlacesQueryServiceResult`
+    ///   - configuration: contains the configuration details needed for making the network request
+    ///   - completion: closure to be called with a `PlacesQueryServiceResult` when the network communications are complete
     func getNearbyPlaces(lat: Double, lon: Double, count: Int, configuration: PlacesConfiguration, completion: @escaping (PlacesQueryServiceResult) -> Void) {
         // make sure we have valid configuration
         if !configuration.isValid {
             Log.warning(label: PlacesConstants.LOG_TAG, "Call to retrieve nearby places from the Places Query Service failed - Places configuration is invalid.")
-            completion(PlacesQueryServiceResult(response: .queryServiceUnavailable))
+            completion(PlacesQueryServiceResult(response: .configurationError))
             return
         }
         
@@ -32,7 +44,7 @@ class PlacesQueryService {
         let urlString = urlBase + librariesVariable + latVariable + lonVariable + limitVariable
         guard let url = URL(string: urlString) else {
             Log.warning(label: PlacesConstants.LOG_TAG, "Unable to request nearby places from the Places Query Service - error creating a URL object from urlString: \(urlString)")
-            completion(PlacesQueryServiceResult(response: .connectivityError))
+            completion(PlacesQueryServiceResult(response: .configurationError))
             return
         }
         
@@ -74,7 +86,7 @@ class PlacesQueryService {
                     }
                 }
                                 
-                // get other pois that he user is near
+                // get other pois that the user is near
                 if let nearbyArray = placesJson[PlacesConstants.QueryService.Json.POIS] as? [[String: Any]] {
                     for currentPoi in nearbyArray {
                         if let poi = try? PointOfInterest(jsonObject: currentPoi) {
@@ -93,7 +105,13 @@ class PlacesQueryService {
     }
     
     
-    
+    /// Returns a `String` representation of Places libraries for use in a request to the Places Edge Query Service
+    ///
+    /// The Places Edge Query Service expects libraries to be passed into the URL with the following format:
+    ///   "library=LIBRARY_ONE&library=LIBRARY_TWO&library=LIBRARY_THREE" and so on.
+    ///
+    /// - Parameter libraries: an array of `PlacesLibrary` objects from which the URL parameter will be generated
+    /// - Returns: a `String` of URL parameters representing the given Places Libraries
     private func getLibrariesUrlParameter(libraries: [PlacesLibrary]) -> String {
         var librariesString = ""
         for library in libraries {
@@ -104,5 +122,3 @@ class PlacesQueryService {
         return librariesString
     }
 }
-
-
