@@ -19,10 +19,10 @@ struct PlacesConfiguration: Codable {
     private(set) var endpoint: String
     private(set) var membershipTtl: TimeInterval
     
-    /// Creates a PlacesConfiguration object from an Event containing Configuration shared state.
-    /// If `event.data` does not contain an entry for `places.libraries`, calling this method will return `nil`.
-    /// - Parameter event: an `Event` containing configuration variables
-    /// - Returns: A `PlacesConfiguration` object represented by the `event` passed in
+    /// Creates a PlacesConfiguration object from a `SharedStateResult` for Configuration.
+    /// If the shared state does not contain an entry for `places.libraries`, calling this method will return `nil`.
+    /// - Parameter sharedState: a `SharedStateResult` containing configuration variables
+    /// - Returns: A `PlacesConfiguration` object represented by the `SharedStateResult` passed in
     static func fromSharedState(_ sharedState: SharedStateResult) -> PlacesConfiguration? {
         guard let eventLibrariesData = sharedState.placesLibraries else {
             Log.debug(label: PlacesConstants.LOG_TAG, "Unable to create a PlacesConfiguration object - no libraries were found in the configuration Event Data.")
