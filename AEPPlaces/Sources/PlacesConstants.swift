@@ -19,10 +19,10 @@ enum PlacesConstants {
     static let LOG_TAG = "Places"
     
     enum DefaultValues {
-        static let MEMBERSHIP_TTL: Int64 = 60 * 60  // 1 hour in seconds
-        static let NEARBY_POI_COUNT      = 10
-        static let RADIUS                = 1000     // 1 km
-        static let INVALID_LAT_LON       = 999.999
+        static let MEMBERSHIP_TTL: TimeInterval = 60 * 60  // 1 hour in seconds
+        static let NEARBY_POI_COUNT             = 10
+        static let RADIUS                       = 1000     // 1 km
+        static let INVALID_LAT_LON              = 999.999
     }
     
     enum UserDefaults {
@@ -41,7 +41,7 @@ enum PlacesConstants {
     
     enum QueryService {
         static let PLACES_EDGE_QUERY = "placesedgequery"
-        static let REQUEST_TIMEOUT = 5
+        static let REQUEST_TIMEOUT: TimeInterval = 5
         
         enum Json {
             static let INPUT = "input"
@@ -52,7 +52,7 @@ enum PlacesConstants {
             static let PLACES = "places"
             static let POI = "p"
             static let POIS = "pois"
-            static let USERS_WITHIN = "userWithin"
+            static let USER_WITHIN = "userWithin"
         }
         
         static let EXPECTED_ARRAY_LENGTH = 7

@@ -1,0 +1,22 @@
+{
+    "places": {
+        "userWithin": [
+            {
+                "p": [
+                    "1234",
+                    "myplace",
+                    12.34,
+                    23.45,
+                    500,
+                    "mylib",
+                    25
+                ],
+                "x": {
+                    "key1": "value1"
+                }
+            }
+        ],
+        "pois": []
+    },
+    "input": null
+}

@@ -1,0 +1,36 @@
+{
+    "places": {
+        "userWithin": [],
+        "pois": [
+            {
+                "p": [
+                    "1234",
+                    "myplace",
+                    12.34,
+                    23.45,
+                    500,
+                    "mylib",
+                    25
+                ],
+                "x": {
+                    "key1": "value1"
+                }
+            },
+            {
+                "p": [
+                    "2345",
+                    "yourplace",
+                    23.45,
+                    34.56,
+                    300,
+                    "yourlib",
+                    30
+                ],
+                "x": {
+                    "key2": "value2"
+                }
+            }
+        ]
+    },
+    "input": null
+}
