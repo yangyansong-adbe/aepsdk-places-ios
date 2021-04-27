@@ -14,5 +14,67 @@ import Foundation
 import AEPCore
 
 extension Event {
+    // MARK: - Event Type/Source/Owner Detection
+    var isPlacesRequestEvent: Bool {
+        return type == EventType.places && source == EventSource.requestContent
+    }
     
+    var isSharedStateUpdateEvent: Bool {
+        return type == EventType.hub && source == EventSource.sharedState
+    }
+    
+    // MARK: - Configuration, Privacy & Settings
+    var sharedStateOwner: String? {
+        return data?[PlacesConstants.EventDataKey.SHARED_STATE_OWNER] as? String
+    }
+    
+    var configurationPlacesLibraries: [[String: Any]]? {
+        return data?[PlacesConstants.EventDataKey.Configuration.PLACES_LIBRARIES] as? [[String: Any]]
+    }
+    
+    var configurationPlacesEndpoint: String? {
+        return data?[PlacesConstants.EventDataKey.Configuration.PLACES_ENDPOINT] as? String
+    }
+    
+    var configurationPlacesMembershipTtl: TimeInterval? {
+        return data?[PlacesConstants.EventDataKey.Configuration.PLACES_MEMBERSHIP_TTL] as? TimeInterval
+    }
+    
+    var privacyStatus: String? {
+        return data?[PlacesConstants.EventDataKey.Configuration.GLOBAL_CONFIG_PRIVACY] as? String
+    }
+        
+    var locationAuthorizationStatus: String? {
+        return data?[PlacesConstants.EventDataKey.Places.AUTH_STATUS] as? String
+    }
+    
+    // MARK: - Get Nearby Places
+    var placesRequestType: String? {
+        return data?[PlacesConstants.EventDataKey.Places.REQUEST_TYPE] as? String
+    }
+    
+    var latitude: Double? {
+        return data?[PlacesConstants.EventDataKey.Places.LATITUDE] as? Double
+    }
+    
+    var longitude: Double? {
+        return data?[PlacesConstants.EventDataKey.Places.LONGITUDE] as? Double
+    }
+    
+    var requestedPoiCount: Int? {
+        return data?[PlacesConstants.EventDataKey.Places.COUNT] as? Int
+    }
+    
+    var placesQueryResponseCode: PlacesQueryResponseCode? {
+        return PlacesQueryResponseCode(rawValue: data?[PlacesConstants.EventDataKey.Places.RESPONSE_STATUS] as? Int ?? -1)
+    }
+    
+    // MARK: - Process Region Events
+    var regionId: String? {
+        return data?[PlacesConstants.EventDataKey.Places.REGION_ID] as? String
+    }
+    
+    var regionEventType: String? {
+        return data?[PlacesConstants.EventDataKey.Places.REGION_EVENT_TYPE] as? String
+    }
 }
