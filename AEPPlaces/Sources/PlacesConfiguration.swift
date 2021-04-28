@@ -12,18 +12,19 @@
 
 import Foundation
 import AEPServices
+import AEPCore
 
 struct PlacesConfiguration: Codable {
     private(set) var libraries: [PlacesLibrary]
     private(set) var endpoint: String
     private(set) var membershipTtl: TimeInterval
     
-    /// Creates a PlacesConfiguration object using EventData from the Configuration shared state.
-    /// If `eventData` does not contain an entry for `places.libraries`, calling this method will return `nil`.
-    /// - Parameter eventData: a map containing configuration variables
-    /// - Returns: A `PlacesConfiguration` object represented by the `eventData` passed in
-    static func withEventData(_ eventData: [String: Any]) -> PlacesConfiguration? {
-        guard let eventLibrariesData = eventData[PlacesConstants.EventDataKey.Configuration.PLACES_LIBRARIES] as? [[String: Any]] else {
+    /// Creates a PlacesConfiguration object from a `SharedStateResult` for Configuration.
+    /// If the shared state does not contain an entry for `places.libraries`, calling this method will return `nil`.
+    /// - Parameter sharedState: a `SharedStateResult` containing configuration variables
+    /// - Returns: A `PlacesConfiguration` object represented by the `SharedStateResult` passed in
+    static func fromSharedState(_ sharedState: SharedStateResult) -> PlacesConfiguration? {
+        guard let eventLibrariesData = sharedState.placesLibraries else {
             Log.debug(label: PlacesConstants.LOG_TAG, "Unable to create a PlacesConfiguration object - no libraries were found in the configuration Event Data.")
             return nil
         }
@@ -46,10 +47,10 @@ struct PlacesConfiguration: Codable {
         }
         
         // get the endpoint for Places Edge query requests
-        let endpoint = eventData[PlacesConstants.EventDataKey.Configuration.PLACES_ENDPOINT] as? String ?? ""
+        let endpoint = sharedState.placesEndpoint ?? ""
         
         // get membership TTL setting
-        let ttl = eventData[PlacesConstants.EventDataKey.Configuration.PLACES_MEMBERSHIP_TTL] as? TimeInterval ?? PlacesConstants.DefaultValues.MEMBERSHIP_TTL
+        let ttl = sharedState.placesMembershipTtl ?? PlacesConstants.DefaultValues.MEMBERSHIP_TTL
         
         return PlacesConfiguration(libraries: libraries, endpoint: endpoint, membershipTtl: ttl)
     }

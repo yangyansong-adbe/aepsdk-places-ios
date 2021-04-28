@@ -11,6 +11,7 @@
  */
 
 import XCTest
+@testable import AEPCore
 @testable import AEPPlaces
 
 class PlacesConfigurationTests: XCTestCase {
@@ -43,10 +44,10 @@ class PlacesConfigurationTests: XCTestCase {
     override func tearDownWithError() throws {
         PlacesConfigurationTests.mockLibraries.removeAll()
     }
-    
-    func getEventData(libraries: [[String: Any]]? = mockLibraries,
-                      endpoint: String? = mockEndpoint,
-                      membershipTtl: TimeInterval? = mockTtl) -> [String: Any] {
+        
+    func getSharedState(libraries: [[String: Any]]? = mockLibraries,
+                        endpoint: String? = mockEndpoint,
+                        membershipTtl: TimeInterval? = mockTtl) -> SharedStateResult {
         var data: [String: Any] = [:]
         if libraries != nil {
             data[PlacesConstants.EventDataKey.Configuration.PLACES_LIBRARIES] = libraries
@@ -57,14 +58,14 @@ class PlacesConfigurationTests: XCTestCase {
         if membershipTtl != nil {
             data[PlacesConstants.EventDataKey.Configuration.PLACES_MEMBERSHIP_TTL] = membershipTtl
         }
-        return data
+        return SharedStateResult(status: .set, value: data)
     }
     
     // MARK: - Tests
     
     func testEventDataConstructorHappy() throws {
         // setup
-        let placesConfig = PlacesConfiguration.withEventData(getEventData())
+        let placesConfig = PlacesConfiguration.fromSharedState(getSharedState())
         
         // verify
         XCTAssertNotNil(placesConfig)
@@ -81,7 +82,7 @@ class PlacesConfigurationTests: XCTestCase {
     
     func testEventDataConstructorBadLibraryInMap() throws {
         // setup
-        let placesConfig = PlacesConfiguration.withEventData(getEventData(libraries:[["noId":"in the map"]]))
+        let placesConfig = PlacesConfiguration.fromSharedState(getSharedState(libraries:[["noId":"in the map"]]))
         
         // verify
         XCTAssertNotNil(placesConfig)
@@ -90,7 +91,7 @@ class PlacesConfigurationTests: XCTestCase {
     
     func testEventDataConstructorLibrariesDoesNotExist() throws {
         // setup
-        let placesConfig = PlacesConfiguration.withEventData(getEventData(libraries:nil))
+        let placesConfig = PlacesConfiguration.fromSharedState(getSharedState(libraries:nil))
         
         // verify
         XCTAssertNil(placesConfig)
@@ -98,7 +99,7 @@ class PlacesConfigurationTests: XCTestCase {
     
     func testEventDataConstructorNoEndpointOrTtl() throws {
         // setup
-        let placesConfig = PlacesConfiguration.withEventData(getEventData(endpoint: nil, membershipTtl: nil))
+        let placesConfig = PlacesConfiguration.fromSharedState(getSharedState(endpoint: nil, membershipTtl: nil))
         
         // verify
         XCTAssertNotNil(placesConfig)
@@ -108,7 +109,7 @@ class PlacesConfigurationTests: XCTestCase {
     
     func testIsValidHappy() throws {
         // setup
-        let placesConfig = PlacesConfiguration.withEventData(getEventData())
+        let placesConfig = PlacesConfiguration.fromSharedState(getSharedState())
         
         // verify
         XCTAssertTrue(placesConfig!.isValid)
@@ -116,7 +117,7 @@ class PlacesConfigurationTests: XCTestCase {
     
     func testIsValidNoLibraries() throws {
         // setup
-        let placesConfig = PlacesConfiguration.withEventData(getEventData(libraries:[["noId":"in the map"]]))
+        let placesConfig = PlacesConfiguration.fromSharedState(getSharedState(libraries:[["noId":"in the map"]]))
         
         // verify
         XCTAssertFalse(placesConfig!.isValid)
@@ -124,7 +125,7 @@ class PlacesConfigurationTests: XCTestCase {
     
     func testIsValidNoEndpoint() throws {
         // setup
-        let placesConfig = PlacesConfiguration.withEventData(getEventData(endpoint: nil))
+        let placesConfig = PlacesConfiguration.fromSharedState(getSharedState(endpoint: nil))
         
         // verify
         XCTAssertFalse(placesConfig!.isValid)
