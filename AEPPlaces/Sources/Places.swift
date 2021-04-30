@@ -16,9 +16,21 @@ import AEPServices
 
 @objc(AEPMobilePlaces)
 public class Places: NSObject, Extension {
+    // MARK: - internal properties
+    internal var nearbyPois: [String: PointOfInterest] = [:]
+    internal var userWithinPois: [String: PointOfInterest] = [:]
+    internal var currentPoi: PointOfInterest?
+    internal var lastEnteredPoi: PointOfInterest?
+    internal var lastExitedPoi: PointOfInterest?
+    internal var lastKnownLatitude: Double
+    internal var lastKnownLongitude: Double
+    internal var membershipTtl: TimeInterval?
+    internal var membershipValidUntil: TimeInterval?
+    internal var authStatus: PlacesAuthorizationStatus
+    internal var dataStore: NamedCollectionDataStore = NamedCollectionDataStore(name: PlacesConstants.UserDefaults.PLACES_DATA_STORE_NAME)
+    
     
     // MARK: - Extension protocol
-    
     // MARK: properties
     public static var extensionVersion: String = PlacesConstants.EXTENSION_VERSION
     public var name: String = PlacesConstants.EXTENSION_NAME
@@ -29,6 +41,10 @@ public class Places: NSObject, Extension {
     // MARK: methods
     public required init?(runtime: ExtensionRuntime) {
         self.runtime = runtime
+        
+        lastKnownLatitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
+        lastKnownLongitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
+        authStatus = .unknown
         
         super.init()
     }
