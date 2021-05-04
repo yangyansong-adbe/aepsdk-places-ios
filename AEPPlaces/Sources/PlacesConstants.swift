@@ -88,6 +88,7 @@ enum PlacesConstants {
         }
         
         enum Response {
+            static let FAILURE = "responsefailure"
             static let GET_LAST_KNOWN_LOCATION = "responsegetlastknownlocation"
             static let GET_NEARBY_PLACES = "responsegetnearbyplaces"
             static let GET_USER_WITHIN_PLACES = "responsegetuserwithinplaces"

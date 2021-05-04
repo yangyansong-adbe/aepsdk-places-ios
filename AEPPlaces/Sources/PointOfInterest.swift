@@ -31,8 +31,12 @@ public class PointOfInterest: NSObject {
     /// - Parameters:
     ///   - jsonString: a JSON String containing keys and values to define a `PointOfInterest` object
     /// - Returns: a new `PointOfInterest` object
-    /// - Throws: a `PlacesDataObjectInvalidInitialization` if JSON parsing fails
+    /// - Throws: a `PlacesDataObjectInvalidInitialization` if JSON parsing fails or if `jsonString` is empty.
     init(jsonString: String) throws {
+        if jsonString.isEmpty {            
+            throw PlacesDataObjectInvalidInitialization(message: "JSON string is empty")
+        }
+        
         do {
             if let json = try JSONSerialization.jsonObject(with: jsonString.data(using: .utf8) ?? Data(),
                                                            options: .mutableContainers) as? [String: Any] {

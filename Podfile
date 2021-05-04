@@ -49,3 +49,7 @@ end
 target 'AEPPlacesTests' do
     dev_main
 end
+
+target 'PlacesTestApp' do
+    test_main
+end

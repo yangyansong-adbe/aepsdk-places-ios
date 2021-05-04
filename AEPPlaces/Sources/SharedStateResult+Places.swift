@@ -26,4 +26,8 @@ extension SharedStateResult {
     var placesMembershipTtl: TimeInterval? {
         return value?[PlacesConstants.EventDataKey.Configuration.PLACES_MEMBERSHIP_TTL] as? TimeInterval
     }
+    
+    var globalPrivacy: PrivacyStatus {
+        return PrivacyStatus(rawValue: value?[PlacesConstants.EventDataKey.Configuration.GLOBAL_CONFIG_PRIVACY] as? String ?? "unknown") ?? PrivacyStatus.unknown
+    }
 }
