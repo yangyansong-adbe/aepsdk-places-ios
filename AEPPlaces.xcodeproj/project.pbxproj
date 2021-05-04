@@ -46,6 +46,10 @@
 		243AC7A426375EE7006501EC /* badJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 243AC7A326375EE7006501EC /* badJson.json */; };
 		243AC7AC263885CD006501EC /* SharedStateResult+Places.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC7AB263885CC006501EC /* SharedStateResult+Places.swift */; };
 		243AC7B026389870006501EC /* SharedStateResult+Places.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC7AF2638986F006501EC /* SharedStateResult+Places.swift */; };
+		243AC7B42638D53D006501EC /* PlacesAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC7B32638D53D006501EC /* PlacesAuthorizationStatus.swift */; };
+		243AC7BA263B16F3006501EC /* NamedCollectionDataStore+Places.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC7B9263B16F3006501EC /* NamedCollectionDataStore+Places.swift */; };
+		243AC7C0263B656B006501EC /* PlacesAuthorizationStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC7BF263B656A006501EC /* PlacesAuthorizationStatusTests.swift */; };
+		243AC7C4263B65DD006501EC /* NamedCollectionDataStore+PlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC7C3263B65DD006501EC /* NamedCollectionDataStore+PlacesTests.swift */; };
 		96F0168F41745525FCC42141 /* Pods_AEPPlacesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E23679BD14AB1EC601C35131 /* Pods_AEPPlacesTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +104,10 @@
 		243AC7A326375EE7006501EC /* badJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = badJson.json; sourceTree = "<group>"; };
 		243AC7AB263885CC006501EC /* SharedStateResult+Places.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedStateResult+Places.swift"; sourceTree = "<group>"; };
 		243AC7AF2638986F006501EC /* SharedStateResult+Places.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedStateResult+Places.swift"; sourceTree = "<group>"; };
+		243AC7B32638D53D006501EC /* PlacesAuthorizationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesAuthorizationStatus.swift; sourceTree = "<group>"; };
+		243AC7B9263B16F3006501EC /* NamedCollectionDataStore+Places.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NamedCollectionDataStore+Places.swift"; sourceTree = "<group>"; };
+		243AC7BF263B656A006501EC /* PlacesAuthorizationStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesAuthorizationStatusTests.swift; sourceTree = "<group>"; };
+		243AC7C3263B65DD006501EC /* NamedCollectionDataStore+PlacesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NamedCollectionDataStore+PlacesTests.swift"; sourceTree = "<group>"; };
 		30BB65E08B61F324815FE3CB /* Pods-AEPPlacesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AEPPlacesTests.debug.xcconfig"; path = "Target Support Files/Pods-AEPPlacesTests/Pods-AEPPlacesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6B49742CE92BC0602C8E1C39 /* Pods-AEPPlaces.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AEPPlaces.release.xcconfig"; path = "Target Support Files/Pods-AEPPlaces/Pods-AEPPlaces.release.xcconfig"; sourceTree = "<group>"; };
 		E23679BD14AB1EC601C35131 /* Pods_AEPPlacesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AEPPlacesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,12 +169,14 @@
 			children = (
 				243AC6C0262A3F72006501EC /* AEPPlaces.h */,
 				243AC704262A4338006501EC /* Event+Places.swift */,
+				243AC7B9263B16F3006501EC /* NamedCollectionDataStore+Places.swift */,
 				243AC6E8262A41C0006501EC /* PlacesConfiguration.swift */,
 				243AC6EC262A42E2006501EC /* PlacesConstants.swift */,
 				243AC6F4262A4304006501EC /* PlacesLibrary.swift */,
 				243AC6FC262A431E006501EC /* Places.swift */,
 				243AC6F8262A4316006501EC /* Places+PublicApi.swift */,
 				243AC70C262A4355006501EC /* Places+State.swift */,
+				243AC7B32638D53D006501EC /* PlacesAuthorizationStatus.swift */,
 				243AC75426334991006501EC /* PlacesQueryResponseCode.swift */,
 				243AC700262A432B006501EC /* PlacesQueryService.swift */,
 				243AC74E2633462A006501EC /* PlacesQueryServiceResult.swift */,
@@ -183,11 +193,13 @@
 				243AC78626371FF2006501EC /* Assets */,
 				243AC76626371C7A006501EC /* Utils */,
 				243AC714262A44EA006501EC /* Event+PlacesTests.swift */,
+				243AC7C3263B65DD006501EC /* NamedCollectionDataStore+PlacesTests.swift */,
 				243AC71F262A44F9006501EC /* PlacesConfigurationTests.swift */,
 				243AC727262A4522006501EC /* PlacesLibraryTests.swift */,
 				243AC6C7262A3F8B006501EC /* PlacesTests.swift */,
 				243AC72B262A453D006501EC /* Places+PublicApiTests.swift */,
 				243AC739262A4578006501EC /* Places+StateTests.swift */,
+				243AC7BF263B656A006501EC /* PlacesAuthorizationStatusTests.swift */,
 				243AC75A2633774E006501EC /* PlacesQueryResponseCodeTests.swift */,
 				243AC731262A4553006501EC /* PlacesQueryServiceTests.swift */,
 				243AC75E26337774006501EC /* PlacesQueryServiceResultTests.swift */,
@@ -430,6 +442,7 @@
 			files = (
 				243AC6F9262A4316006501EC /* Places+PublicApi.swift in Sources */,
 				243AC6E9262A41C0006501EC /* PlacesConfiguration.swift in Sources */,
+				243AC7BA263B16F3006501EC /* NamedCollectionDataStore+Places.swift in Sources */,
 				243AC705262A4338006501EC /* Event+Places.swift in Sources */,
 				243AC70D262A4355006501EC /* Places+State.swift in Sources */,
 				243AC75526334991006501EC /* PlacesQueryResponseCode.swift in Sources */,
@@ -441,6 +454,7 @@
 				243AC7AC263885CD006501EC /* SharedStateResult+Places.swift in Sources */,
 				243AC701262A432B006501EC /* PlacesQueryService.swift in Sources */,
 				243AC6FD262A431E006501EC /* Places.swift in Sources */,
+				243AC7B42638D53D006501EC /* PlacesAuthorizationStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,10 +465,12 @@
 				243AC736262A4564006501EC /* PlacesRegionEventTests.swift in Sources */,
 				243AC720262A44F9006501EC /* PlacesConfigurationTests.swift in Sources */,
 				243AC72C262A453D006501EC /* Places+PublicApiTests.swift in Sources */,
+				243AC7C4263B65DD006501EC /* NamedCollectionDataStore+PlacesTests.swift in Sources */,
 				243AC78326371E6C006501EC /* TestableNetworkService.swift in Sources */,
 				243AC73A262A4578006501EC /* Places+StateTests.swift in Sources */,
 				243AC728262A4522006501EC /* PlacesLibraryTests.swift in Sources */,
 				243AC715262A44EA006501EC /* Event+PlacesTests.swift in Sources */,
+				243AC7C0263B656B006501EC /* PlacesAuthorizationStatusTests.swift in Sources */,
 				243AC76826371C9E006501EC /* TestableExtensionRuntime.swift in Sources */,
 				243AC75B2633774F006501EC /* PlacesQueryResponseCodeTests.swift in Sources */,
 				243AC75F26337774006501EC /* PlacesQueryServiceResultTests.swift in Sources */,
