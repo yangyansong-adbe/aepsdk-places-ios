@@ -114,25 +114,28 @@ public class Places: NSObject, Extension {
         // make sure the user isn't opted-out
         if privacyStatus == .optedOut {
             Log.trace(label: PlacesConstants.LOG_TAG, "Ignoring request to get nearby places - device has a privacy status of opted-out")
-            dispatchPairedResponseIfNecessary(eventName: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
-                                              data: [:],
-                                              event: event)
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
+                                      data: [:],
+                                      forEvent: event)
+            return
         }
         
         // validate places configuration
         guard let placesConfig = getPlacesConfiguration(forEvent: event) else {
             Log.debug(label: PlacesConstants.LOG_TAG, "Places is not configured for this app.")
             let eventData = [PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: PlacesQueryResponseCode.configurationError]
-            dispatchPairedResponseIfNecessary(eventName: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
-                                              data: eventData, event: event)
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
+                                      data: eventData,
+                                      forEvent: event)
             return
         }
         
         if !placesConfig.isValid {
             Log.debug(label: PlacesConstants.LOG_TAG, "Places configuration for this app is invalid.")
             let eventData = [PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: PlacesQueryResponseCode.configurationError]
-            dispatchPairedResponseIfNecessary(eventName: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
-                                              data: eventData, event: event)
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
+                                      data: eventData,
+                                      forEvent: event)
             return
         }
         
@@ -140,8 +143,9 @@ public class Places: NSObject, Extension {
         guard let latitude = event.latitude, let longitude = event.longitude else {
             Log.debug(label: PlacesConstants.LOG_TAG, "Latitude and Longitude are required parameters to retrieve nearby POI.")
             let eventData = [PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: PlacesQueryResponseCode.invalidLatLongError]
-            dispatchPairedResponseIfNecessary(eventName: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
-                                              data: eventData, event: event)
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
+                                      data: eventData,
+                                      forEvent: event)
             return
         }
         
@@ -154,7 +158,7 @@ public class Places: NSObject, Extension {
         // prep request for places query service
         let count = event.requestedPoiCount ?? PlacesConstants.DefaultValues.NEARBY_POI_COUNT
         
-        Log.debug(label: PlacesConstants.LOG_TAG, "Requesting \(count) nearby POIs for device location (\(latitude), \(longitude)")
+        Log.debug(label: PlacesConstants.LOG_TAG, "Requesting \(count) nearby POIs for device location (\(latitude), \(longitude))")
         
         // get nearby pois from the query service
         placesQueryService.getNearbyPlaces(lat: latitude, lon: longitude, count: count, configuration: placesConfig) { result in
@@ -170,8 +174,9 @@ public class Places: NSObject, Extension {
                 PlacesConstants.SharedStateKey.NEARBY_POIS: result.pois ?? [:]
             ]
             
-            self.dispatchPairedResponseIfNecessary(eventName: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
-                                              data: eventData, event: event)
+            self.dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
+                                           data: eventData,
+                                           forEvent: event)
             self.dispatchPlacesResponse(eventName: PlacesConstants.EventName.Response.GET_NEARBY_PLACES, data: eventData)
         }
     }
@@ -180,25 +185,27 @@ public class Places: NSObject, Extension {
         // make sure the user isn't opted-out
         if privacyStatus == .optedOut {
             Log.trace(label: PlacesConstants.LOG_TAG, "Ignoring request to process region event - device has a privacy status of opted-out.")
-            dispatchPairedResponseIfNecessary(eventName: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
-                                              data: [:],
-                                              event: event)
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
+                                      data: [:],
+                                      forEvent: event)
         }
         
         // validate places configuration
         guard let placesConfig = getPlacesConfiguration(forEvent: event) else {
             Log.debug(label: PlacesConstants.LOG_TAG, "Places is not configured for this app.")
             let eventData = [PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: PlacesQueryResponseCode.configurationError]
-            dispatchPairedResponseIfNecessary(eventName: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
-                                              data: eventData, event: event)
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
+                                      data: eventData,
+                                      forEvent: event)
             return
         }
         
         if !placesConfig.isValid {
             Log.debug(label: PlacesConstants.LOG_TAG, "Places configuration for this app is invalid.")
             let eventData = [PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: PlacesQueryResponseCode.configurationError]
-            dispatchPairedResponseIfNecessary(eventName: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
-                                              data: eventData, event: event)
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
+                                      data: eventData,
+                                      forEvent: event)
             return
         }
         
@@ -239,9 +246,9 @@ public class Places: NSObject, Extension {
             PlacesConstants.SharedStateKey.USER_WITHIN_POIS: userWithinPois
         ]
         
-        dispatchPairedResponseIfNecessary(eventName: PlacesConstants.EventName.Response.GET_USER_WITHIN_PLACES,
-                                          data: eventData,
-                                          event: event)
+        dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_USER_WITHIN_PLACES,
+                                  data: eventData,
+                                  forEvent: event)
         dispatchPlacesResponse(eventName: PlacesConstants.EventName.Response.GET_USER_WITHIN_PLACES, data: eventData)
     }
     
@@ -253,9 +260,9 @@ public class Places: NSObject, Extension {
             PlacesConstants.EventDataKey.Places.LONGITUDE: lastKnownLongitude
         ]
         
-        dispatchPairedResponseIfNecessary(eventName: PlacesConstants.EventName.Response.GET_LAST_KNOWN_LOCATION,
-                                          data: eventData,
-                                          event: event)
+        dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_LAST_KNOWN_LOCATION,
+                                  data: eventData,
+                                  forEvent: event)
         dispatchPlacesResponse(eventName: PlacesConstants.EventName.Response.GET_LAST_KNOWN_LOCATION, data: eventData)
     }
     
@@ -274,6 +281,7 @@ public class Places: NSObject, Extension {
     }
     
     private func dispatchPlacesResponse(eventName: String, data: [String: Any]) {
+        // then generic response event
         let event = Event(name: eventName, type: EventType.places, source: EventSource.responseContent, data: data)
         dispatch(event: event)
     }
@@ -292,10 +300,11 @@ public class Places: NSObject, Extension {
     
     // TODO: - can we combine this with dispatchPlacesResponse?
     
-    private func dispatchPairedResponseIfNecessary(eventName: String, data: [String: Any], event: Event) {
-        if event.responseID != nil {
-            let responseEvent = event.createResponseEvent(name: eventName, type: EventType.places, source: EventSource.responseContent, data: data)
-            dispatch(event: responseEvent)
-        }
+    private func dispatchResponseEventWith(name: String, data: [String: Any], forEvent event: Event) {
+        let responseEvent = event.createResponseEvent(name: name,
+                                                      type: EventType.places,
+                                                      source: EventSource.responseContent,
+                                                      data: data)
+        dispatch(event: responseEvent)
     }
 }

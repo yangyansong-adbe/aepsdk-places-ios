@@ -55,7 +55,7 @@ class PlacesQueryService {
                                      connectTimeout: PlacesConstants.QueryService.REQUEST_TIMEOUT,
                                      readTimeout: PlacesConstants.QueryService.REQUEST_TIMEOUT)
         
-        networkService.connectAsync(networkRequest: request) { (connection) in
+        networkService.connectAsync(networkRequest: request) { connection in
             if connection.responseCode == HttpConnectionConstants.ResponseCodes.HTTP_OK {
                 guard let responseData = connection.data else {
                     Log.debug(label: PlacesConstants.LOG_TAG, "No nearby POIs.")

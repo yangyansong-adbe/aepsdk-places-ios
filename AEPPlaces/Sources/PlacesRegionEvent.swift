@@ -13,16 +13,37 @@
 import Foundation
 
 /// Represents a region event which is used to map a user's movement in and out of Places POIs
-enum PlacesRegionEvent: String {
-    case entry = "entry"
-    case exit = "exit"
-    case none = "none"
+@objc(AEPPlacesRegionEvent)
+public enum PlacesRegionEvent: Int {
+    case entry = 0
+    case exit
+    case none
+    
+    /// String representation of the `PlacesRegionEvent`.
+    /// Necessary workaround to support an Int-based enum, which is required for objective-c compatibility.
+    var stringValue: String {
+        switch self {
+        case .entry:
+            return "entry"
+        case .exit:
+            return "exit"
+        case .none:
+            return "none"
+        }
+    }
     
     /// Converts a `String` to its respective `PlacesRegionEvent`
     /// If `fromRawValue` is not a valid `PlacesRegionEvent`, calling this method will return `PlacesRegionEvent.none`
-    /// - Parameter fromRawValue: a `String` representation of a `PlacesRegionEvent`
+    /// - Parameter fromString: a `String` representation of a `PlacesRegionEvent`
     /// - Returns: a `PlacesRegionEvent` representing the passed-in `String`
-    init(fromRawValue: String) {
-        self = PlacesRegionEvent(rawValue: fromRawValue) ?? .none
+    init(fromString: String) {
+        switch fromString {
+        case "entry":
+            self = PlacesRegionEvent.entry
+        case "exit":
+            self = PlacesRegionEvent.exit
+        default:
+            self = PlacesRegionEvent.none
+        }
     }
 }

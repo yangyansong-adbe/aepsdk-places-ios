@@ -33,7 +33,7 @@ public class PointOfInterest: NSObject {
     /// - Returns: a new `PointOfInterest` object
     /// - Throws: a `PlacesDataObjectInvalidInitialization` if JSON parsing fails or if `jsonString` is empty.
     init(jsonString: String) throws {
-        if jsonString.isEmpty {            
+        if jsonString.isEmpty {
             throw PlacesDataObjectInvalidInitialization(message: "JSON string is empty")
         }
         
@@ -79,8 +79,8 @@ public class PointOfInterest: NSObject {
         
         self.identifier = poiInfo[PlacesConstants.QueryService.Index.ID] as? String ?? ""
         self.name = poiInfo[PlacesConstants.QueryService.Index.NAME] as? String ?? ""
-        self.latitude = poiInfo[PlacesConstants.QueryService.Index.LATITUDE] as? Double ?? PlacesConstants.DefaultValues.INVALID_LAT_LON
-        self.longitude = poiInfo[PlacesConstants.QueryService.Index.LONGITUDE] as? Double ?? PlacesConstants.DefaultValues.INVALID_LAT_LON
+        self.latitude = Double(poiInfo[PlacesConstants.QueryService.Index.LATITUDE] as? String ?? "") ?? PlacesConstants.DefaultValues.INVALID_LAT_LON
+        self.longitude = Double(poiInfo[PlacesConstants.QueryService.Index.LONGITUDE] as? String ?? "") ?? PlacesConstants.DefaultValues.INVALID_LAT_LON
         self.radius = poiInfo[PlacesConstants.QueryService.Index.RADIUS] as? Int ?? 0
         self.libraryId = poiInfo[PlacesConstants.QueryService.Index.LIBRARY_ID] as? String ?? ""
         self.weight = poiInfo[PlacesConstants.QueryService.Index.WEIGHT] as? Int ?? 0
@@ -125,6 +125,10 @@ public class PointOfInterest: NSObject {
         }
         
         return true
+    }
+    
+    public override var description: String {
+        return "<PointOfInterest> Name: \(name); ID: \(identifier); Center: (\(latitude), \(longitude)); Radius: \(radius) m"
     }
 }
 

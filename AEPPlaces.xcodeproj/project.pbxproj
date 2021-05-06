@@ -57,6 +57,8 @@
 		243DB0F2263CC4C500EF7956 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 243DB0F1263CC4C500EF7956 /* Assets.xcassets */; };
 		243DB0F5263CC4C500EF7956 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 243DB0F3263CC4C500EF7956 /* LaunchScreen.storyboard */; };
 		243DB11E263CC78800EF7956 /* AEPPlaces.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243AC68B262A3A36006501EC /* AEPPlaces.framework */; };
+		243DB13326447FE900EF7956 /* AdobeLehi.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 243DB13126447FE800EF7956 /* AdobeLehi.gpx */; };
+		243DB13426447FE900EF7956 /* AdobeSanJose.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 243DB13226447FE800EF7956 /* AdobeSanJose.gpx */; };
 		96F0168F41745525FCC42141 /* Pods_AEPPlacesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E23679BD14AB1EC601C35131 /* Pods_AEPPlacesTests.framework */; };
 		FC7363218D22005827E43CC5 /* Pods_PlacesTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DA43E9E97ADBA80419F896 /* Pods_PlacesTestApp.framework */; };
 /* End PBXBuildFile section */
@@ -132,6 +134,8 @@
 		243DB0F1263CC4C500EF7956 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		243DB0F4263CC4C500EF7956 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		243DB0F6263CC4C500EF7956 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		243DB13126447FE800EF7956 /* AdobeLehi.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = AdobeLehi.gpx; sourceTree = "<group>"; };
+		243DB13226447FE800EF7956 /* AdobeSanJose.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = AdobeSanJose.gpx; sourceTree = "<group>"; };
 		30BB65E08B61F324815FE3CB /* Pods-AEPPlacesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AEPPlacesTests.debug.xcconfig"; path = "Target Support Files/Pods-AEPPlacesTests/Pods-AEPPlacesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6B49742CE92BC0602C8E1C39 /* Pods-AEPPlaces.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AEPPlaces.release.xcconfig"; path = "Target Support Files/Pods-AEPPlaces/Pods-AEPPlaces.release.xcconfig"; sourceTree = "<group>"; };
 		78DA43E9E97ADBA80419F896 /* Pods_PlacesTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlacesTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -275,6 +279,7 @@
 		243DB0E7263CC4C100EF7956 /* PlacesTestApp */ = {
 			isa = PBXGroup;
 			children = (
+				243DB12D26447F6600EF7956 /* gpx */,
 				243DB0E8263CC4C100EF7956 /* AppDelegate.swift */,
 				243DB0EA263CC4C100EF7956 /* SceneDelegate.swift */,
 				243DB0EC263CC4C100EF7956 /* ViewController.swift */,
@@ -284,6 +289,15 @@
 				243DB0F6263CC4C500EF7956 /* Info.plist */,
 			);
 			path = PlacesTestApp;
+			sourceTree = "<group>";
+		};
+		243DB12D26447F6600EF7956 /* gpx */ = {
+			isa = PBXGroup;
+			children = (
+				243DB13126447FE800EF7956 /* AdobeLehi.gpx */,
+				243DB13226447FE800EF7956 /* AdobeSanJose.gpx */,
+			);
+			path = gpx;
 			sourceTree = "<group>";
 		};
 		DF5EB3AD0F6BA7612343B983 /* Frameworks */ = {
@@ -452,8 +466,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				243DB0F5263CC4C500EF7956 /* LaunchScreen.storyboard in Resources */,
+				243DB13426447FE900EF7956 /* AdobeSanJose.gpx in Resources */,
 				243DB0F2263CC4C500EF7956 /* Assets.xcassets in Resources */,
 				243DB0F0263CC4C100EF7956 /* Main.storyboard in Resources */,
+				243DB13326447FE900EF7956 /* AdobeLehi.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

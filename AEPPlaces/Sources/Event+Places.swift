@@ -86,12 +86,20 @@ extension Event {
         return PlacesQueryResponseCode(rawValue: data?[PlacesConstants.EventDataKey.Places.RESPONSE_STATUS] as? Int ?? -1)
     }
     
+    var nearbyPois: [PointOfInterest]? {
+        return data?[PlacesConstants.SharedStateKey.NEARBY_POIS] as? [PointOfInterest]
+    }
+    
+    var userWithinPois: [PointOfInterest]? {
+        return data?[PlacesConstants.SharedStateKey.USER_WITHIN_POIS] as? [PointOfInterest]
+    }
+    
     // MARK: - Process Region Events
     var regionId: String? {
         return data?[PlacesConstants.EventDataKey.Places.REGION_ID] as? String
     }
     
     var regionEventType: PlacesRegionEvent? {        
-        return PlacesRegionEvent(rawValue: data?[PlacesConstants.EventDataKey.Places.REGION_EVENT_TYPE] as? String ?? "")
+        return PlacesRegionEvent(fromString: data?[PlacesConstants.EventDataKey.Places.REGION_EVENT_TYPE] as? String ?? "")
     }
 }
