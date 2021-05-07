@@ -10,8 +10,9 @@
  governing permissions and limitations under the License.
  */
 
-import Foundation
 import AEPServices
+import CoreLocation
+import Foundation
 
 extension NamedCollectionDataStore {
     // MARK: - Getters
@@ -65,8 +66,8 @@ extension NamedCollectionDataStore {
         return getDouble(key: PlacesConstants.UserDefaults.PERSISTED_LONGITUDE) ?? PlacesConstants.DefaultValues.INVALID_LAT_LON
     }
     
-    var authStatus: PlacesAuthorizationStatus {
-        return PlacesAuthorizationStatus(fromStringValue: getString(key: PlacesConstants.UserDefaults.PERSISTED_AUTH_STATUS) ?? "")
+    var authStatus: CLAuthorizationStatus {
+        return CLAuthorizationStatus.init(fromString: getString(key: PlacesConstants.UserDefaults.PERSISTED_AUTH_STATUS) ?? "")
     }
     
     var membershipValidUntil: TimeInterval? {
@@ -138,9 +139,9 @@ extension NamedCollectionDataStore {
         }
     }
     
-    func setAuthStatus(_ status: PlacesAuthorizationStatus?) {
+    func setAuthStatus(_ status: CLAuthorizationStatus?) {
         if let status = status {
-            set(key: PlacesConstants.UserDefaults.PERSISTED_AUTH_STATUS, value: status.stringValue())
+            set(key: PlacesConstants.UserDefaults.PERSISTED_AUTH_STATUS, value: status.stringValue)
         } else {
             remove(key: PlacesConstants.UserDefaults.PERSISTED_AUTH_STATUS)
         }
