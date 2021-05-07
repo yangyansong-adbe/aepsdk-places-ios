@@ -10,10 +10,13 @@
  governing permissions and limitations under the License.
  */
 
+import CoreLocation
 import XCTest
 @testable import AEPPlaces
 
-class PlacesAuthorizationStatusTests: XCTestCase {
+class CLAuthorizationStatusPlusPlacesTests: XCTestCase {
     // MARK: - Tests
-    
+    func testToStringAllowAlways() throws {
+        XCTAssertEqual("always", CLAuthorizationStatus.authorizedAlways.stringValue)
+    }
 }

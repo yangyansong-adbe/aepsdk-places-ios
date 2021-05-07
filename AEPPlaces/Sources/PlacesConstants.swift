@@ -13,7 +13,7 @@
 import Foundation
 
 enum PlacesConstants {
-    static let EXTENSION_NAME = "com.adobe.aep.places"
+    static let EXTENSION_NAME = "com.adobe.module.places"
     static let EXTENSION_VERSION = "3.0.0-alpha-1"
     static let FRIENDLY_NAME = EXTENSION_NAME
     static let LOG_TAG = "Places"

@@ -8,17 +8,23 @@
 import UIKit
 import AEPCore
 import AEPPlaces
+import ACPCore
+import AEPAssurance
+
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
         MobileCore.setLogLevel(.trace)
         
         // steve-places in Adobe Benedick Corp: launch-EN459260fc579a4dcbb2d1743947e65f09-development
         MobileCore.configureWith(appId: "launch-EN459260fc579a4dcbb2d1743947e65f09-development")
-        MobileCore.registerExtensions([Places.self])
+        
+        try? ACPCore.registerExtension(AEPAssurance.self)
+        MobileCore.registerExtensions([Places.self]) {
+            AEPAssurance.startSession(URL(string: "aepplaces://?adb_validation_sessionid=ecc9abb0-9028-4312-bc1d-a16920353e79")!)
+        }
         
         return true
     }
