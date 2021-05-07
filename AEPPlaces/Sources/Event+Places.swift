@@ -28,6 +28,10 @@ extension Event {
         return data?[PlacesConstants.EventDataKey.SHARED_STATE_OWNER] as? String
     }
     
+    var isConfigSharedStateChange: Bool {
+        return sharedStateOwner == PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME
+    }
+    
     var privacyStatus: String? {
         return data?[PlacesConstants.EventDataKey.Configuration.GLOBAL_CONFIG_PRIVACY] as? String
     }
@@ -36,11 +40,36 @@ extension Event {
         return data?[PlacesConstants.EventDataKey.Places.AUTH_STATUS] as? String
     }
     
-    // MARK: - Get Nearby Places
+    // MARK: - Request Type handling
     var placesRequestType: String? {
         return data?[PlacesConstants.EventDataKey.Places.REQUEST_TYPE] as? String
     }
     
+    var isGetNearbyPlacesRequestType: Bool {
+        return placesRequestType == PlacesConstants.EventDataKey.Places.RequestType.GET_NEARBY_PLACES
+    }
+    
+    var isProcessRegionEventRequestType: Bool {
+        return placesRequestType == PlacesConstants.EventDataKey.Places.RequestType.PROCESS_REGION_EVENT
+    }
+    
+    var isGetUserWithinPlacesRequestType: Bool {
+        return placesRequestType == PlacesConstants.EventDataKey.Places.RequestType.GET_USER_WITHIN_PLACES
+    }
+    
+    var isGetLastKnownLocationRequestType: Bool {
+        return placesRequestType == PlacesConstants.EventDataKey.Places.RequestType.GET_LAST_KNOWN_LOCATION
+    }
+    
+    var isResetRequestType: Bool {
+        return placesRequestType == PlacesConstants.EventDataKey.Places.RequestType.RESET
+    }
+    
+    var isSetAuthorizationStatusRequestType: Bool {
+        return placesRequestType == PlacesConstants.EventDataKey.Places.RequestType.SET_AUTHORIZATION_STATUS
+    }
+    
+    // MARK: - Get Nearby Places
     var latitude: Double? {
         return data?[PlacesConstants.EventDataKey.Places.LATITUDE] as? Double
     }
@@ -57,12 +86,20 @@ extension Event {
         return PlacesQueryResponseCode(rawValue: data?[PlacesConstants.EventDataKey.Places.RESPONSE_STATUS] as? Int ?? -1)
     }
     
+    var nearbyPois: [PointOfInterest]? {
+        return data?[PlacesConstants.SharedStateKey.NEARBY_POIS] as? [PointOfInterest]
+    }
+    
+    var userWithinPois: [PointOfInterest]? {
+        return data?[PlacesConstants.SharedStateKey.USER_WITHIN_POIS] as? [PointOfInterest]
+    }
+    
     // MARK: - Process Region Events
     var regionId: String? {
         return data?[PlacesConstants.EventDataKey.Places.REGION_ID] as? String
     }
     
-    var regionEventType: String? {
-        return data?[PlacesConstants.EventDataKey.Places.REGION_EVENT_TYPE] as? String
+    var regionEventType: PlacesRegionEvent? {        
+        return PlacesRegionEvent(fromString: data?[PlacesConstants.EventDataKey.Places.REGION_EVENT_TYPE] as? String ?? "")
     }
 }

@@ -17,17 +17,19 @@ import AEPServices
 @objc(AEPMobilePlaces)
 public class Places: NSObject, Extension {
     // MARK: - internal properties
-    internal var nearbyPois: [String: PointOfInterest] = [:]
-    internal var userWithinPois: [String: PointOfInterest] = [:]
-    internal var currentPoi: PointOfInterest?
-    internal var lastEnteredPoi: PointOfInterest?
-    internal var lastExitedPoi: PointOfInterest?
-    internal var lastKnownLatitude: Double
-    internal var lastKnownLongitude: Double
-    internal var membershipTtl: TimeInterval?
-    internal var membershipValidUntil: TimeInterval?
-    internal var authStatus: PlacesAuthorizationStatus
-    internal var dataStore: NamedCollectionDataStore = NamedCollectionDataStore(name: PlacesConstants.UserDefaults.PLACES_DATA_STORE_NAME)
+    var nearbyPois: [String: PointOfInterest] = [:]
+    var userWithinPois: [String: PointOfInterest] = [:]
+    var currentPoi: PointOfInterest?
+    var lastEnteredPoi: PointOfInterest?
+    var lastExitedPoi: PointOfInterest?
+    var lastKnownLatitude: Double
+    var lastKnownLongitude: Double
+    var membershipTtl: TimeInterval?
+    var membershipValidUntil: TimeInterval?
+    var authStatus: PlacesAuthorizationStatus
+    var privacyStatus: PrivacyStatus
+    var dataStore: NamedCollectionDataStore = NamedCollectionDataStore(name: PlacesConstants.UserDefaults.PLACES_DATA_STORE_NAME)    
+    var placesQueryService = PlacesQueryService()
     
     
     // MARK: - Extension protocol
@@ -45,12 +47,21 @@ public class Places: NSObject, Extension {
         lastKnownLatitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
         lastKnownLongitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
         authStatus = .unknown
+        privacyStatus = .unknown
         
         super.init()
     }
     
     public func onRegistered() {
+        // register listener for shared state updates
+        registerListener(type: EventType.hub, source: EventSource.sharedState, listener: handleSharedStateUpdate)
         
+        // register listener for places request events
+        registerListener(type: EventType.places, source: EventSource.requestContent, listener: handlePlacesRequest)
+        
+        // load persisted places state data and share it
+        loadPersistence()
+        createSharedState(data: getSharedStateData(), event: nil)        
     }
     
     public func onUnregistered() {
@@ -58,8 +69,242 @@ public class Places: NSObject, Extension {
     }
     
     public func readyForEvent(_ event: Event) -> Bool {
-        return true
+        return getSharedState(extensionName: PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME, event: event)?.status == .set
     }
     
-    // MARK: -
+    // MARK: - Listener Methods
+    private func handleSharedStateUpdate(_ event: Event) {
+        if event.isConfigSharedStateChange {
+            processSharedStateChange(event: event)
+        }
+    }
+    
+    private func handlePlacesRequest(_ event: Event) {
+        if event.isGetNearbyPlacesRequestType {
+            handleGetNearbyPlacesRequest(event: event)
+        } else if event.isProcessRegionEventRequestType {
+            handleProcessRegionEventRequest(event: event)
+        } else if event.isGetUserWithinPlacesRequestType {
+            getUserWithinPlacesFor(event: event)
+        } else if event.isGetLastKnownLocationRequestType {
+            getLastKnownLocationFor(event: event)
+        } else if event.isSetAuthorizationStatusRequestType {
+            setAuthorizationStatusFrom(event: event)
+        } else if event.isResetRequestType {
+            reset()
+        } else {
+            Log.debug(label: PlacesConstants.LOG_TAG, "Ignoring a Places Request event due to a missing or unrecognized request type.")
+        }
+    }
+    
+    // MARK: - Private Methods
+    private func processSharedStateChange(event: Event) {
+        let configSharedState = getSharedState(extensionName: PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME, event: event)
+        if let privacy = configSharedState?.globalPrivacy {
+            if privacy == .optedOut {
+                Log.debug(label: PlacesConstants.LOG_TAG, "Stopping Places processing due to privacy opt-out")
+                stopEvents()
+                createSharedState(data: [:], event: event)
+            }
+            privacyStatus = privacy
+        }
+    }
+    
+    private func handleGetNearbyPlacesRequest(event: Event) {
+        // make sure the user isn't opted-out
+        if privacyStatus == .optedOut {
+            Log.trace(label: PlacesConstants.LOG_TAG, "Ignoring request to get nearby places - device has a privacy status of opted-out")
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
+                                      data: [:],
+                                      forEvent: event)
+            return
+        }
+        
+        // validate places configuration
+        guard let placesConfig = getPlacesConfiguration(forEvent: event) else {
+            Log.debug(label: PlacesConstants.LOG_TAG, "Places is not configured for this app.")
+            let eventData = [PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: PlacesQueryResponseCode.configurationError]
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
+                                      data: eventData,
+                                      forEvent: event)
+            return
+        }
+        
+        if !placesConfig.isValid {
+            Log.debug(label: PlacesConstants.LOG_TAG, "Places configuration for this app is invalid.")
+            let eventData = [PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: PlacesQueryResponseCode.configurationError]
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
+                                      data: eventData,
+                                      forEvent: event)
+            return
+        }
+        
+        // validate necessary event data
+        guard let latitude = event.latitude, let longitude = event.longitude else {
+            Log.debug(label: PlacesConstants.LOG_TAG, "Latitude and Longitude are required parameters to retrieve nearby POI.")
+            let eventData = [PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: PlacesQueryResponseCode.invalidLatLongError]
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
+                                      data: eventData,
+                                      forEvent: event)
+            return
+        }
+        
+        // update some of our state values
+        lastKnownLatitude = latitude
+        lastKnownLongitude = longitude
+        membershipTtl = placesConfig.membershipTtl
+        updateMembershipValidUntil()
+        
+        // prep request for places query service
+        let count = event.requestedPoiCount ?? PlacesConstants.DefaultValues.NEARBY_POI_COUNT
+        
+        Log.debug(label: PlacesConstants.LOG_TAG, "Requesting \(count) nearby POIs for device location (\(latitude), \(longitude))")
+        
+        // get nearby pois from the query service
+        placesQueryService.getNearbyPlaces(lat: latitude, lon: longitude, count: count, configuration: placesConfig) { result in
+            // update shared state when we get a valid response
+            if result.response == .ok {
+                _ = self.processNewNearbyPois(result.pois ?? [])
+                self.createSharedState(data: self.getSharedStateData(), event: event)
+            }
+            
+            // respond to the original event
+            let eventData: [String: Any] = [
+                PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: result.response.rawValue,
+                PlacesConstants.SharedStateKey.NEARBY_POIS: result.pois ?? [:]
+            ]
+            
+            self.dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
+                                           data: eventData,
+                                           forEvent: event)
+            self.dispatchPlacesResponse(eventName: PlacesConstants.EventName.Response.GET_NEARBY_PLACES, data: eventData)
+        }
+    }
+    
+    private func handleProcessRegionEventRequest(event: Event) {
+        // make sure the user isn't opted-out
+        if privacyStatus == .optedOut {
+            Log.trace(label: PlacesConstants.LOG_TAG, "Ignoring request to process region event - device has a privacy status of opted-out.")
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
+                                      data: [:],
+                                      forEvent: event)
+        }
+        
+        // validate places configuration
+        guard let placesConfig = getPlacesConfiguration(forEvent: event) else {
+            Log.debug(label: PlacesConstants.LOG_TAG, "Places is not configured for this app.")
+            let eventData = [PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: PlacesQueryResponseCode.configurationError]
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
+                                      data: eventData,
+                                      forEvent: event)
+            return
+        }
+        
+        if !placesConfig.isValid {
+            Log.debug(label: PlacesConstants.LOG_TAG, "Places configuration for this app is invalid.")
+            let eventData = [PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: PlacesQueryResponseCode.configurationError]
+            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
+                                      data: eventData,
+                                      forEvent: event)
+            return
+        }
+        
+        // validate event data
+        guard let regionId = event.regionId, let regionEventType = event.regionEventType else {
+            Log.debug(label: PlacesConstants.LOG_TAG, "Ignoring request to process region event - 'regionid' and 'regioneventtype' are required fields but are missing.")
+            return
+        }
+        
+        // make sure the regionId is in our list of nearby pois
+        // this check is used to sanitize the region event, helping prevent a stale region event from being processed
+        guard let triggeringPoi = nearbyPois[regionId] else {
+            Log.debug(label: PlacesConstants.LOG_TAG, "Unable to process a region event for a POI that is not in the list of nearbyPois.")
+            return
+        }
+        
+        membershipTtl = placesConfig.membershipTtl
+        
+        Log.debug(label: PlacesConstants.LOG_TAG, "Processing region \(regionEventType) event for region '\(triggeringPoi.name)'")
+        
+        processRegionEvent(regionEventType, forPoi: triggeringPoi)
+        
+        dispatchRegionEventFor(poi: triggeringPoi, withRegionEventType: regionEventType)
+    }
+    
+    // TODO: set PlacesConfiguration only on shared state updates from config
+    private func getPlacesConfiguration(forEvent event: Event) -> PlacesConfiguration? {
+        guard let configSharedState = getSharedState(extensionName: PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME, event: event) else {
+            return nil
+        }
+        return PlacesConfiguration.fromSharedState(configSharedState)
+    }
+    
+    private func getUserWithinPlacesFor(event: Event) {
+        Log.trace(label: PlacesConstants.LOG_TAG, "Getting user-within Points of Interest.")
+        
+        let eventData = [
+            PlacesConstants.SharedStateKey.USER_WITHIN_POIS: userWithinPois
+        ]
+        
+        dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_USER_WITHIN_PLACES,
+                                  data: eventData,
+                                  forEvent: event)
+        dispatchPlacesResponse(eventName: PlacesConstants.EventName.Response.GET_USER_WITHIN_PLACES, data: eventData)
+    }
+    
+    private func getLastKnownLocationFor(event: Event) {
+        Log.trace(label: PlacesConstants.LOG_TAG, "Getting last know user location.")
+        
+        let eventData = [
+            PlacesConstants.EventDataKey.Places.LATITUDE: lastKnownLatitude,
+            PlacesConstants.EventDataKey.Places.LONGITUDE: lastKnownLongitude
+        ]
+        
+        dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_LAST_KNOWN_LOCATION,
+                                  data: eventData,
+                                  forEvent: event)
+        dispatchPlacesResponse(eventName: PlacesConstants.EventName.Response.GET_LAST_KNOWN_LOCATION, data: eventData)
+    }
+    
+    private func setAuthorizationStatusFrom(event: Event) {
+        if let status = event.locationAuthorizationStatus {
+            authStatus = PlacesAuthorizationStatus(fromStringValue: status)
+            createSharedState(data: getSharedStateData(), event: event)
+            Log.debug(label: PlacesConstants.LOG_TAG, "Setting location authorization status for Places: \(status)")
+        }
+    }
+    
+    private func reset() {
+        clearClientData()
+        createSharedState(data: [:], event: nil)
+        Log.debug(label: PlacesConstants.LOG_TAG, "Places shared state and persisted data has been reset.")
+    }
+    
+    private func dispatchPlacesResponse(eventName: String, data: [String: Any]) {
+        // then generic response event
+        let event = Event(name: eventName, type: EventType.places, source: EventSource.responseContent, data: data)
+        dispatch(event: event)
+    }
+    
+    private func dispatchRegionEventFor(poi: PointOfInterest, withRegionEventType type: PlacesRegionEvent) {
+        let eventData: [String: Any] = [
+            PlacesConstants.EventDataKey.Places.TRIGGERING_REGION: poi,
+            PlacesConstants.EventDataKey.Places.REGION_EVENT_TYPE: type.rawValue
+        ]
+        let event = Event(name: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
+                          type: EventType.places, source: EventSource.responseContent, data: eventData)
+        
+        createSharedState(data: getSharedStateData(), event: nil)
+        dispatch(event: event)
+    }
+    
+    // TODO: - can we combine this with dispatchPlacesResponse?
+    
+    private func dispatchResponseEventWith(name: String, data: [String: Any], forEvent event: Event) {
+        let responseEvent = event.createResponseEvent(name: name,
+                                                      type: EventType.places,
+                                                      source: EventSource.responseContent,
+                                                      data: data)
+        dispatch(event: responseEvent)
+    }
 }

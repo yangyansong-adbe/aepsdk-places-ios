@@ -12,7 +12,8 @@
 
 import Foundation
 
-enum PlacesQueryResponseCode: Int {
+@objc(AEPPlacesQueryResponseCode)
+public enum PlacesQueryResponseCode: Int {
     case ok = 0
     case connectivityError
     case serverResponseError

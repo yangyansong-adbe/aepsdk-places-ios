@@ -69,6 +69,7 @@ extension Places {
     
     func updateMembershipValidUntil() {
         membershipValidUntil = Date().timeIntervalSince1970 + (membershipTtl ?? 0)
+        updatePersistence()
     }
     
     /// Set the Points of Interest near the current location of the device.
