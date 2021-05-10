@@ -53,3 +53,7 @@ end
 target 'PlacesTestApp' do
     test_main
 end
+
+target 'PlacesTestApp_objc' do
+  test_main
+end

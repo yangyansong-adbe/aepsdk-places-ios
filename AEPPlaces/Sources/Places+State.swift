@@ -43,7 +43,7 @@ extension Places {
         }
         
         // add location authorization status string
-        data[PlacesConstants.SharedStateKey.AUTH_STATUS] = authStatus.stringValue()
+        data[PlacesConstants.SharedStateKey.AUTH_STATUS] = authStatus.stringValue
                 
         // add membership timestamp
         if membershipValidUntil != nil {
@@ -61,7 +61,7 @@ extension Places {
         lastExitedPoi = nil
         lastKnownLatitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
         lastKnownLongitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
-        authStatus = .unknown
+        authStatus = .notDetermined
         membershipValidUntil = nil
         
         updatePersistence()

@@ -157,10 +157,11 @@ public extension Places {
     /// Calling this method does not impact the actual location authorization status for this device.
     ///
     /// - Parameter status: the CLAuthorizationStatus to be set for this device
+    @objc(setAuthorizationStatus:)
     static func setAuthorizationStatus(status: CLAuthorizationStatus) {
         let eventData: [String: Any] = [
             PlacesConstants.EventDataKey.Places.REQUEST_TYPE: PlacesConstants.EventDataKey.Places.RequestType.SET_AUTHORIZATION_STATUS,
-            PlacesConstants.EventDataKey.Places.AUTH_STATUS: status
+            PlacesConstants.EventDataKey.Places.AUTH_STATUS: status.stringValue
         ]
         
         let event = Event(name: PlacesConstants.EventName.Request.SET_AUTHORIZATION_STATUS,

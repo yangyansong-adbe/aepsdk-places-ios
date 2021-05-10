@@ -1,16 +1,20 @@
-//
-//  AppDelegate.swift
-//  PlacesTestApp
-//
-//  Created by steve benedick on 4/30/21.
-//
+/*
+ Copyright 2021 Adobe. All rights reserved.
+ This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License. You may obtain a copy
+ of the License at http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software distributed under
+ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ OF ANY KIND, either express or implied. See the License for the specific language
+ governing permissions and limitations under the License.
+ */
 
 import UIKit
 import AEPCore
 import AEPPlaces
 import ACPCore
 import AEPAssurance
-
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         try? ACPCore.registerExtension(AEPAssurance.self)
         MobileCore.registerExtensions([Places.self]) {
+            // Griffon Session - AEPPlaces in Adobe Benedick Corp
             AEPAssurance.startSession(URL(string: "aepplaces://?adb_validation_sessionid=ecc9abb0-9028-4312-bc1d-a16920353e79")!)
         }
         
