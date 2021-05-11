@@ -28,18 +28,18 @@ extension Places {
         }
         
         // add the current poi
-        if currentPoi != nil {
-            data[PlacesConstants.SharedStateKey.CURRENT_POI] = currentPoi!
+        if let currentPoi = currentPoi {
+            data[PlacesConstants.SharedStateKey.CURRENT_POI] = currentPoi.mapValue
         }
         
         // add the last entered poi
-        if lastEnteredPoi != nil {
-            data[PlacesConstants.SharedStateKey.LAST_ENTERED_POI] = lastEnteredPoi!
+        if let lastEnteredPoi = lastEnteredPoi {
+            data[PlacesConstants.SharedStateKey.LAST_ENTERED_POI] = lastEnteredPoi.mapValue
         }
         
         // add the last exited poi
-        if lastExitedPoi != nil {
-            data[PlacesConstants.SharedStateKey.LAST_EXITED_POI] = lastExitedPoi!
+        if let lastExitedPoi = lastExitedPoi {
+            data[PlacesConstants.SharedStateKey.LAST_EXITED_POI] = lastExitedPoi.mapValue
         }
         
         // add location authorization status string
@@ -68,7 +68,7 @@ extension Places {
     }
     
     func updateMembershipValidUntil() {
-        membershipValidUntil = Date().timeIntervalSince1970 + (membershipTtl ?? 0)
+        membershipValidUntil = (Date().timeIntervalSince1970 + membershipTtl).rounded()
         updatePersistence()
     }
     

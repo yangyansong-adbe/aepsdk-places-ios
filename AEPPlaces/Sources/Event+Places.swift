@@ -86,12 +86,12 @@ extension Event {
         return PlacesQueryResponseCode(rawValue: data?[PlacesConstants.EventDataKey.Places.RESPONSE_STATUS] as? Int ?? -1)
     }
     
-    var nearbyPois: [PointOfInterest]? {
-        return data?[PlacesConstants.SharedStateKey.NEARBY_POIS] as? [PointOfInterest]
+    var nearbyPois: [[String: Any]]? {
+        return data?[PlacesConstants.SharedStateKey.NEARBY_POIS] as? [[String: Any]]
     }
     
-    var userWithinPois: [PointOfInterest]? {
-        return data?[PlacesConstants.SharedStateKey.USER_WITHIN_POIS] as? [PointOfInterest]
+    var userWithinPois: [[String: Any]]? {
+        return data?[PlacesConstants.SharedStateKey.USER_WITHIN_POIS] as? [[String: Any]]
     }
     
     // MARK: - Process Region Events

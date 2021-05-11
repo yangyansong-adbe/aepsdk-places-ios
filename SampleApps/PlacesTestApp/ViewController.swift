@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func processRegionEvent(_ sender: Any) {
+    @IBAction func processRegionEntryEvent(_ sender: Any) {
         // starbucks lehi
         let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude: 40.3886845, longitude: -111.8284979), radius: 100, identifier: "877677e4-3004-46dd-a8b1-a609bd65a428")
         
@@ -36,6 +36,16 @@ class ViewController: UIViewController {
         // let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude: 40.4350117, longitude: -111.8918432), radius: 150, identifier: "0f437cb7-df9a-4431-bec1-18af523b2dcf")
         
         Places.processRegionEvent(.entry, forRegion: region)
+    }
+    
+    @IBAction func processRegionExitEvent(_ sender: Any) {
+        // starbucks lehi
+        let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude: 40.3886845, longitude: -111.8284979), radius: 100, identifier: "877677e4-3004-46dd-a8b1-a609bd65a428")
+        
+        // adobe lehi
+        // let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude: 40.4350117, longitude: -111.8918432), radius: 150, identifier: "0f437cb7-df9a-4431-bec1-18af523b2dcf")
+        
+        Places.processRegionEvent(.exit, forRegion: region)
     }
     
     @IBAction func getCurrentPointsOfInterest(_ sender: Any) {

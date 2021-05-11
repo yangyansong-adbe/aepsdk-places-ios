@@ -52,8 +52,16 @@ public extension Places {
                 closure([])
                 return
             }
-            
-            closure(pois)
+                        
+            var convertedPois: [PointOfInterest] = []
+            for currentMap in pois {
+                if let currentAsJsonData = try? JSONSerialization.data(withJSONObject: currentMap, options: []),
+                   let currentJsonString = String(data: currentAsJsonData, encoding: .utf8),
+                   let convertedPoi = try? PointOfInterest(jsonString: currentJsonString) {
+                    convertedPois.append(convertedPoi)
+                }
+            }
+            closure(convertedPois)
         }
     }
     
@@ -118,7 +126,15 @@ public extension Places {
             }
             
             if responseCode == .ok {
-                closure(pois)
+                var convertedPois: [PointOfInterest] = []
+                for currentMap in pois {
+                    if let currentAsJsonData = try? JSONSerialization.data(withJSONObject: currentMap, options: []),
+                       let currentJsonString = String(data: currentAsJsonData, encoding: .utf8),
+                       let convertedPoi = try? PointOfInterest(jsonString: currentJsonString) {
+                        convertedPois.append(convertedPoi)
+                    }
+                }
+                closure(convertedPois)
             } else {
                 error?(responseCode)
             }            

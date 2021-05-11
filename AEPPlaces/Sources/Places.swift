@@ -25,7 +25,7 @@ public class Places: NSObject, Extension {
     var lastExitedPoi: PointOfInterest?
     var lastKnownLatitude: Double
     var lastKnownLongitude: Double
-    var membershipTtl: TimeInterval?
+    var membershipTtl: TimeInterval
     var membershipValidUntil: TimeInterval?
     var authStatus: CLAuthorizationStatus
     var privacyStatus: PrivacyStatus
@@ -49,6 +49,7 @@ public class Places: NSObject, Extension {
         lastKnownLongitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
         authStatus = .notDetermined
         privacyStatus = .unknown
+        membershipTtl = PlacesConstants.DefaultValues.MEMBERSHIP_TTL
         
         super.init()
     }
@@ -170,9 +171,13 @@ public class Places: NSObject, Extension {
             }
             
             // respond to the original event
+            var nearbyPoiArray: [[String: Any]] = []
+            for poi in result.pois ?? [] {
+                nearbyPoiArray.append(poi.mapValue)
+            }
             let eventData: [String: Any] = [
                 PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: result.response.rawValue,
-                PlacesConstants.SharedStateKey.NEARBY_POIS: result.pois ?? [:]
+                PlacesConstants.SharedStateKey.NEARBY_POIS: nearbyPoiArray
             ]
             
             self.dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
@@ -244,9 +249,9 @@ public class Places: NSObject, Extension {
         Log.trace(label: PlacesConstants.LOG_TAG, "Getting user-within Points of Interest.")
         
         // convert the map of userWithinPois to an array to put in the eventData
-        var userWithinPoiArray: [PointOfInterest] = []
+        var userWithinPoiArray: [[String: Any]] = []
         for poi in userWithinPois.values {
-            userWithinPoiArray.append(poi)
+            userWithinPoiArray.append(poi.mapValue)
         }
         
         let eventData = [
@@ -296,8 +301,8 @@ public class Places: NSObject, Extension {
     
     private func dispatchRegionEventFor(poi: PointOfInterest, withRegionEventType type: PlacesRegionEvent) {
         let eventData: [String: Any] = [
-            PlacesConstants.EventDataKey.Places.TRIGGERING_REGION: poi,
-            PlacesConstants.EventDataKey.Places.REGION_EVENT_TYPE: type.rawValue
+            PlacesConstants.EventDataKey.Places.TRIGGERING_REGION: poi.mapValue,
+            PlacesConstants.EventDataKey.Places.REGION_EVENT_TYPE: type.stringValue
         ]
         let event = Event(name: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
                           type: EventType.places, source: EventSource.responseContent, data: eventData)
