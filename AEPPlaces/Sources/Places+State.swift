@@ -158,11 +158,7 @@ extension Places {
         case .entry:
             Log.trace(label: PlacesConstants.LOG_TAG, "\(#function) updating lastEnteredPoi - name: \(poi.name), identifier: \(poi.identifier).")
             lastEnteredPoi = poi
-            
-            // make sure this poi is in our list of userWithinPois - it should already be there
-            if userWithinPois[poi.identifier] == nil {
-                userWithinPois[poi.identifier] = poi
-            }
+            userWithinPois[poi.identifier] = poi
         case .exit:
             Log.trace(label: PlacesConstants.LOG_TAG, "\(#function) updating lastExitedPoi - name: \(poi.name), identifier: \(poi.identifier).")
             lastExitedPoi = poi
@@ -174,6 +170,7 @@ extension Places {
             userWithinPois.removeValue(forKey: poi.identifier)
         case .none:
             Log.trace(label: PlacesConstants.LOG_TAG, "\(#function) processing .none region event - you shouldn't ever see this!")
+            return
         }
         
         updateMembershipValidUntil()
