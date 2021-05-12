@@ -67,8 +67,8 @@ class PointOfInterestTests: XCTestCase {
         "p": [
             "1234",
             "myplace",
-            12.34,
-            23.45,
+            "12.34",
+            "23.45",
             500,
             "mylib",
             25

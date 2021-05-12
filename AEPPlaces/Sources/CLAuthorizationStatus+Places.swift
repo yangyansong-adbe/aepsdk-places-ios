@@ -17,9 +17,17 @@ extension CLAuthorizationStatus {
     init(fromString: String) {
         switch fromString {
         case "always":
-            self = CLAuthorizationStatus.authorizedAlways
+            self = .authorizedAlways
+        case "wheninuse":
+            self = .authorizedWhenInUse
+        case "denied":
+            self = .denied
+        case "restricted":
+            self = .restricted
+        case "unknown":
+            self = .notDetermined
         default:
-            self = CLAuthorizationStatus.notDetermined
+            self = .notDetermined
         }
     }
     
