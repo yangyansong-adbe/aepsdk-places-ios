@@ -13,7 +13,43 @@
 import Foundation
 import AEPServices
 
+/// Helps maintain the current state for the Places extension, including managing persistence and shared state
 extension Places {
+    // MARK: - internal functions
+    
+    /// Resets all the Places state data on the client and updates persistence
+    func clearClientData() {
+        nearbyPois.removeAll()
+        userWithinPois.removeAll()
+        currentPoi = nil
+        lastEnteredPoi = nil
+        lastExitedPoi = nil
+        lastKnownLatitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
+        lastKnownLongitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
+        authStatus = .notDetermined
+        membershipValidUntil = nil
+        
+        updatePersistence()
+    }
+    
+    /// Resets `currentPoi`, `lastEnteredPoi`, `lastExitedPoi`, and `membershipValidUntil` state values.
+    /// Removes each of the above values from persistence.
+    func clearMembershipData() {
+        // clear locals
+        currentPoi = nil
+        lastEnteredPoi = nil
+        lastExitedPoi = nil
+        membershipValidUntil = nil
+        
+        // clear persistence
+        dataStore.setCurrentPoi(nil)
+        dataStore.setLastEnteredPoi(nil)
+        dataStore.setLastExitedPoi(nil)
+        dataStore.setMembershipValidUntil(nil)
+    }
+    
+    /// Creates a dictionary representing the shared state for Places
+    /// - Returns: a `[String: Any]` dictionary representing Places shared state
     func getSharedStateData() -> [String: Any] {
         var data: [String: Any] = [:]
         
@@ -53,41 +89,28 @@ extension Places {
         return data
     }
     
-    func clearClientData() {
-        nearbyPois.removeAll()
-        userWithinPois.removeAll()
-        currentPoi = nil
-        lastEnteredPoi = nil
-        lastExitedPoi = nil
-        lastKnownLatitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
-        lastKnownLongitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
-        authStatus = .notDetermined
-        membershipValidUntil = nil
-        
-        updatePersistence()
+    /// Reads all of the Places state values out of persistence and into local variables
+    func loadPersistence() {
+        nearbyPois = dataStore.nearbyPois
+        userWithinPois = dataStore.userWithinPois
+        currentPoi = dataStore.currentPoi
+        lastEnteredPoi = dataStore.lastEnteredPoi
+        lastExitedPoi = dataStore.lastExitedPoi
+        lastKnownLatitude = dataStore.lastKnownLatitude
+        lastKnownLongitude = dataStore.lastKnownLongitude
+        authStatus = dataStore.authStatus
+        membershipValidUntil = dataStore.membershipValidUntil
     }
     
-    func updateMembershipValidUntil() {
-        membershipValidUntil = (Date().timeIntervalSince1970 + membershipTtl).rounded()
-        updatePersistence()
-    }
-    
-    /// Set the Points of Interest near the current location of the device.
+    /// Set the Points of Interest near the current location of the device
     ///
-    /// // TODO: are we still triggering entries in this case?
-    /// This method returns a list of POIs that the user has newly entered.
-    /// The caller is responsible for dispatching entry events for these entries.
     /// This method will update `currentPoi` and `lastEnteredPoi` when necessary.
     ///
     /// - Parameter pois: an array of new nearby Points of Interest that need to be processed
-    /// - Returns: an array of `PointOfInterest` objects that the user has newly entered
-    func processNewNearbyPois(_ pois: [PointOfInterest]) -> [PointOfInterest] {
+    func processNewNearbyPois(_ pois: [PointOfInterest]) {
         // current poi is always reset when we have a new list of POIs
         currentPoi = nil
-                
-        // initialize our return value
-        var newlyEnteredPois: [PointOfInterest] = []
-        
+                        
         // quick check to make sure we have new pois
         if pois.isEmpty {
             nearbyPois.removeAll()
@@ -104,12 +127,7 @@ extension Places {
                 if poi.userIsWithin {
                     // add poi to our list of new userWithinPois map
                     newUserWithinPois[poi.identifier] = poi
-                    
-                    // only add this poi to the newlyEnteredPois if the poi isn't in the existing list
-                    if userWithinPois[poi.identifier] != nil {
-                        newlyEnteredPois.append(poi)
-                    }
-                    
+                                        
                     // the first poi in this list is the closest to the requested location, so we only
                     // want to set lastEnteredPoi one time while iterating in this loop
                     if !lastEnteredPoiHasBeenUpdated {
@@ -128,7 +146,6 @@ extension Places {
         
         updateMembershipValidUntil()
         updatePersistence()
-        return newlyEnteredPois
     }
     
     /// Process a `PlacesRegionEvent` and update current, last entered, and last exited pois when applicable
@@ -164,36 +181,24 @@ extension Places {
         updatePersistence()
     }
     
-    func clearMembershipData() {
-        // clear locals
-        currentPoi = nil
-        lastEnteredPoi = nil
-        lastExitedPoi = nil
-        membershipValidUntil = nil
-        
-        // clear persistence
-        dataStore.setCurrentPoi(nil)
-        dataStore.setLastEnteredPoi(nil)
-        dataStore.setLastExitedPoi(nil)
-        dataStore.setMembershipValidUntil(nil)
+    /// Updates the timestamp that determines the TTL for Places state data
+    func updateMembershipValidUntil() {
+        membershipValidUntil = (Date().timeIntervalSince1970 + membershipTtl).rounded()
+        updatePersistence()
     }
+       
     
-    func loadPersistence() {
-        nearbyPois = dataStore.nearbyPois
-        userWithinPois = dataStore.userWithinPois
-        currentPoi = dataStore.currentPoi
-        lastEnteredPoi = dataStore.lastEnteredPoi
-        lastExitedPoi = dataStore.lastExitedPoi
-        lastKnownLatitude = dataStore.lastKnownLatitude
-        lastKnownLongitude = dataStore.lastKnownLongitude
-        authStatus = dataStore.authStatus
-        membershipValidUntil = dataStore.membershipValidUntil
-    }
+    // MARK: - private functions
     
+    /// Determines whether the current Places membership is still valid
     private var membershipDataIsValid: Bool {
         return Date().timeIntervalSince1970 < membershipValidUntil ?? 0
     }
     
+    /// Converts the provided `[String: PointOfInterest]` into a dictionary of `String`s
+    /// The values in the new dictionary are json string representations of the `PointOfInterest` object
+    /// - Parameter pois: the dictionary to be converted
+    /// - Returns: a `[String: String]` representation of the provided `pois`
     private func poisToStringMap(pois: [String: PointOfInterest]) -> [String: String] {
         var poiStringMap: [String: String] = [:]
         
@@ -204,6 +209,7 @@ extension Places {
         return poiStringMap
     }
     
+    /// Loops through `userWithinPois` to appropriately set `currentPoi`
     private func recalculateCurrentPoi() {
         if userWithinPois.isEmpty {
             currentPoi = nil
@@ -215,12 +221,16 @@ extension Places {
         }
     }
     
+    /// Compares the `currentPoi` to the provided `poi` and updates `currentPoi` if necessary
+    /// See `PointOfInterest.hasPriorityOver` to understand how priority is calculated
+    /// - Parameter poi: new `PointOfInterest` to compare against the existing `currentPoi`
     private func updateCurrentPoiIfNecessary(_ poi: PointOfInterest) {
         if currentPoi == nil || poi.hasPriorityOver(currentPoi!) {
             currentPoi = poi
         }
     }
     
+    /// Saves all the local Places state variables into the persisted data store
     private func updatePersistence() {
         dataStore.setNearbyPois(nearbyPois)
         dataStore.setUserWithinPois(userWithinPois)
@@ -232,5 +242,4 @@ extension Places {
         dataStore.setAuthStatus(authStatus)
         dataStore.setMembershipValidUntil(membershipValidUntil)
     }
-    
 }

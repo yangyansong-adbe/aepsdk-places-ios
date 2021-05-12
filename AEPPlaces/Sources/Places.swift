@@ -166,7 +166,7 @@ public class Places: NSObject, Extension {
         placesQueryService.getNearbyPlaces(lat: latitude, lon: longitude, count: count, configuration: placesConfig) { result in
             // update shared state when we get a valid response
             if result.response == .ok {
-                _ = self.processNewNearbyPois(result.pois ?? [])
+                self.processNewNearbyPois(result.pois ?? [])
                 self.createSharedState(data: self.getSharedStateData(), event: event)
             }
             

@@ -273,6 +273,7 @@
 			children = (
 				243AC78626371FF2006501EC /* Assets */,
 				243AC76626371C7A006501EC /* Utils */,
+				243AC7BF263B656A006501EC /* CLAuthorizationStatusPlusPlacesTests.swift */,
 				243AC714262A44EA006501EC /* Event+PlacesTests.swift */,
 				243AC7C3263B65DD006501EC /* NamedCollectionDataStore+PlacesTests.swift */,
 				243AC71F262A44F9006501EC /* PlacesConfigurationTests.swift */,
@@ -280,7 +281,6 @@
 				243AC6C7262A3F8B006501EC /* PlacesTests.swift */,
 				243AC72B262A453D006501EC /* Places+PublicApiTests.swift */,
 				243AC739262A4578006501EC /* Places+StateTests.swift */,
-				243AC7BF263B656A006501EC /* CLAuthorizationStatusPlusPlacesTests.swift */,
 				243AC75A2633774E006501EC /* PlacesQueryResponseCodeTests.swift */,
 				243AC731262A4553006501EC /* PlacesQueryServiceTests.swift */,
 				243AC75E26337774006501EC /* PlacesQueryServiceResultTests.swift */,

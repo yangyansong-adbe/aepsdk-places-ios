@@ -10,6 +10,7 @@
  governing permissions and limitations under the License.
  */
 
+import CoreLocation
 import XCTest
 @testable import AEPPlaces
 @testable import AEPServices
@@ -418,7 +419,7 @@ class NamedCollectionDataStorePlusPlacesTests: XCTestCase {
         let result = mockDataStore.authStatus
         
         // verify
-        XCTAssertEqual(PlacesAuthorizationStatus.always, result)
+        XCTAssertEqual(CLAuthorizationStatus.authorizedAlways, result)
     }
     
     func testAuthStatusNoneInPersistence() throws {
@@ -426,7 +427,7 @@ class NamedCollectionDataStorePlusPlacesTests: XCTestCase {
         let result = mockDataStore.authStatus
         
         // verify
-        XCTAssertEqual(PlacesAuthorizationStatus.unknown, result)
+        XCTAssertEqual(CLAuthorizationStatus.notDetermined, result)
     }
     
     func testSetAuthStatusHappy() throws {
