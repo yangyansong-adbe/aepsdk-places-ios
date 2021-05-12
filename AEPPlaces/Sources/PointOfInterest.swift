@@ -92,19 +92,7 @@ public class PointOfInterest: NSObject {
     /// If serialization fails, this method returns an empty string.
     /// - Returns: a JSON string representation of the calling object
     internal func toJsonString() -> String {
-        var myMap: [String: Any] = [:]
-        
-        myMap[PlacesConstants.EventDataKey.Places.REGION_ID] = identifier
-        myMap[PlacesConstants.EventDataKey.Places.REGION_NAME] = name
-        myMap[PlacesConstants.EventDataKey.Places.LATITUDE] = latitude
-        myMap[PlacesConstants.EventDataKey.Places.LONGITUDE] = longitude
-        myMap[PlacesConstants.EventDataKey.Places.RADIUS] = radius
-        myMap[PlacesConstants.EventDataKey.Places.WEIGHT] = weight
-        myMap[PlacesConstants.EventDataKey.Places.LIBRARY_ID] = libraryId
-        myMap[PlacesConstants.EventDataKey.Places.USER_IS_WITHIN] = userIsWithin
-        myMap[PlacesConstants.EventDataKey.Places.REGION_META_DATA] = metaData
-        
-        if let jsonData = try? JSONSerialization.data(withJSONObject: myMap, options: []) {
+        if let jsonData = try? JSONSerialization.data(withJSONObject: self.mapValue, options: []) {
             return String(data: jsonData, encoding: .utf8) ?? ""
         }
         
@@ -137,6 +125,22 @@ extension PointOfInterest {
     /// - Returns: true if both objects have the same value for `identifier`
     static func == (lhs: PointOfInterest, rhs: PointOfInterest) -> Bool {
         return lhs.identifier == rhs.identifier
+    }
+    
+    var mapValue: [String: Any] {
+        var map: [String: Any] = [:]
+        
+        map[PlacesConstants.EventDataKey.Places.REGION_ID] = identifier
+        map[PlacesConstants.EventDataKey.Places.REGION_NAME] = name
+        map[PlacesConstants.EventDataKey.Places.LATITUDE] = latitude
+        map[PlacesConstants.EventDataKey.Places.LONGITUDE] = longitude
+        map[PlacesConstants.EventDataKey.Places.RADIUS] = radius
+        map[PlacesConstants.EventDataKey.Places.WEIGHT] = weight
+        map[PlacesConstants.EventDataKey.Places.LIBRARY_ID] = libraryId
+        map[PlacesConstants.EventDataKey.Places.USER_IS_WITHIN] = userIsWithin
+        map[PlacesConstants.EventDataKey.Places.REGION_META_DATA] = metaData
+        
+        return map
     }
 }
 
