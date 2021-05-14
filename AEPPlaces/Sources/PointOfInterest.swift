@@ -38,7 +38,7 @@ public class PointOfInterest: NSObject {
         }
         
         do {
-            if let json = try JSONSerialization.jsonObject(with: jsonString.data(using: .utf8) ?? Data(),
+            if let json = try JSONSerialization.jsonObject(with: jsonString.data(using: .utf8)!,
                                                            options: .mutableContainers) as? [String: Any] {
                 identifier = json[PlacesConstants.EventDataKey.Places.REGION_ID] as? String ?? ""
                 name = json[PlacesConstants.EventDataKey.Places.REGION_NAME] as? String ?? ""
@@ -93,7 +93,7 @@ public class PointOfInterest: NSObject {
     /// - Returns: a JSON string representation of the calling object
     internal func toJsonString() -> String {
         if let jsonData = try? JSONSerialization.data(withJSONObject: self.mapValue, options: []) {
-            return String(data: jsonData, encoding: .utf8) ?? ""
+            return String(data: jsonData, encoding: .utf8)!
         }
         
         return ""
