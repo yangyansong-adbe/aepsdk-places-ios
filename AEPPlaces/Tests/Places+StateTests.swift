@@ -171,13 +171,15 @@ class PlacesPlusStateTests: XCTestCase {
         let result = places.getSharedStateData()
         
         // verify
-        XCTAssertEqual(2, result.count)
+        XCTAssertEqual(3, result.count)
         let nearby = result[PlacesConstants.SharedStateKey.NEARBY_POIS] as! [String: String]
         XCTAssertEqual(1, nearby.count)
         let nearbypoi = try! PointOfInterest(jsonString: nearby[poi.identifier]!)
         XCTAssertTrue(poi == nearbypoi)
         let auth = result[PlacesConstants.SharedStateKey.AUTH_STATUS] as! String
         XCTAssertEqual("always", auth)
+        let validUntil = result[PlacesConstants.SharedStateKey.VALID_UNTIL] as? Double
+        XCTAssertEqual(0, validUntil)
     }
     
     func testGetSharedStateDataEverythingIsEmpty() throws {
@@ -185,9 +187,11 @@ class PlacesPlusStateTests: XCTestCase {
         let result = places.getSharedStateData()
         
         // verify
-        XCTAssertEqual(1, result.count)
+        XCTAssertEqual(2, result.count)
         let auth = result[PlacesConstants.SharedStateKey.AUTH_STATUS] as! String
         XCTAssertEqual("unknown", auth)
+        let validUntil = result[PlacesConstants.SharedStateKey.VALID_UNTIL] as! Double
+        XCTAssertEqual(0, validUntil)
     }
     
     func testLoadPersistence() throws {
@@ -305,33 +309,6 @@ class PlacesPlusStateTests: XCTestCase {
         XCTAssertNil(places.dataStore.getString(key: PlacesConstants.UserDefaults.PERSISTED_CURRENT_POI))
         XCTAssertNotNil(places.dataStore.getString(key: PlacesConstants.UserDefaults.PERSISTED_LAST_EXITED_POI))
         XCTAssertNotNil(places.dataStore.getDouble(key: PlacesConstants.UserDefaults.PERSISTED_MEMBERSHIP_VALID_UNTIL))
-    }
-    
-    func testProcessRegionEventNone() throws {
-        // setup
-        XCTAssertEqual(0, places.nearbyPois.count)
-        XCTAssertEqual(0, places.userWithinPois.count)
-        XCTAssertNil(places.currentPoi)
-        XCTAssertNil(places.lastEnteredPoi)
-        XCTAssertNil(places.lastExitedPoi)
-        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownLatitude)
-        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownLongitude)
-        XCTAssertEqual(CLAuthorizationStatus.notDetermined, places.authStatus)
-        XCTAssertNil(places.membershipValidUntil)
-        
-        // test
-        places.processRegionEvent(.none, forPoi: poi)
-        
-        // verify
-        XCTAssertEqual(0, places.nearbyPois.count)
-        XCTAssertEqual(0, places.userWithinPois.count)
-        XCTAssertNil(places.currentPoi)
-        XCTAssertNil(places.lastEnteredPoi)
-        XCTAssertNil(places.lastExitedPoi)
-        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownLatitude)
-        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownLongitude)
-        XCTAssertEqual(CLAuthorizationStatus.notDetermined, places.authStatus)
-        XCTAssertNil(places.membershipValidUntil)
     }
     
     func testUpdateMembershipValidUntil() throws {

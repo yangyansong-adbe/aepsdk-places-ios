@@ -54,6 +54,20 @@ public class Places: NSObject, Extension {
         super.init()
     }
     
+    /// internal initializer only meant for use when unit testing - allows mocking of the query service
+    internal init(runtime: ExtensionRuntime, queryService: PlacesQueryService) {
+        self.runtime = runtime
+        self.placesQueryService = queryService
+        
+        lastKnownLatitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
+        lastKnownLongitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
+        authStatus = .notDetermined
+        privacyStatus = .unknown
+        membershipTtl = PlacesConstants.DefaultValues.MEMBERSHIP_TTL
+        
+        super.init()
+    }
+    
     public func onRegistered() {
         // register listener for shared state updates
         registerListener(type: EventType.hub, source: EventSource.sharedState, listener: handleSharedStateUpdate)
@@ -66,9 +80,7 @@ public class Places: NSObject, Extension {
         createSharedState(data: getSharedStateData(), event: nil)        
     }
     
-    public func onUnregistered() {
-        
-    }
+    public func onUnregistered() { }
     
     public func readyForEvent(_ event: Event) -> Bool {
         return getSharedState(extensionName: PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME, event: event)?.status == .set
@@ -101,15 +113,17 @@ public class Places: NSObject, Extension {
     
     // MARK: - Private Methods
     private func processSharedStateChange(event: Event) {
-        let configSharedState = getSharedState(extensionName: PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME, event: event)
-        if let privacy = configSharedState?.globalPrivacy {
-            if privacy == .optedOut {
-                Log.debug(label: PlacesConstants.LOG_TAG, "Stopping Places processing due to privacy opt-out")
-                stopEvents()
-                createSharedState(data: [:], event: event)
-            }
-            privacyStatus = privacy
+        guard let configSharedState = getSharedState(extensionName: PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME, event: event) else {
+            return
         }
+        
+        if configSharedState.globalPrivacy == .optedOut {
+            Log.debug(label: PlacesConstants.LOG_TAG, "Stopping Places processing due to privacy opt-out")
+            stopEvents()
+            createSharedState(data: [:], event: event)
+        }
+        
+        privacyStatus = configSharedState.globalPrivacy
     }
     
     private func handleGetNearbyPlacesRequest(event: Event) {
@@ -191,27 +205,17 @@ public class Places: NSObject, Extension {
         // make sure the user isn't opted-out
         if privacyStatus == .optedOut {
             Log.trace(label: PlacesConstants.LOG_TAG, "Ignoring request to process region event - device has a privacy status of opted-out.")
-            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
-                                      data: [:],
-                                      forEvent: event)
+            return
         }
         
         // validate places configuration
         guard let placesConfig = getPlacesConfiguration(forEvent: event) else {
             Log.debug(label: PlacesConstants.LOG_TAG, "Places is not configured for this app.")
-            let eventData = [PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: PlacesQueryResponseCode.configurationError]
-            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
-                                      data: eventData,
-                                      forEvent: event)
             return
         }
         
         if !placesConfig.isValid {
             Log.debug(label: PlacesConstants.LOG_TAG, "Places configuration for this app is invalid.")
-            let eventData = [PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: PlacesQueryResponseCode.configurationError]
-            dispatchResponseEventWith(name: PlacesConstants.EventName.Response.PROCESS_REGION_EVENT,
-                                      data: eventData,
-                                      forEvent: event)
             return
         }
         
@@ -236,8 +240,7 @@ public class Places: NSObject, Extension {
         
         dispatchRegionEventFor(poi: triggeringPoi, withRegionEventType: regionEventType)
     }
-    
-    // TODO: set PlacesConfiguration only on shared state updates from config
+        
     private func getPlacesConfiguration(forEvent event: Event) -> PlacesConfiguration? {
         guard let configSharedState = getSharedState(extensionName: PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME, event: event) else {
             return nil
@@ -281,7 +284,6 @@ public class Places: NSObject, Extension {
     private func setAuthorizationStatusFrom(event: Event) {
         if let status = event.locationAuthorizationStatus {
             authStatus = CLAuthorizationStatus(fromString: status)
-            updateMembershipValidUntil()
             createSharedState(data: getSharedStateData(), event: event)
             Log.debug(label: PlacesConstants.LOG_TAG, "Setting location authorization status for Places: \(authStatus.stringValue)")
         }
@@ -310,8 +312,6 @@ public class Places: NSObject, Extension {
         createSharedState(data: getSharedStateData(), event: nil)
         dispatch(event: event)
     }
-    
-    // TODO: - can we combine this with dispatchPlacesResponse?
     
     private func dispatchResponseEventWith(name: String, data: [String: Any], forEvent event: Event) {
         let responseEvent = event.createResponseEvent(name: name,

@@ -19,4 +19,44 @@ class CLAuthorizationStatusPlusPlacesTests: XCTestCase {
     func testToStringAllowAlways() throws {
         XCTAssertEqual("always", CLAuthorizationStatus.authorizedAlways.stringValue)
     }
+    
+    func testToStringAllowWhenInUse() throws {
+        XCTAssertEqual("wheninuse", CLAuthorizationStatus.authorizedWhenInUse.stringValue)
+    }
+    
+    func testToStringDenied() throws {
+        XCTAssertEqual("denied", CLAuthorizationStatus.denied.stringValue)
+    }
+    
+    func testToStringRestricted() throws {
+        XCTAssertEqual("restricted", CLAuthorizationStatus.restricted.stringValue)
+    }
+    
+    func testToStringUnknown() throws {
+        XCTAssertEqual("unknown", CLAuthorizationStatus.notDetermined.stringValue)
+    }
+        
+    func testFromStringAlways() throws {
+        XCTAssertEqual(.authorizedAlways, CLAuthorizationStatus(fromString: "always"))
+    }
+    
+    func testFromStringWhenInUse() throws {
+        XCTAssertEqual(.authorizedWhenInUse, CLAuthorizationStatus(fromString: "wheninuse"))
+    }
+    
+    func testFromStringDenied() throws {
+        XCTAssertEqual(.denied, CLAuthorizationStatus(fromString: "denied"))
+    }
+    
+    func testFromStringRestricted() throws {
+        XCTAssertEqual(.restricted, CLAuthorizationStatus(fromString: "restricted"))
+    }
+    
+    func testFromStringUnknown() throws {
+        XCTAssertEqual(.notDetermined, CLAuthorizationStatus(fromString: "unknown"))
+    }
+    
+    func testFromStringInvalid() throws {
+        XCTAssertEqual(.notDetermined, CLAuthorizationStatus(fromString: "blah"))
+    }
 }

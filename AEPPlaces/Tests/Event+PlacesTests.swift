@@ -248,6 +248,6 @@ class EventPlusPlacesTests: XCTestCase {
         let event = getSharedStateUpdateEvent()
         
         // verify
-        XCTAssertEqual(PlacesRegionEvent.none, event.regionEventType)
+        XCTAssertNil(event.regionEventType)
     }
 }

@@ -17,8 +17,7 @@ import Foundation
 public enum PlacesRegionEvent: Int {
     case entry = 0
     case exit
-    case none
-    
+        
     /// String representation of the `PlacesRegionEvent`.
     /// Necessary workaround to support an Int-based enum, which is required for objective-c compatibility.
     var stringValue: String {
@@ -27,23 +26,21 @@ public enum PlacesRegionEvent: Int {
             return "entry"
         case .exit:
             return "exit"
-        case .none:
-            return "none"
         }
     }
     
     /// Converts a `String` to its respective `PlacesRegionEvent`
-    /// If `fromRawValue` is not a valid `PlacesRegionEvent`, calling this method will return `PlacesRegionEvent.none`
-    /// - Parameter fromString: a `String` representation of a `PlacesRegionEvent`
+    /// If `string` is not a valid `PlacesRegionEvent`, calling this method will return `nil`
+    /// - Parameter string: a `String` representation of a `PlacesRegionEvent`
     /// - Returns: a `PlacesRegionEvent` representing the passed-in `String`
-    init(fromString: String) {
-        switch fromString {
+    static func fromString(_ string: String) -> PlacesRegionEvent? {
+        switch string {
         case "entry":
-            self = PlacesRegionEvent.entry
+            return .entry
         case "exit":
-            self = PlacesRegionEvent.exit
+            return .exit
         default:
-            self = PlacesRegionEvent.none
+            return nil
         }
     }
 }

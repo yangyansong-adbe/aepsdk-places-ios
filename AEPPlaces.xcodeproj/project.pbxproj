@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		09F3D002F490B5D55CCF0DA7 /* Pods_AEPPlaces.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B564B4991C7921C27904C90 /* Pods_AEPPlaces.framework */; };
+		2407DF50264C9396002B070F /* MockDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2407DF4E264C9396002B070F /* MockDataStore.swift */; };
+		2407DF51264C9396002B070F /* MockNetworkServiceOverrider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2407DF4F264C9396002B070F /* MockNetworkServiceOverrider.swift */; };
+		2407DF5B264DC12E002B070F /* MockPlacesQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2407DF5A264DC12E002B070F /* MockPlacesQueryService.swift */; };
 		243AC695262A3A37006501EC /* AEPPlaces.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243AC68B262A3A36006501EC /* AEPPlaces.framework */; };
 		243AC6C2262A3F72006501EC /* AEPPlaces.h in Headers */ = {isa = PBXBuildFile; fileRef = 243AC6C0262A3F72006501EC /* AEPPlaces.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		243AC6C9262A3F8B006501EC /* PlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243AC6C7262A3F8B006501EC /* PlacesTests.swift */; };
@@ -98,6 +101,9 @@
 /* Begin PBXFileReference section */
 		0B564B4991C7921C27904C90 /* Pods_AEPPlaces.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AEPPlaces.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DF0DA3F1EFC247D845A0CD6 /* Pods-PlacesTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesTestApp.release.xcconfig"; path = "Target Support Files/Pods-PlacesTestApp/Pods-PlacesTestApp.release.xcconfig"; sourceTree = "<group>"; };
+		2407DF4E264C9396002B070F /* MockDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDataStore.swift; sourceTree = "<group>"; };
+		2407DF4F264C9396002B070F /* MockNetworkServiceOverrider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNetworkServiceOverrider.swift; sourceTree = "<group>"; };
+		2407DF5A264DC12E002B070F /* MockPlacesQueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlacesQueryService.swift; sourceTree = "<group>"; };
 		243AC68B262A3A36006501EC /* AEPPlaces.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AEPPlaces.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		243AC694262A3A37006501EC /* AEPPlacesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AEPPlacesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		243AC6C0262A3F72006501EC /* AEPPlaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AEPPlaces.h; sourceTree = "<group>"; };
@@ -294,6 +300,9 @@
 		243AC76626371C7A006501EC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				2407DF4E264C9396002B070F /* MockDataStore.swift */,
+				2407DF4F264C9396002B070F /* MockNetworkServiceOverrider.swift */,
+				2407DF5A264DC12E002B070F /* MockPlacesQueryService.swift */,
 				243AC76726371C9E006501EC /* TestableExtensionRuntime.swift */,
 				243AC78226371E6C006501EC /* TestableNetworkService.swift */,
 			);
@@ -741,9 +750,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2407DF5B264DC12E002B070F /* MockPlacesQueryService.swift in Sources */,
 				243AC736262A4564006501EC /* PlacesRegionEventTests.swift in Sources */,
 				243AC720262A44F9006501EC /* PlacesConfigurationTests.swift in Sources */,
 				243AC72C262A453D006501EC /* Places+PublicApiTests.swift in Sources */,
+				2407DF51264C9396002B070F /* MockNetworkServiceOverrider.swift in Sources */,
 				243AC7C4263B65DD006501EC /* NamedCollectionDataStore+PlacesTests.swift in Sources */,
 				243AC78326371E6C006501EC /* TestableNetworkService.swift in Sources */,
 				243AC73A262A4578006501EC /* Places+StateTests.swift in Sources */,
@@ -755,6 +766,7 @@
 				243AC75F26337774006501EC /* PlacesQueryServiceResultTests.swift in Sources */,
 				243AC724262A450D006501EC /* PointOfInterestTests.swift in Sources */,
 				243AC6C9262A3F8B006501EC /* PlacesTests.swift in Sources */,
+				2407DF50264C9396002B070F /* MockDataStore.swift in Sources */,
 				243AC732262A4553006501EC /* PlacesQueryServiceTests.swift in Sources */,
 				243AC7B026389870006501EC /* SharedStateResult+Places.swift in Sources */,
 			);
