@@ -1,5 +1,5 @@
 included: # paths to include during linting. `--path` is ignored if present.
-  - AEPMessaging/Sources
+  - AEPPlaces/Sources
 
 line_length: 1000
 function_body_length: 500

@@ -3,7 +3,7 @@
  This file is licensed to you under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software distributed under
  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
  OF ANY KIND, either express or implied. See the License for the specific language
@@ -17,7 +17,7 @@ import Foundation
 public enum PlacesRegionEvent: Int {
     case entry = 0
     case exit
-        
+
     /// String representation of the `PlacesRegionEvent`.
     /// Necessary workaround to support an Int-based enum, which is required for objective-c compatibility.
     var stringValue: String {
@@ -28,7 +28,7 @@ public enum PlacesRegionEvent: Int {
             return "exit"
         }
     }
-    
+
     /// Converts a `String` to its respective `PlacesRegionEvent`
     /// If `string` is not a valid `PlacesRegionEvent`, calling this method will return `nil`
     /// - Parameter string: a `String` representation of a `PlacesRegionEvent`

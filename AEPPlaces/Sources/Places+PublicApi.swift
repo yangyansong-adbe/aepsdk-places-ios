@@ -3,7 +3,7 @@
  This file is licensed to you under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software distributed under
  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
  OF ANY KIND, either express or implied. See the License for the specific language
@@ -18,7 +18,7 @@ import Foundation
 /// Defines the public interface for the Places extension.
 @objc
 public extension Places {
-    
+
     /// Clears out the client-side data for Places in shared state, local storage, and in-memory.
     static func clear() {
         let eventData: [String: Any] = [
@@ -28,12 +28,12 @@ public extension Places {
                           type: EventType.places,
                           source: EventSource.requestContent,
                           data: eventData)
-        
+
         Log.trace(label: PlacesConstants.LOG_TAG, "Requesting reset of Places state and data.")
-        
+
         MobileCore.dispatch(event: event)
     }
-    
+
     /// Returns all Points of Interest (POI) of which the device is currently known to be within.
     ///
     /// - Parameter closure: called with an array of `PointOfInterest` objects that represent the user-within POIs
@@ -41,18 +41,18 @@ public extension Places {
         let eventData: [String: Any] = [
             PlacesConstants.EventDataKey.Places.REQUEST_TYPE: PlacesConstants.EventDataKey.Places.RequestType.GET_USER_WITHIN_PLACES
         ]
-        
+
         let event = Event(name: PlacesConstants.EventName.Request.GET_USER_WITHIN_PLACES,
                           type: EventType.places,
                           source: EventSource.requestContent,
                           data: eventData)
-        
+
         MobileCore.dispatch(event: event, timeout: 2) { responseEvent in
             guard let pois = responseEvent?.userWithinPois else {
                 closure([])
                 return
             }
-                        
+
             var convertedPois: [PointOfInterest] = []
             for currentMap in pois {
                 if let currentAsJsonData = try? JSONSerialization.data(withJSONObject: currentMap, options: []),
@@ -64,7 +64,7 @@ public extension Places {
             closure(convertedPois)
         }
     }
-    
+
     /// Returns the last latitude and longitude provided to the ACPPlaces Extension.
     ///
     /// If the Places Extension does not have a valid last known location for the user, the parameter passed
@@ -78,23 +78,23 @@ public extension Places {
         let eventData: [String: Any] = [
             PlacesConstants.EventDataKey.Places.REQUEST_TYPE: PlacesConstants.EventDataKey.Places.RequestType.GET_LAST_KNOWN_LOCATION
         ]
-        
+
         let event = Event(name: PlacesConstants.EventName.Request.GET_LAST_KNOWN_LOCATION,
                           type: EventType.places,
                           source: EventSource.requestContent,
                           data: eventData)
-        
+
         MobileCore.dispatch(event: event, timeout: 2) { responseEvent in
             guard let lat = responseEvent?.latitude, let lon = responseEvent?.longitude else {
                 closure(nil)
                 return
             }
-            
+
             let lastLocation = CLLocation(latitude: lat, longitude: lon)
             closure(lastLocation)
         }
     }
-    
+
     /// Requests a list of nearby Points of Interest (POI) and returns them in a closure.
     ///
     /// - Parameters:
@@ -113,18 +113,18 @@ public extension Places {
             PlacesConstants.EventDataKey.Places.LONGITUDE: location.coordinate.longitude,
             PlacesConstants.EventDataKey.Places.COUNT: limit
         ]
-        
+
         let event = Event(name: PlacesConstants.EventName.Request.GET_NEARBY_PLACES,
                           type: EventType.places,
                           source: EventSource.requestContent,
                           data: eventData)
-        
+
         MobileCore.dispatch(event: event, timeout: 5) { responseEvent in
             guard let pois = responseEvent?.nearbyPois, let responseCode = responseEvent?.placesQueryResponseCode else {
                 error?(PlacesQueryResponseCode.unknownError)
                 return
             }
-            
+
             if responseCode == .ok {
                 var convertedPois: [PointOfInterest] = []
                 for currentMap in pois {
@@ -137,10 +137,10 @@ public extension Places {
                 closure(convertedPois)
             } else {
                 error?(responseCode)
-            }            
+            }
         }
     }
-    
+
     /// Passes a `CLRegion` and a `PlacesRegionEvent` to be processed by the Places extension.
     ///
     /// Calling this method will result in an Event being dispatched to the SDK's EventHub.
@@ -156,17 +156,17 @@ public extension Places {
             PlacesConstants.EventDataKey.Places.REGION_ID: region.identifier,
             PlacesConstants.EventDataKey.Places.REGION_EVENT_TYPE: regionEvent.stringValue
         ]
-        
+
         let event = Event(name: PlacesConstants.EventName.Request.PROCESS_REGION_EVENT,
                           type: EventType.places,
                           source: EventSource.requestContent,
                           data: eventData)
-        
+
         Log.trace(label: PlacesConstants.LOG_TAG, "Dispatching region '\(regionEvent.stringValue)' event for POI ID '\(region.identifier)'")
-        
+
         MobileCore.dispatch(event: event)
     }
-    
+
     /// Sets the authorization status in the Places extension.
     ///
     /// The status provided is stored in the Places shared state, and is for reference only.
@@ -179,12 +179,12 @@ public extension Places {
             PlacesConstants.EventDataKey.Places.REQUEST_TYPE: PlacesConstants.EventDataKey.Places.RequestType.SET_AUTHORIZATION_STATUS,
             PlacesConstants.EventDataKey.Places.AUTH_STATUS: status.stringValue
         ]
-        
+
         let event = Event(name: PlacesConstants.EventName.Request.SET_AUTHORIZATION_STATUS,
                           type: EventType.places,
                           source: EventSource.requestContent,
                           data: eventData)
-        
+
         MobileCore.dispatch(event: event)
     }
 }
