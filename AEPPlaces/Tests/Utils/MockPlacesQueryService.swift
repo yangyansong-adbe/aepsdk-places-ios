@@ -14,12 +14,14 @@ import Foundation
 @testable import AEPPlaces
 
 class MockPlacesQueryService: PlacesQueryService {
+    var getNearbyPlacesWasCalled = false
     var invokedLat: Double?
     var invokedLon: Double?
     var invokedCount: Int?
     var returnValue: PlacesQueryServiceResult?
     
     override func getNearbyPlaces(lat: Double, lon: Double, count: Int, configuration: PlacesConfiguration, completion: @escaping (PlacesQueryServiceResult) -> Void) {
+        getNearbyPlacesWasCalled = true
         invokedLat = lat
         invokedLon = lon
         invokedCount = count

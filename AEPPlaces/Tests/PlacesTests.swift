@@ -193,10 +193,7 @@ class PlacesTests: XCTestCase {
     func testOnRegistered() throws {
         // setup
         // onRegistered called in setUpWithError
-        
-        // test
-        mockRuntime.startEvents()
-        
+                
         // verify
         XCTAssertEqual(2, mockRuntime.listeners.count)
         XCTAssertEqual(2, places.nearbyPois.count)
@@ -331,9 +328,7 @@ class PlacesTests: XCTestCase {
         mockRuntime.simulateComingEvents(requestingEvent)
         
         // verify
-        XCTAssertNil(mockQueryService.invokedLat)
-        XCTAssertNil(mockQueryService.invokedLon)
-        XCTAssertNil(mockQueryService.invokedCount)
+        XCTAssertFalse(mockQueryService.getNearbyPlacesWasCalled)
         XCTAssertEqual(1, mockRuntime.dispatchedEvents.count) // one responseEvent
         let responseEvent = mockRuntime.firstEvent!
         XCTAssertEqual(requestingEvent.id, responseEvent.responseID)
@@ -341,7 +336,8 @@ class PlacesTests: XCTestCase {
         XCTAssertEqual(EventSource.responseContent, responseEvent.source)
         XCTAssertEqual(PlacesConstants.EventName.Response.GET_NEARBY_PLACES, responseEvent.name)
         let dispatchedData = responseEvent.data!
-        XCTAssertEqual(0, dispatchedData.count)
+        XCTAssertEqual(1, dispatchedData.count)
+        XCTAssertEqual(.privacyOptedOut, dispatchedData[PlacesConstants.EventDataKey.Places.RESPONSE_STATUS] as? PlacesQueryResponseCode)
     }
     
     func testHandleGetNearbyPlacesNoPlacesConfig() throws {
@@ -353,9 +349,7 @@ class PlacesTests: XCTestCase {
         mockRuntime.simulateComingEvents(requestingEvent)
         
         // verify
-        XCTAssertNil(mockQueryService.invokedLat)
-        XCTAssertNil(mockQueryService.invokedLon)
-        XCTAssertNil(mockQueryService.invokedCount)
+        XCTAssertFalse(mockQueryService.getNearbyPlacesWasCalled)
         XCTAssertEqual(1, mockRuntime.dispatchedEvents.count) // one responseEvent
         let responseEvent = mockRuntime.firstEvent!
         XCTAssertEqual(requestingEvent.id, responseEvent.responseID)
@@ -376,9 +370,7 @@ class PlacesTests: XCTestCase {
         mockRuntime.simulateComingEvents(requestingEvent)
         
         // verify
-        XCTAssertNil(mockQueryService.invokedLat)
-        XCTAssertNil(mockQueryService.invokedLon)
-        XCTAssertNil(mockQueryService.invokedCount)
+        XCTAssertFalse(mockQueryService.getNearbyPlacesWasCalled)
         XCTAssertEqual(1, mockRuntime.dispatchedEvents.count) // one responseEvent
         let responseEvent = mockRuntime.firstEvent!
         XCTAssertEqual(requestingEvent.id, responseEvent.responseID)
@@ -400,9 +392,7 @@ class PlacesTests: XCTestCase {
         mockRuntime.simulateComingEvents(requestingEvent)
         
         // verify
-        XCTAssertNil(mockQueryService.invokedLat)
-        XCTAssertNil(mockQueryService.invokedLon)
-        XCTAssertNil(mockQueryService.invokedCount)
+        XCTAssertFalse(mockQueryService.getNearbyPlacesWasCalled)
         XCTAssertEqual(1, mockRuntime.dispatchedEvents.count) // one responseEvent
         let responseEvent = mockRuntime.firstEvent!
         XCTAssertEqual(requestingEvent.id, responseEvent.responseID)
@@ -424,9 +414,7 @@ class PlacesTests: XCTestCase {
         mockRuntime.simulateComingEvents(requestingEvent)
         
         // verify
-        XCTAssertNil(mockQueryService.invokedLat)
-        XCTAssertNil(mockQueryService.invokedLon)
-        XCTAssertNil(mockQueryService.invokedCount)
+        XCTAssertFalse(mockQueryService.getNearbyPlacesWasCalled)
         XCTAssertEqual(1, mockRuntime.dispatchedEvents.count) // one responseEvent
         let responseEvent = mockRuntime.firstEvent!
         XCTAssertEqual(requestingEvent.id, responseEvent.responseID)

@@ -89,7 +89,7 @@ public class Places: NSObject, Extension {
     // MARK: - Listener Methods
     private func handleSharedStateUpdate(_ event: Event) {
         if event.isConfigSharedStateChange {
-            processSharedStateChange(event: event)
+            processConfigurationSharedStateUpdate(event: event)
         }
     }
     
@@ -112,7 +112,7 @@ public class Places: NSObject, Extension {
     }
     
     // MARK: - Private Methods
-    private func processSharedStateChange(event: Event) {
+    private func processConfigurationSharedStateUpdate(event: Event) {
         guard let configSharedState = getSharedState(extensionName: PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME, event: event) else {
             return
         }
@@ -130,8 +130,9 @@ public class Places: NSObject, Extension {
         // make sure the user isn't opted-out
         if privacyStatus == .optedOut {
             Log.trace(label: PlacesConstants.LOG_TAG, "Ignoring request to get nearby places - device has a privacy status of opted-out")
+            let eventData = [PlacesConstants.EventDataKey.Places.RESPONSE_STATUS: PlacesQueryResponseCode.privacyOptedOut]
             dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_NEARBY_PLACES,
-                                      data: [:],
+                                      data: eventData,
                                       forEvent: event)
             return
         }

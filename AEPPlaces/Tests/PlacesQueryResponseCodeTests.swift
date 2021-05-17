@@ -24,7 +24,8 @@ class PlacesQueryResponseCodeTests: XCTestCase {
         XCTAssertEqual(3, PlacesQueryResponseCode.invalidLatLongError.rawValue)
         XCTAssertEqual(4, PlacesQueryResponseCode.configurationError.rawValue)
         XCTAssertEqual(5, PlacesQueryResponseCode.queryServiceUnavailable.rawValue)
-        XCTAssertEqual(6, PlacesQueryResponseCode.unknownError.rawValue)
+        XCTAssertEqual(6, PlacesQueryResponseCode.privacyOptedOut.rawValue)
+        XCTAssertEqual(7, PlacesQueryResponseCode.unknownError.rawValue)
     }
     
     func testIntFromRawValueOk() throws {
@@ -32,7 +33,7 @@ class PlacesQueryResponseCodeTests: XCTestCase {
         let result = PlacesQueryResponseCode(fromRawValue: 0)
         
         // verify
-        XCTAssertEqual(PlacesQueryResponseCode.ok, result)
+        XCTAssertEqual(.ok, result)
     }
     
     func testIntFromRawValueConnectivityError() throws {
@@ -40,7 +41,7 @@ class PlacesQueryResponseCodeTests: XCTestCase {
         let result = PlacesQueryResponseCode(fromRawValue: 1)
         
         // verify
-        XCTAssertEqual(PlacesQueryResponseCode.connectivityError, result)
+        XCTAssertEqual(.connectivityError, result)
     }
     
     func testIntFromRawValueServerResponseError() throws {
@@ -48,7 +49,7 @@ class PlacesQueryResponseCodeTests: XCTestCase {
         let result = PlacesQueryResponseCode(fromRawValue: 2)
         
         // verify
-        XCTAssertEqual(PlacesQueryResponseCode.serverResponseError, result)
+        XCTAssertEqual(.serverResponseError, result)
     }
     
     func testIntFromRawValueInvalidLatLongError() throws {
@@ -56,7 +57,7 @@ class PlacesQueryResponseCodeTests: XCTestCase {
         let result = PlacesQueryResponseCode(fromRawValue: 3)
         
         // verify
-        XCTAssertEqual(PlacesQueryResponseCode.invalidLatLongError, result)
+        XCTAssertEqual(.invalidLatLongError, result)
     }
     
     func testIntFromRawValueConfigurationError() throws {
@@ -64,7 +65,7 @@ class PlacesQueryResponseCodeTests: XCTestCase {
         let result = PlacesQueryResponseCode(fromRawValue: 4)
         
         // verify
-        XCTAssertEqual(PlacesQueryResponseCode.configurationError, result)
+        XCTAssertEqual(.configurationError, result)
     }
     
     func testIntFromRawValueQueryServiceUnavailable() throws {
@@ -72,15 +73,23 @@ class PlacesQueryResponseCodeTests: XCTestCase {
         let result = PlacesQueryResponseCode(fromRawValue: 5)
         
         // verify
-        XCTAssertEqual(PlacesQueryResponseCode.queryServiceUnavailable, result)
+        XCTAssertEqual(.queryServiceUnavailable, result)
     }
     
-    func testIntFromRawValueUnknownError() throws {
+    func testIntFromRawValuePrivacyOptedOut() throws {
         // setup
         let result = PlacesQueryResponseCode(fromRawValue: 6)
         
         // verify
-        XCTAssertEqual(PlacesQueryResponseCode.unknownError, result)
+        XCTAssertEqual(.privacyOptedOut, result)
+    }
+    
+    func testIntFromRawValueUnknownError() throws {
+        // setup
+        let result = PlacesQueryResponseCode(fromRawValue: 7)
+        
+        // verify
+        XCTAssertEqual(.unknownError, result)
     }
     
     func testIntFromRawValueInvalidEnumValue() throws {
@@ -88,6 +97,6 @@ class PlacesQueryResponseCodeTests: XCTestCase {
         let result = PlacesQueryResponseCode(fromRawValue: 552)
         
         // verify
-        XCTAssertEqual(PlacesQueryResponseCode.unknownError, result)
+        XCTAssertEqual(.unknownError, result)
     }
 }

@@ -20,6 +20,7 @@ public enum PlacesQueryResponseCode: Int {
     case invalidLatLongError
     case configurationError
     case queryServiceUnavailable
+    case privacyOptedOut
     case unknownError
     
     /// Converts an `Int` to its respective `PlacesQueryResponseCode`

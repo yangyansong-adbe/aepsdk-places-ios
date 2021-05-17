@@ -42,8 +42,7 @@ class PlacesPlusPublicApiTests: XCTestCase {
     // MARK: - clear
     func testClear() throws {
         // setup
-        let expectation = XCTestExpectation(description: "clear should dispatch an event")
-        expectation.assertForOverFulfill = true
+        let expectation = XCTestExpectation(description: "clear should dispatch an event")         
         extensionContainer.registerListener(type: EventType.places, source: EventSource.requestContent) { (event) in
             XCTAssertEqual(PlacesConstants.EventDataKey.Places.RequestType.RESET,
                            event.data?[PlacesConstants.EventDataKey.Places.REQUEST_TYPE] as? String)
@@ -60,8 +59,7 @@ class PlacesPlusPublicApiTests: XCTestCase {
     // MARK: - getCurrentPointsOfInterest
     func testGetCurrentPointsOfInterest() throws {
         // setup
-        let expectation = XCTestExpectation(description: "getCurrentPointsOfInterest should call its closure")
-        expectation.assertForOverFulfill = true
+        let expectation = XCTestExpectation(description: "getCurrentPointsOfInterest should dispatch an event")
         extensionContainer.registerListener(type: EventType.places, source: EventSource.requestContent) { (event) in
             XCTAssertEqual(PlacesConstants.EventDataKey.Places.RequestType.GET_USER_WITHIN_PLACES,
                            event.data?[PlacesConstants.EventDataKey.Places.REQUEST_TYPE] as? String)
@@ -78,8 +76,7 @@ class PlacesPlusPublicApiTests: XCTestCase {
     // MARK: - getLastKnownLocation
     func testGetLastKnownLocation() throws {
         // setup
-        let expectation = XCTestExpectation(description: "getLastKnownLocation should call its closure")
-        expectation.assertForOverFulfill = true
+        let expectation = XCTestExpectation(description: "getLastKnownLocation should dispatch an event")
         extensionContainer.registerListener(type: EventType.places, source: EventSource.requestContent) { (event) in
             XCTAssertEqual(PlacesConstants.EventDataKey.Places.RequestType.GET_LAST_KNOWN_LOCATION,
                            event.data?[PlacesConstants.EventDataKey.Places.REQUEST_TYPE] as? String)
@@ -96,11 +93,13 @@ class PlacesPlusPublicApiTests: XCTestCase {
     // MARK: - getNearbyPointsOfInterest
     func testGetNearbyPointsOfInterest() throws {
         // setup
-        let expectation = XCTestExpectation(description: "getNearbyPointsOfInterest should call its closure")
-        expectation.assertForOverFulfill = true
+        let expectation = XCTestExpectation(description: "getNearbyPointsOfInterest should dispatch an event")
         extensionContainer.registerListener(type: EventType.places, source: EventSource.requestContent) { (event) in
             XCTAssertEqual(PlacesConstants.EventDataKey.Places.RequestType.GET_NEARBY_PLACES,
                            event.data?[PlacesConstants.EventDataKey.Places.REQUEST_TYPE] as? String)
+            XCTAssertEqual(12.34, event.data?[PlacesConstants.EventDataKey.Places.LATITUDE] as? Double)
+            XCTAssertEqual(23.45, event.data?[PlacesConstants.EventDataKey.Places.LONGITUDE] as? Double)
+            XCTAssertEqual(3, event.data?[PlacesConstants.EventDataKey.Places.COUNT] as? UInt)
             expectation.fulfill()
         }
         let location = CLLocation(latitude: 12.34, longitude: 23.45)
@@ -115,11 +114,12 @@ class PlacesPlusPublicApiTests: XCTestCase {
     // MARK: - processRegionEvent
     func testProcessRegionEvent() throws {
         // setup
-        let expectation = XCTestExpectation(description: "processRegionEvent should call its closure")
-        expectation.assertForOverFulfill = true
+        let expectation = XCTestExpectation(description: "processRegionEvent should dispatch an event")
         extensionContainer.registerListener(type: EventType.places, source: EventSource.requestContent) { (event) in
             XCTAssertEqual(PlacesConstants.EventDataKey.Places.RequestType.PROCESS_REGION_EVENT,
                            event.data?[PlacesConstants.EventDataKey.Places.REQUEST_TYPE] as? String)
+            XCTAssertEqual("id", event.data?[PlacesConstants.EventDataKey.Places.REGION_ID] as? String)
+            XCTAssertEqual("entry", event.data?[PlacesConstants.EventDataKey.Places.REGION_EVENT_TYPE] as? String)
             expectation.fulfill()
         }
         let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude: 12.34, longitude: 23.45), radius: 100, identifier: "id")
@@ -134,11 +134,11 @@ class PlacesPlusPublicApiTests: XCTestCase {
     // MARK: - setAuthorizationStatus
     func testSetAuthorizationStatus() throws {
         // setup
-        let expectation = XCTestExpectation(description: "setAuthorizationStatus should call its closure")
-        expectation.assertForOverFulfill = true
+        let expectation = XCTestExpectation(description: "setAuthorizationStatus should dispatch an event")
         extensionContainer.registerListener(type: EventType.places, source: EventSource.requestContent) { (event) in
             XCTAssertEqual(PlacesConstants.EventDataKey.Places.RequestType.SET_AUTHORIZATION_STATUS,
                            event.data?[PlacesConstants.EventDataKey.Places.REQUEST_TYPE] as? String)
+            XCTAssertEqual("always", event.data?[PlacesConstants.EventDataKey.Places.AUTH_STATUS] as? String)            
             expectation.fulfill()
         }
                 
