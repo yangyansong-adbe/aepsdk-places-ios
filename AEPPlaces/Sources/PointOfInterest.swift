@@ -3,7 +3,7 @@
  This file is licensed to you under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software distributed under
  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
  OF ANY KIND, either express or implied. See the License for the specific language
@@ -22,10 +22,10 @@ public class PointOfInterest: NSObject {
     var radius: Int
     var metaData: [String: String]
     var userIsWithin: Bool
-    
+
     private(set) var libraryId: String
     private(set) var weight: Int
-    
+
     /// Initializes a `PointOfInterest` object from a JSON String.
     ///
     /// - Parameters:
@@ -36,7 +36,7 @@ public class PointOfInterest: NSObject {
         if jsonString.isEmpty {
             throw PlacesDataObjectInvalidInitialization(message: "JSON string is empty")
         }
-        
+
         do {
             if let json = try JSONSerialization.jsonObject(with: jsonString.data(using: .utf8)!,
                                                            options: .mutableContainers) as? [String: Any] {
@@ -58,7 +58,7 @@ public class PointOfInterest: NSObject {
             throw PlacesDataObjectInvalidInitialization(message: "Invalid JSON string")
         }
     }
-    
+
     /// Initializes a `PointOfInterest` object from a Dictionary that represents an object returned by PlacesEdge.
     ///
     /// - Parameters:
@@ -71,12 +71,12 @@ public class PointOfInterest: NSObject {
             Log.warning(label: PlacesConstants.LOG_TAG, "An error occurred while trying to create a PointOfInterest from the Edge response.")
             throw PlacesDataObjectInvalidInitialization(message: "Invalid JSON Object")
         }
-        
+
         if poiInfo.count != PlacesConstants.QueryService.EXPECTED_ARRAY_LENGTH {
             Log.warning(label: PlacesConstants.LOG_TAG, "The PointOfInterest does not contain the correct number of elements.")
             throw PlacesDataObjectInvalidInitialization(message: "Invalid JSON Object")
         }
-        
+
         self.identifier = poiInfo[PlacesConstants.QueryService.Index.ID] as? String ?? ""
         self.name = poiInfo[PlacesConstants.QueryService.Index.NAME] as? String ?? ""
         self.latitude = Double(poiInfo[PlacesConstants.QueryService.Index.LATITUDE] as? String ?? "") ?? PlacesConstants.DefaultValues.INVALID_LAT_LON
@@ -87,7 +87,7 @@ public class PointOfInterest: NSObject {
         self.userIsWithin = userIsWithin!
         self.metaData = jsonObject[PlacesConstants.QueryService.Json.META_DATA] as? [String: String] ?? [:]
     }
-    
+
     /// Converts and returns the contents of this `PointOfInterest` as a JSON string.
     /// If serialization fails, this method returns an empty string.
     /// - Returns: a JSON string representation of the calling object
@@ -95,10 +95,10 @@ public class PointOfInterest: NSObject {
         if let jsonData = try? JSONSerialization.data(withJSONObject: self.mapValue, options: []) {
             return String(data: jsonData, encoding: .utf8)!
         }
-        
+
         return ""
     }
-        
+
     /// Check if the current PointOfInterest has priority over the provided object.
     /// Priority is measured by weight - the lower the weight, the higher the priority.
     /// In the case that both weights are the same, the PointOfInterest with a smaller radius has priority.
@@ -111,10 +111,10 @@ public class PointOfInterest: NSObject {
         } else if rhs.weight == weight {
             return rhs.radius >= radius
         }
-        
+
         return true
     }
-    
+
     public override var description: String {
         return "<PointOfInterest> Name: \(name); ID: \(identifier); Center: (\(latitude), \(longitude)); Radius: \(radius) m"
     }
@@ -126,10 +126,10 @@ extension PointOfInterest {
     static func == (lhs: PointOfInterest, rhs: PointOfInterest) -> Bool {
         return lhs.identifier == rhs.identifier
     }
-    
+
     var mapValue: [String: Any] {
         var map: [String: Any] = [:]
-        
+
         map[PlacesConstants.EventDataKey.Places.REGION_ID] = identifier
         map[PlacesConstants.EventDataKey.Places.REGION_NAME] = name
         map[PlacesConstants.EventDataKey.Places.LATITUDE] = latitude
@@ -139,14 +139,14 @@ extension PointOfInterest {
         map[PlacesConstants.EventDataKey.Places.LIBRARY_ID] = libraryId
         map[PlacesConstants.EventDataKey.Places.USER_IS_WITHIN] = userIsWithin
         map[PlacesConstants.EventDataKey.Places.REGION_META_DATA] = metaData
-        
+
         return map
     }
 }
 
 public struct PlacesDataObjectInvalidInitialization: Error {
     public let message: String?
-        
+
     public init(message: String? = nil) {
         self.message = message
     }

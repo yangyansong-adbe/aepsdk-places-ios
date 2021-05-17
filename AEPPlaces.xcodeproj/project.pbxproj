@@ -6,6 +6,20 @@
 	objectVersion = 51;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		2407DFA326531062002B070F /* AEPPlacesXCF */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 2407DFA426531062002B070F /* Build configuration list for PBXAggregateTarget "AEPPlacesXCF" */;
+			buildPhases = (
+			);
+			dependencies = (
+				2407DFAD26531069002B070F /* PBXTargetDependency */,
+			);
+			name = AEPPlacesXCF;
+			productName = AEPPlacesXCF;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		09F3D002F490B5D55CCF0DA7 /* Pods_AEPPlaces.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B564B4991C7921C27904C90 /* Pods_AEPPlaces.framework */; };
 		2407DF50264C9396002B070F /* MockDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2407DF4E264C9396002B070F /* MockDataStore.swift */; };
@@ -76,6 +90,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2407DFAC26531069002B070F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 243AC682262A3A36006501EC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 243AC68A262A3A36006501EC;
+			remoteInfo = AEPPlaces;
+		};
 		243AC696262A3A37006501EC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 243AC682262A3A36006501EC /* Project object */;
@@ -500,6 +521,9 @@
 				LastSwiftUpdateCheck = 1230;
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
+					2407DFA326531062002B070F = {
+						CreatedOnToolsVersion = 12.3;
+					};
 					243AC68A262A3A36006501EC = {
 						CreatedOnToolsVersion = 12.3;
 						LastSwiftMigration = 1230;
@@ -532,6 +556,7 @@
 				243AC693262A3A37006501EC /* AEPPlacesTests */,
 				243DB0E5263CC4C100EF7956 /* PlacesTestApp */,
 				243DB15D2649930900EF7956 /* PlacesTestApp_objc */,
+				2407DFA326531062002B070F /* AEPPlacesXCF */,
 			);
 		};
 /* End PBXProject section */
@@ -800,6 +825,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2407DFAD26531069002B070F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 243AC68A262A3A36006501EC /* AEPPlaces */;
+			targetProxy = 2407DFAC26531069002B070F /* PBXContainerItemProxy */;
+		};
 		243AC697262A3A37006501EC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 243AC68A262A3A36006501EC /* AEPPlaces */;
@@ -853,6 +883,22 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2407DFA526531062002B070F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2407DFA626531062002B070F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		243AC69D262A3A37006501EC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1159,6 +1205,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2407DFA426531062002B070F /* Build configuration list for PBXAggregateTarget "AEPPlacesXCF" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2407DFA526531062002B070F /* Debug */,
+				2407DFA626531062002B070F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		243AC685262A3A36006501EC /* Build configuration list for PBXProject "AEPPlaces" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
