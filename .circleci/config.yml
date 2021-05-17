@@ -89,9 +89,9 @@ jobs:
             bash ./codecov -v -X s3 -c -D "./build/out" -J "AEPPlaces"
 
       # build test apps
-      - run:
-          name: Build Test Apps
-          command: make build-test-apps
+      # - run:
+      #     name: Build Test Apps
+      #     command: make build-test-apps
 
       # verify XCFramework archive builds
       - run:
