@@ -98,15 +98,13 @@ public extension Places {
     /// Requests a list of nearby Points of Interest (POI) and returns them in a closure.
     ///
     /// - Parameters:
-    ///   - forLocation: a CLLocation object represent the current location of the device
-    ///   - withLimit: a non-negative number representing the number of nearby POI to return from the request
-    ///   - closure: called with an array of `PointOfInterest` objects that represent the nearest POI to the device
-    ///   - error: called with a `PlacesQueryResponseCode` if the request failed
-    @objc(getNearbyPointsOfInterest:limit:callback:errorCallback:)
+    ///   - location: a CLLocation object represent the current location of the device
+    ///   - limit: a non-negative number representing the number of nearby POI to return from the request
+    ///   - closure: called with an array of `PointOfInterest` objects that represent the nearest POI to the device and a `PlacesQueryResponseCode`
+    @objc(getNearbyPointsOfInterest:limit:callback:)
     static func getNearbyPointsOfInterest(forLocation location: CLLocation,
                                           withLimit limit: UInt,
-                                          closure: @escaping ([PointOfInterest]) -> Void,
-                                          error: ((PlacesQueryResponseCode) -> Void)? = nil) {
+                                          closure: @escaping ([PointOfInterest], PlacesQueryResponseCode) -> Void) {
         let eventData: [String: Any] = [
             PlacesConstants.EventDataKey.Places.REQUEST_TYPE: PlacesConstants.EventDataKey.Places.RequestType.GET_NEARBY_PLACES,
             PlacesConstants.EventDataKey.Places.LATITUDE: location.coordinate.latitude,
@@ -121,7 +119,7 @@ public extension Places {
 
         MobileCore.dispatch(event: event, timeout: 5) { responseEvent in
             guard let pois = responseEvent?.nearbyPois, let responseCode = responseEvent?.placesQueryResponseCode else {
-                error?(PlacesQueryResponseCode.unknownError)
+                closure([], PlacesQueryResponseCode.unknownError)
                 return
             }
 
@@ -134,9 +132,9 @@ public extension Places {
                         convertedPois.append(convertedPoi)
                     }
                 }
-                closure(convertedPois)
+                closure(convertedPois, responseCode)
             } else {
-                error?(responseCode)
+                closure([], responseCode)
             }
         }
     }
@@ -148,7 +146,7 @@ public extension Places {
     ///
     /// - Parameters:
     ///   - regionEvent: value indicating whether the device entered or exited the given region
-    ///   - forRegion: the `CLRegion` object that triggered the event
+    ///   - region: the `CLRegion` object that triggered the event
     static func processRegionEvent(_ regionEvent: PlacesRegionEvent,
                                    forRegion region: CLRegion) {
         let eventData: [String: Any] = [

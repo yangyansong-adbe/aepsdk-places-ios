@@ -23,8 +23,8 @@ class ViewController: UIViewController {
 
     @IBAction func getNearbyPois(_ sender: Any) {
         let location = CLLocation(latitude: 40.4350229, longitude: -111.8918356)
-        Places.getNearbyPointsOfInterest(forLocation: location, withLimit: 10) { nearbyPois in
-            print("nearbyPois: \(nearbyPois)")
+        Places.getNearbyPointsOfInterest(forLocation: location, withLimit: 10) { (nearbyPois, responseCode) in
+            print("responseCode: \(responseCode.rawValue) \nnearbyPois: \(nearbyPois)")
         }
     }
     

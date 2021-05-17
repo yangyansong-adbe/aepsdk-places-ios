@@ -23,10 +23,9 @@
 
 - (IBAction) getNearbyPois:(id)sender {
     CLLocation *location = [[CLLocation alloc] initWithLatitude:40.4350229 longitude:-111.8918356];
-    [AEPMobilePlaces getNearbyPointsOfInterest:location limit:10 callback:^(NSArray<AEPPlacesPoi *> *pois) {
+    [AEPMobilePlaces getNearbyPointsOfInterest:location limit:10 callback:^(NSArray<AEPPlacesPoi *> *pois, AEPPlacesQueryResponseCode responseCode) {
+        NSLog(@"responseCode: %ld", (long)responseCode);
         NSLog(@"nearbyPois: %@", pois);
-    } errorCallback:^(AEPPlacesQueryResponseCode code) {
-        NSLog(@"error: %ld", (long)code);
     }];
 }
 

@@ -105,8 +105,8 @@ class PlacesPlusPublicApiTests: XCTestCase {
         let location = CLLocation(latitude: 12.34, longitude: 23.45)
         
         // test
-        Places.getNearbyPointsOfInterest(forLocation: location, withLimit: 3) { _ in }
-        
+        Places.getNearbyPointsOfInterest(forLocation: location, withLimit: 3) { (_, _) in }
+                
         // verify
         wait(for: [expectation], timeout: 1)
     }

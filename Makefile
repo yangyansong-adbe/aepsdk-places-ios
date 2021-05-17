@@ -1,5 +1,6 @@
 export EXTENSION_NAME = AEPPlaces
 export APP_NAME = PlacesTestApp
+export APP_NAME_OBJC = PlacesTestApp_objc
 PROJECT_NAME = $(EXTENSION_NAME)
 TARGET_NAME_XCFRAMEWORK = $(EXTENSION_NAME).xcframework
 SCHEME_NAME_XCFRAMEWORK = AEPMessagingXCF
@@ -54,3 +55,7 @@ lint-autocorrect:
 
 lint:
 	(swiftlint lint Sources SampleApps/$(APP_NAME))
+
+build-test-apps:
+	xcodebuild -workspace $(PROJECT_NAME).xcworkspace -scheme $(APP_NAME) -destination 'platform=iOS Simulator,name=iPhone 8'
+	xcodebuild -workspace $(PROJECT_NAME).xcworkspace -scheme $(APP_NAME_OBJC) -destination 'platform=iOS Simulator,name=iPhone 8'
