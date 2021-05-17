@@ -18,7 +18,9 @@ class SharedStateResultPlusPlacesTests: XCTestCase {
     // MARK: - Helpers
     func getConfigSharedState(placesLibraries: [[String: Any]]? = [["id":"1234","name":"mylib"], ["id":"2345","name":"yourlib"]],
                               placesEndpoint: String? = "test.places.edge",
-                              placesMembershipTtl: TimeInterval? = 552) -> SharedStateResult {
+                              placesMembershipTtl: TimeInterval? = 552,
+                              privacy: String? = "optedin",
+                              badPrivacy: Int? = 0) -> SharedStateResult {
         var dataMap: [String: Any] = [:]
         
         if placesLibraries != nil {
@@ -29,6 +31,12 @@ class SharedStateResultPlusPlacesTests: XCTestCase {
         }
         if placesMembershipTtl != nil {
             dataMap[PlacesConstants.EventDataKey.Configuration.PLACES_MEMBERSHIP_TTL] = placesMembershipTtl
+        }
+        if privacy != nil {
+            dataMap[PlacesConstants.EventDataKey.Configuration.GLOBAL_CONFIG_PRIVACY] = privacy
+        }
+        if badPrivacy == 552 {
+            dataMap[PlacesConstants.EventDataKey.Configuration.GLOBAL_CONFIG_PRIVACY] = badPrivacy
         }
         
         return SharedStateResult(status: .set, value: dataMap)
@@ -85,4 +93,28 @@ class SharedStateResultPlusPlacesTests: XCTestCase {
         // verify
         XCTAssertNil(state.placesMembershipTtl)
     }
+    
+    func testGlobalPrivacyHappy() throws {
+        // setup
+        let state = getConfigSharedState()
+        
+        // verify
+        XCTAssertEqual(.optedIn, state.globalPrivacy)
+    }
+    
+    func testGlobalPrivacyEmpty() throws {
+        // setup
+        let state = getConfigSharedState(privacy: nil)
+        
+        // verify
+        XCTAssertEqual(.unknown, state.globalPrivacy)
+    }
+    
+    func testGlobalPrivacyNotString() throws {
+        // setup
+        let state = getConfigSharedState(badPrivacy: 552)
+        
+        // verify
+        XCTAssertEqual(.unknown, state.globalPrivacy)
+    }    
 }

@@ -78,6 +78,19 @@ class PointOfInterestTests: XCTestCase {
         ]
     ]
     
+    static let EDGE_RESPONSE_MAP_BAD_POI_DATA: [String: Any] = [
+        "p": [
+            1234,
+            3,
+            12.34,
+            23.45,
+            "500",
+            424,
+            "25"
+        ],
+        "x": "nope"
+    ]
+    
     // MARK: - Tests
         
     func testConstructorFromJsonStringHappy() throws {
@@ -94,6 +107,23 @@ class PointOfInterestTests: XCTestCase {
         XCTAssertEqual(false, poi.userIsWithin)
         XCTAssertEqual(1, poi.metaData.count)
         XCTAssertEqual("value1", poi.metaData["key1"])
+    }
+    
+    func testConstructorFromJsonStringEmptyJson() throws {
+        // setup
+        let poi = try PointOfInterest(jsonString: "{}")
+        
+        // verify
+        XCTAssertNotNil(poi)
+        XCTAssertEqual("", poi.identifier)
+        XCTAssertEqual("", poi.name)
+        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, poi.latitude)
+        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, poi.longitude)
+        XCTAssertEqual(0, poi.radius)
+        XCTAssertEqual(0, poi.weight)
+        XCTAssertEqual("", poi.libraryId)
+        XCTAssertEqual(false, poi.userIsWithin)
+        XCTAssertEqual(0, poi.metaData.count)
     }
     
     func testConstructorFromJsonStringBadJson() throws {
@@ -131,6 +161,23 @@ class PointOfInterestTests: XCTestCase {
         XCTAssertEqual(true, poi.userIsWithin)
         XCTAssertEqual(1, poi.metaData.count)
         XCTAssertEqual("value1", poi.metaData["key1"])
+    }
+    
+    func testConstructorFromJsonObjectIncorrectJsonArrayData() throws {
+        // setup
+        let poi = try PointOfInterest(jsonObject: PointOfInterestTests.EDGE_RESPONSE_MAP_BAD_POI_DATA)
+        
+        // verify
+        XCTAssertNotNil(poi)
+        XCTAssertEqual("", poi.identifier)
+        XCTAssertEqual("", poi.name)
+        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, poi.latitude)
+        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, poi.longitude)
+        XCTAssertEqual(0, poi.radius)
+        XCTAssertEqual(0, poi.weight)
+        XCTAssertEqual("", poi.libraryId)
+        XCTAssertEqual(false, poi.userIsWithin)
+        XCTAssertEqual(0, poi.metaData.count)
     }
     
     func testConstructorFromJsonObjectNoPoi() throws {

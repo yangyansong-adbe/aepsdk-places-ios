@@ -17,6 +17,33 @@ import AEPCore
 class EventPlusPlacesTests: XCTestCase {
 
     // MARK: - Helpers
+    static let JSON_STRING = """
+    {
+        "regionid": "1234",
+        "regionname": "myplace",
+        "latitude": 12.34,
+        "longitude": 23.45,
+        "radius": 500,
+        "weight": 25,
+        "libraryid": "mylib",
+        "useriswithin": false,
+        "regionmetadata": {
+            "key1": "value1"
+        }
+    }
+    """
+    
+    func getNearbyPlacesResponseEvent() -> Event {
+        return Event(name: "name", type: EventType.places, source: EventSource.responseContent, data: [
+            PlacesConstants.SharedStateKey.NEARBY_POIS: [try? PointOfInterest(jsonString: EventPlusPlacesTests.JSON_STRING).mapValue]
+        ])
+    }
+    
+    func getUserWithPoisResponseEvent() -> Event {
+        return Event(name: "name", type: EventType.places, source: EventSource.responseContent, data: [
+            PlacesConstants.SharedStateKey.USER_WITHIN_POIS: [try? PointOfInterest(jsonString: EventPlusPlacesTests.JSON_STRING).mapValue]
+        ])
+    }
     
     func getNearbyPlacesRequestEvent(type: String = EventType.places,
                                      source: String = EventSource.requestContent,
@@ -248,6 +275,40 @@ class EventPlusPlacesTests: XCTestCase {
         let event = getSharedStateUpdateEvent()
         
         // verify
-        XCTAssertEqual(PlacesRegionEvent.none, event.regionEventType)
+        XCTAssertNil(event.regionEventType)
+    }
+    
+    func testNearbyPois() throws {
+        // setup
+        let event = getNearbyPlacesResponseEvent()
+        
+        // verify
+        XCTAssertNotNil(event.nearbyPois)
+        XCTAssertEqual(1, event.nearbyPois?.count)
+    }
+    
+    func testNearbyPoisEmpty() throws {
+        // setup
+        let event = getUserWithPoisResponseEvent()
+        
+        // verify
+        XCTAssertNil(event.nearbyPois)
+    }
+    
+    func testUserWithinPois() throws {
+        // setup
+        let event = getUserWithPoisResponseEvent()
+        
+        // verify
+        XCTAssertNotNil(event.userWithinPois)
+        XCTAssertEqual(1, event.userWithinPois?.count)
+    }
+    
+    func testUserWithinPoisEmpty() throws {
+        // setup
+        let event = getNearbyPlacesResponseEvent()
+        
+        // verify
+        XCTAssertNil(event.userWithinPois)
     }
 }

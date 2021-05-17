@@ -82,10 +82,8 @@ extension Places {
         data[PlacesConstants.SharedStateKey.AUTH_STATUS] = authStatus.stringValue
                 
         // add membership timestamp
-        if membershipValidUntil != nil {
-            data[PlacesConstants.SharedStateKey.VALID_UNTIL] = membershipValidUntil!
-        }
-        
+        data[PlacesConstants.SharedStateKey.VALID_UNTIL] = membershipValidUntil ?? 0 as TimeInterval
+                
         return data
     }
     
@@ -168,8 +166,8 @@ extension Places {
             
             // remove the poi from our userWithinPois list
             userWithinPois.removeValue(forKey: poi.identifier)
-        case .none:
-            Log.trace(label: PlacesConstants.LOG_TAG, "\(#function) processing .none region event - you shouldn't ever see this!")
+        default:
+            Log.trace(label: PlacesConstants.LOG_TAG, "\(#function) processing unknown region event - you shouldn't ever see this!")
             return
         }
         

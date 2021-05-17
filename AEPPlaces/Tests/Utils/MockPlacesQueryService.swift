@@ -10,13 +10,21 @@
  governing permissions and limitations under the License.
  */
 
-import CoreLocation
-import XCTest
+import Foundation
 @testable import AEPPlaces
 
-class CLAuthorizationStatusPlusPlacesTests: XCTestCase {
-    // MARK: - Tests
-    func testToStringAllowAlways() throws {
-        XCTAssertEqual("always", CLAuthorizationStatus.authorizedAlways.stringValue)
+class MockPlacesQueryService: PlacesQueryService {
+    var getNearbyPlacesWasCalled = false
+    var invokedLat: Double?
+    var invokedLon: Double?
+    var invokedCount: Int?
+    var returnValue: PlacesQueryServiceResult?
+    
+    override func getNearbyPlaces(lat: Double, lon: Double, count: Int, configuration: PlacesConfiguration, completion: @escaping (PlacesQueryServiceResult) -> Void) {
+        getNearbyPlacesWasCalled = true
+        invokedLat = lat
+        invokedLon = lon
+        invokedCount = count
+        completion(returnValue ?? PlacesQueryServiceResult(pois: nil, response: .unknownError))
     }
 }

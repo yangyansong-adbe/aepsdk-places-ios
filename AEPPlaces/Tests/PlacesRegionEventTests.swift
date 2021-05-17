@@ -32,15 +32,7 @@ class PlacesRegionEventTests: XCTestCase {
         // verify
         XCTAssertEqual(PlacesRegionEvent.exit, exitEvent)
     }
-    
-    func testConstructorRawValuesNone() throws {
-        // setup
-        let noneEvent = PlacesRegionEvent(rawValue: 2)
         
-        // verify
-        XCTAssertEqual(PlacesRegionEvent.none, noneEvent)
-    }
-    
     func testConstructorRawValuesInvalid() throws {
         // setup
         let unmatchedEvent = PlacesRegionEvent(rawValue: 552)
@@ -51,7 +43,7 @@ class PlacesRegionEventTests: XCTestCase {
     
     func testFromStringEntry() throws {
         // setup
-        let entry = PlacesRegionEvent(fromString: "entry")
+        let entry = PlacesRegionEvent.fromString("entry")
         
         // verify
         XCTAssertEqual(PlacesRegionEvent.entry, entry)
@@ -59,32 +51,23 @@ class PlacesRegionEventTests: XCTestCase {
     
     func testFromStringExit() throws {
         // setup
-        let exit = PlacesRegionEvent(fromString: "exit")
+        let exit = PlacesRegionEvent.fromString("exit")
         
         // verify
         XCTAssertEqual(PlacesRegionEvent.exit, exit)
     }
     
-    func testFromStringNone() throws {
-        // setup
-        let none = PlacesRegionEvent(fromString: "none")
-        
-        // verify
-        XCTAssertEqual(PlacesRegionEvent.none, none)
-    }
-    
     func testFromStringInvalid() throws {
         // setup
-        let invalid = PlacesRegionEvent(fromString: "i don't match anything")
+        let invalid = PlacesRegionEvent.fromString("i don't match anything")
         
         // verify
-        XCTAssertEqual(PlacesRegionEvent.none, invalid)
+        XCTAssertNil(invalid)
     }
         
     func testStringValues() throws {
         // verify
         XCTAssertEqual("entry", PlacesRegionEvent.entry.stringValue)
         XCTAssertEqual("exit", PlacesRegionEvent.exit.stringValue)
-        XCTAssertEqual("none", PlacesRegionEvent.none.stringValue)
     }
 }

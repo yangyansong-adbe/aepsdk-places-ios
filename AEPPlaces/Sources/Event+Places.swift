@@ -100,6 +100,6 @@ extension Event {
     }
     
     var regionEventType: PlacesRegionEvent? {        
-        return PlacesRegionEvent(fromString: data?[PlacesConstants.EventDataKey.Places.REGION_EVENT_TYPE] as? String ?? "")
+        return PlacesRegionEvent.fromString(data?[PlacesConstants.EventDataKey.Places.REGION_EVENT_TYPE] as? String ?? "")
     }
 }
