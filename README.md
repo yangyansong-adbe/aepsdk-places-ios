@@ -28,7 +28,7 @@ To generate `AEPPlaces.xcframework`, run the following command from the root dir
 make archive
 ```
 
-This will generate an XCFramework under the `build` folder. Drag and drop all the .xcframeworks to your app target.
+This will generate an XCFramework under the `build` folder. Drag and drop `AEPPlaces.xcframework` to your app target.
 
 ### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
 
@@ -37,12 +37,10 @@ This will generate an XCFramework under the `build` folder. Drag and drop all th
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-      pod 'AEPPlaces', :git => 'git@github.com:adobe/aepsdk-places-ios.git', :branch => 'main'
-      pod 'AEPEdge', :git => 'git@github.com:adobe/aepsdk-edge-ios.git', :branch => 'main'
-      pod 'AEPEdgeIdentity', :git => 'git@github.com:adobe/aepsdk-edgeidentity-ios.git', :branch => 'main'
-      pod 'AEPCore', :git => 'git@github.com:adobe/aepsdk-core-ios.git', :branch => 'main'
-      pod 'AEPServices', :git => 'git@github.com:adobe/aepsdk-core-ios.git', :branch => 'main'
-      pod 'AEPRulesEngine', :git => 'git@github.com:adobe/aepsdk-rulesengine-ios.git', :branch => 'main'
+      pod 'AEPPlaces', :git => 'git@github.com:adobe/aepsdk-places-ios.git', :branch => 'main'      
+      pod 'AEPCore'
+      pod 'AEPServices'
+      pod 'AEPRulesEngine'
 end
 ```
 
@@ -54,7 +52,7 @@ To add the AEPPlaces Package to your application, from the Xcode menu select:
 
 Enter the URL for the AEPPlaces package repository: `https://github.com/adobe/aepsdk-places-ios.git`.
 
-When prompted, make sure you change the branch to `main`. 
+When prompted, make sure you change the branch to `main`.
 
 Alternatively, if your project has a `Package.swift` file, you can add AEPPlaces directly to your dependencies:
 
@@ -63,17 +61,17 @@ dependencies: [
     .package(url: "https://github.com/adobe/aepsdk-places-ios.git", .branch("main"))
 ],
 targets: [
-    .target(name: "YourTarget", 
-            dependencies: ["AEPPlaces"], 
+    .target(name: "YourTarget",
+            dependencies: ["AEPPlaces"],
             path: "your/path")
 ]
 ```
 
 ## Documentation
-Additional documentation for configuration and sdk usage can be found under the [Documentation](Documentation/README.md) directory.
+Additional documentation for configuration and SDK usage can be found under the [Documentation](Documentation/README.md) directory.
 
-## Setup Demo Application
-The AEP Places Demo application is a sample app which retrieving nearby Points of Interest and triggering region events.
+## PlacesTestApp & PlacesTestApp_objc
+Two sample apps are provided (one each for Swift and Objective-c) which demonstrate retrieving nearby Points of Interest and triggering region events. Their targets are in `AEPPlaces.xcodeproj`, runnable in `AEPPlaces.xcworkspace`. Sample app source code can be found in the `SampleApps` directory.
 
 ## Contributing
 Looking to contribute to this project? Please review our [Contributing guidelines](.github/CONTRIBUTING.md) prior to opening a pull request.
