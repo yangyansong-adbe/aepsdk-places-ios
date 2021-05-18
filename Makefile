@@ -3,7 +3,7 @@ export APP_NAME = PlacesTestApp
 export APP_NAME_OBJC = PlacesTestApp_objc
 PROJECT_NAME = $(EXTENSION_NAME)
 TARGET_NAME_XCFRAMEWORK = $(EXTENSION_NAME).xcframework
-SCHEME_NAME_XCFRAMEWORK = AEPMessagingXCF
+SCHEME_NAME_XCFRAMEWORK = AEPPlacesXCF
 
 SIMULATOR_ARCHIVE_PATH = ./build/ios_simulator.xcarchive/Products/Library/Frameworks/
 IOS_ARCHIVE_PATH = ./build/ios.xcarchive/Products/Library/Frameworks/
