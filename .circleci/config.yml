@@ -89,9 +89,9 @@ jobs:
             bash ./codecov -v -X s3 -c -D "./build/out" -J "AEPPlaces"
 
       # build swift package
-      # - run:
-      #     name: Build Swift Package
-      #     command: make swift-build
+      - run:
+          name: Build Swift Package
+          command: make swift-build
 
       # verify XCFramework archive builds
       - run:
