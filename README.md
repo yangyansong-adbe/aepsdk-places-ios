@@ -1,5 +1,10 @@
 # Adobe Experience Platform - Places extension for iOS
 
+[![Cocoapods](https://img.shields.io/cocoapods/v/AEPPlaces.svg?color=orange&label=AEPPlaces&logo=apple&logoColor=white)](https://cocoapods.org/pods/AEPPlaces)
+[![SPM](https://img.shields.io/badge/SPM-Supported-orange.svg?logo=apple&logoColor=white)](https://swift.org/package-manager/)
+[![CircleCI](https://img.shields.io/circleci/project/github/adobe/aepsdk-places-ios/main.svg?logo=circleci)](https://circleci.com/gh/adobe/workflows/aepsdk-places-ios)
+[![Code Coverage](https://img.shields.io/codecov/c/github/adobe/aepsdk-places-ios/main.svg?logo=codecov)](https://codecov.io/gh/adobe/aepsdk-places-ios/branch/main)
+
 ## BETA
 AEPPlaces is currently in Beta. Use of this code is by invitation only and not otherwise supported by Adobe. Please contact your Adobe Customer Success Manager to learn more.
 
