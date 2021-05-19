@@ -52,7 +52,7 @@ extension Places {
     /// - Returns: a `[String: Any]` dictionary representing Places shared state
     func getSharedStateData() -> [String: Any] {
         var data: [String: Any] = [:]
-
+        
         // ensure membership data is still valid and clear it out if it's expired
         if !membershipDataIsValid {
             clearMembershipData()

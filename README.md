@@ -43,9 +43,6 @@ use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
       pod 'AEPPlaces', :git => 'git@github.com:adobe/aepsdk-places-ios.git', :branch => 'main'      
-      pod 'AEPCore'
-      pod 'AEPServices'
-      pod 'AEPRulesEngine'
 end
 ```
 

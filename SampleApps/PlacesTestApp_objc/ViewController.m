@@ -40,6 +40,7 @@
 }
 
 - (IBAction) getCurrentPointsOfInterest:(id)sender {
+    AEPMobilePlaces getcur
     [AEPMobilePlaces getCurrentPointsOfInterest:^(NSArray<AEPPlacesPoi *> *pois) {
         NSLog(@"currentPois: %@", pois);
     }];

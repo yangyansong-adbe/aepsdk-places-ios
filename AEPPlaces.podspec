@@ -17,6 +17,6 @@ Pod::Spec.new do |s|
   s.dependency 'AEPCore'
   s.dependency 'AEPServices'
 
-  s.source_files = 'Sources/**/*.swift'
+  s.source_files = 'AEPPlaces/Sources/**/*.swift'
 
 end

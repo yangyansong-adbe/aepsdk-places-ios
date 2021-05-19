@@ -32,6 +32,7 @@
     [AEPMobileCore registerExtensions:@[AEPMobilePlaces.class] completion:^{
         // Griffon Session - AEPPlaces_objc in Adobe Benedick Corp
         [AEPAssurance startSession:[NSURL URLWithString:@"aepplaces://?adb_validation_sessionid=45028228-fc99-4865-87cb-99351de0c064"]];
+        NSLog(@"places version: %@", [AEPMobilePlaces extensionVersion]);
     }];
         
     return YES;
