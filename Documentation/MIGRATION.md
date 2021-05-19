@@ -2,6 +2,55 @@
 
 This page gives an overview of how to migrate an ACPPlaces implementation to use AEPPlaces.  
 
+The class name containing public APIs is available is different depending on which SDK and language combination you're using:
+
+| SDK Version | Language | Public Class Name | Example |
+| ----------- | -------- | ----------------- | ------- |
+| ACPPlaces | Objective-c | `ACPPlaces` | `[ACPPlaces clear];`|
+| AEPPlaces | Objective-c | `AEPMobilePlaces` | `[AEPMobilePlaces clear];` |
+| AEPPlaces | Swift | `Places` | `Places.clear()` |
+
+
+## APIs (alphabetical)
+- [clear](#clear)
+- [extensionVersion](#extensionVersion)
+- [getCurrentPointsOfInterest](#getCurrentPointsOfInterest)
+
+### clear
+
+| SDK Version | Language    | API Signature |
+| ----------- | ----------- | ------------- |
+| ACPPlaces   | Objective-c | |
+| AEPPlaces   | Objective-c | |
+| AEPPlaces   | Swift       | |
+
+
+### extensionVersion
+
+| SDK Version | Language    | API Signature |
+| ----------- | ----------- | ------------- |
+| ACPPlaces   | Objective-c | |
+| AEPPlaces   | Objective-c | |
+| AEPPlaces   | Swift       | |
+
+
+### getCurrentPointsOfInterest
+
+<b>ACPPlaces (Objective-c)</b>
+```
+  + (void) getCurrentPointsOfInterest: (nullable void (^) (NSArray<ACPPlacesPoi*>* _Nullable userWithinPoi)) callback;
+```
+
+<b>AEPPlaces (Objective-c)</b>
+```
+  + (void) getCurrentPointsOfInterest: ^(NSArray<AEPPlacesPoi*>* _Nonnull pois)closure;
+```
+
+<b>AEPPlaces (Swift)</b>
+```
+  static func getCurrentPointsOfInterest(_ closure: @escaping ([PointOfInterest]) -> Void)
+```
+
 ## New APIs
 The table below shows each of the AEPPlaces APIs and the ACPPlaces API they are replacing:
 
