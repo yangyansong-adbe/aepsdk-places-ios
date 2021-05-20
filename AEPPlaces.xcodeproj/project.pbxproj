@@ -362,7 +362,7 @@
 				243DB0F6263CC4C500EF7956 /* Info.plist */,
 			);
 			name = PlacesTestApp;
-			path = SampleApps/PlacesTestApp;
+			path = TestApps/PlacesTestApp;
 			sourceTree = "<group>";
 		};
 		243DB12D26447F6600EF7956 /* gpx */ = {
@@ -390,7 +390,7 @@
 				243DB1722649930D00EF7956 /* main.m */,
 			);
 			name = PlacesTestApp_objc;
-			path = SampleApps/PlacesTestApp_objc;
+			path = TestApps/PlacesTestApp_objc;
 			sourceTree = "<group>";
 		};
 		DF5EB3AD0F6BA7612343B983 /* Frameworks */ = {
@@ -1128,7 +1128,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U7WJX8Z527;
-				INFOPLIST_FILE = SampleApps/PlacesTestApp/Info.plist;
+				INFOPLIST_FILE = TestApps/PlacesTestApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1149,7 +1149,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U7WJX8Z527;
-				INFOPLIST_FILE = SampleApps/PlacesTestApp/Info.plist;
+				INFOPLIST_FILE = TestApps/PlacesTestApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1170,7 +1170,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U7WJX8Z527;
-				INFOPLIST_FILE = SampleApps/PlacesTestApp_objc/Info.plist;
+				INFOPLIST_FILE = TestApps/PlacesTestApp_objc/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1190,7 +1190,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U7WJX8Z527;
-				INFOPLIST_FILE = SampleApps/PlacesTestApp_objc/Info.plist;
+				INFOPLIST_FILE = TestApps/PlacesTestApp_objc/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -47,7 +47,9 @@
 
 - (IBAction) getLastKnownLocation:(id)sender {
     [AEPMobilePlaces getLastKnownLocation:^(CLLocation *location) {
-        NSLog(@"location returned from closure: (%f, %f)", location.coordinate.latitude, location.coordinate.longitude);
+        if (location) {
+            NSLog(@"location returned from closure: (%f, %f)", location.coordinate.latitude, location.coordinate.longitude);
+        }
     }];
 }
 
