@@ -1,6 +1,6 @@
 # Migration from ACPPlaces to AEPPlaces
 
-This document is a reference comparison of ACPPlaces APIs against their equivalent APIs in AEPPlaces.
+This document is a reference comparison of ACPPlaces (2.x) APIs against their equivalent APIs in AEPPlaces (3.x).
 
 If explanation beyond showing API differences is necessary, it will be captured as a "Note" within that API's section.  
 
