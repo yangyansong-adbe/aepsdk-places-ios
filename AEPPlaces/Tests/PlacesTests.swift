@@ -58,8 +58,7 @@ class PlacesTests: XCTestCase {
         places.currentPoi = poi
         places.lastEnteredPoi = poi
         places.lastExitedPoi = poi
-        places.lastKnownLatitude = poi.latitude
-        places.lastKnownLongitude = poi.longitude
+        places.lastKnownCoordinate = CLLocationCoordinate2D(latitude: poi.latitude, longitude: poi.longitude)
         places.authStatus = .authorizedAlways
         places.membershipValidUntil = Date().timeIntervalSince1970 + 60
     }
@@ -677,8 +676,8 @@ class PlacesTests: XCTestCase {
         XCTAssertEqual(EventSource.responseContent, responseEvent.source)
         XCTAssertEqual(PlacesConstants.EventName.Response.GET_LAST_KNOWN_LOCATION, responseEvent.name)
         let dispatchedData = responseEvent.data!
-        XCTAssertEqual(places.lastKnownLatitude, dispatchedData[PlacesConstants.EventDataKey.Places.LATITUDE] as? Double)
-        XCTAssertEqual(places.lastKnownLongitude, dispatchedData[PlacesConstants.EventDataKey.Places.LONGITUDE] as? Double)
+        XCTAssertEqual(places.lastKnownCoordinate.latitude, dispatchedData[PlacesConstants.EventDataKey.Places.LATITUDE] as? Double)
+        XCTAssertEqual(places.lastKnownCoordinate.longitude, dispatchedData[PlacesConstants.EventDataKey.Places.LONGITUDE] as? Double)
         
         // validate generic event
         let genericEvent = mockRuntime.secondEvent!
@@ -687,8 +686,8 @@ class PlacesTests: XCTestCase {
         XCTAssertEqual(EventSource.responseContent, genericEvent.source)
         XCTAssertEqual(PlacesConstants.EventName.Response.GET_LAST_KNOWN_LOCATION, genericEvent.name)
         let genericData = genericEvent.data!
-        XCTAssertEqual(places.lastKnownLatitude, genericData[PlacesConstants.EventDataKey.Places.LATITUDE] as? Double)
-        XCTAssertEqual(places.lastKnownLongitude, genericData[PlacesConstants.EventDataKey.Places.LONGITUDE] as? Double)
+        XCTAssertEqual(places.lastKnownCoordinate.latitude, genericData[PlacesConstants.EventDataKey.Places.LATITUDE] as? Double)
+        XCTAssertEqual(places.lastKnownCoordinate.longitude, genericData[PlacesConstants.EventDataKey.Places.LONGITUDE] as? Double)
     }
     
     func testSetAuthorizationStatus() throws {
@@ -741,8 +740,8 @@ class PlacesTests: XCTestCase {
         XCTAssertNil(places.lastEnteredPoi)
         XCTAssertNil(places.lastExitedPoi)
         XCTAssertNil(places.membershipValidUntil)
-        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownLatitude)
-        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownLongitude)
+        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownCoordinate.latitude)
+        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownCoordinate.longitude)
         XCTAssertEqual(.notDetermined, places.authStatus)
         
         XCTAssertEqual(2, mockRuntime.createdSharedStates.count)  // first from onRegistered, second as result of this event

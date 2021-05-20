@@ -50,8 +50,7 @@ class PlacesPlusStateTests: XCTestCase {
         places.currentPoi = poi
         places.lastEnteredPoi = poi
         places.lastExitedPoi = poi
-        places.lastKnownLatitude = poi.latitude
-        places.lastKnownLongitude = poi.longitude
+        places.lastKnownCoordinate = CLLocationCoordinate2D(latitude: poi.latitude, longitude: poi.longitude)
         places.authStatus = .authorizedAlways
         places.membershipValidUntil = Date().timeIntervalSince1970 + 60
     }
@@ -96,8 +95,8 @@ class PlacesPlusStateTests: XCTestCase {
         XCTAssertNil(places.currentPoi)
         XCTAssertNil(places.lastEnteredPoi)
         XCTAssertNil(places.lastExitedPoi)
-        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownLatitude)
-        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownLongitude)
+        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownCoordinate.latitude)
+        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownCoordinate.longitude)
         XCTAssertEqual(CLAuthorizationStatus.notDetermined, places.authStatus)
         XCTAssertNil(places.membershipValidUntil)
         
@@ -201,8 +200,8 @@ class PlacesPlusStateTests: XCTestCase {
         XCTAssertNil(places.currentPoi)
         XCTAssertNil(places.lastEnteredPoi)
         XCTAssertNil(places.lastExitedPoi)
-        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownLatitude)
-        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownLongitude)
+        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownCoordinate.latitude)
+        XCTAssertEqual(PlacesConstants.DefaultValues.INVALID_LAT_LON, places.lastKnownCoordinate.longitude)
         XCTAssertEqual(CLAuthorizationStatus.notDetermined, places.authStatus)
         XCTAssertNil(places.membershipValidUntil)
         populatePlacesDataStore()
@@ -216,8 +215,8 @@ class PlacesPlusStateTests: XCTestCase {
         XCTAssertNotNil(places.currentPoi)
         XCTAssertNotNil(places.lastEnteredPoi)
         XCTAssertNotNil(places.lastExitedPoi)
-        XCTAssertEqual(12.34, places.lastKnownLatitude)
-        XCTAssertEqual(23.45, places.lastKnownLongitude)
+        XCTAssertEqual(12.34, places.lastKnownCoordinate.latitude)
+        XCTAssertEqual(23.45, places.lastKnownCoordinate.longitude)
         XCTAssertEqual(CLAuthorizationStatus.authorizedAlways, places.authStatus)
         XCTAssertNotNil(places.membershipValidUntil)
     }
