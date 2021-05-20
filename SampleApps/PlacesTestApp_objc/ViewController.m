@@ -39,8 +39,7 @@
     [AEPMobilePlaces processRegionEvent:AEPPlacesRegionEventEntry forRegion:region];
 }
 
-- (IBAction) getCurrentPointsOfInterest:(id)sender {
-    AEPMobilePlaces getcur
+- (IBAction) getCurrentPointsOfInterest:(id)sender {    
     [AEPMobilePlaces getCurrentPointsOfInterest:^(NSArray<AEPPlacesPoi *> *pois) {
         NSLog(@"currentPois: %@", pois);
     }];

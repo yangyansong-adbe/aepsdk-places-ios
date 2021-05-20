@@ -1,103 +1,232 @@
 # Migration from ACPPlaces to AEPPlaces
 
-This page gives an overview of how to migrate an ACPPlaces implementation to use AEPPlaces.  
+This document is a reference comparison of ACPPlaces APIs against their equivalent APIs in AEPPlaces.
 
-The class name containing public APIs is available is different depending on which SDK and language combination you're using:
+If explanation beyond showing API differences is necessary, it will be captured as a "Note" within that API's section.  
 
-| SDK Version | Language | Public Class Name | Example |
-| ----------- | -------- | ----------------- | ------- |
+For example:
+
+> <b>Note</b>: This is information that is important to help clarify the API.
+
+## Primary Class
+
+The class name containing public APIs is different depending on which SDK and language combination being used.
+
+| SDK Version | Language | Class Name | Example |
+| ----------- | -------- | ---------- | ------- |
 | ACPPlaces | Objective-c | `ACPPlaces` | `[ACPPlaces clear];`|
 | AEPPlaces | Objective-c | `AEPMobilePlaces` | `[AEPMobilePlaces clear];` |
 | AEPPlaces | Swift | `Places` | `Places.clear()` |
 
+## Additional Public Classes and Enums
 
-## APIs (alphabetical)
+| ACPPlaces (Objective-c) | AEPPlaces (Objective-c) | AEPPlaces (Swift) |
+| ----------------------- | ----------------------- | ----------------- |
+| `ACPPlacesRequestError` | `AEPlacesQueryResponseCode` | `PlacesQueryResponseCode` |
+| `ACPPlacesPoi` | `AEPPlacesPoi` | `PointOfInterest` |
+| `ACPRegionEventType` | `AEPPlacesRegionEvent` | `PlacesRegionEvent` |
+
+## Public APIs (alphabetical)
 - [clear](#clear)
 - [extensionVersion](#extensionVersion)
 - [getCurrentPointsOfInterest](#getCurrentPointsOfInterest)
+- [getLastKnownLocation](#getLastKnownLocation)
+- [getNearbyPointsOfInterest](#getNearbyPointsOfInterest)
+- [processRegionEvent](#processRegionEvent)
+- [registerExtension](#registerExtension)
+- [setAuthorizationStatus](#setAuthorizationStatus)
+
+<hr />
 
 ### clear
 
-| SDK Version | Language    | API Signature |
-| ----------- | ----------- | ------------- |
-| ACPPlaces   | Objective-c | |
-| AEPPlaces   | Objective-c | |
-| AEPPlaces   | Swift       | |
+<b>ACPPlaces (Objective-c)</b>
+```
++ (void) clear;
+```
 
+<b>AEPPlaces (Objective-c)</b>
+```
++ (void) clear;
+```
+
+<b>AEPPlaces (Swift)</b>
+```
+static func clear()
+```
+
+<hr />
 
 ### extensionVersion
 
-| SDK Version | Language    | API Signature |
-| ----------- | ----------- | ------------- |
-| ACPPlaces   | Objective-c | |
-| AEPPlaces   | Objective-c | |
-| AEPPlaces   | Swift       | |
+<b>ACPPlaces (Objective-c)</b>
+```
++ (nonnull NSString*) extensionVersion;
+```
 
+<b>AEPPlaces (Objective-c)</b>
+```
++ (nonnull NSString*) extensionVersion;
+```
+
+<b>AEPPlaces (Swift)</b>
+```
+static var extensionVersion: String
+```
+
+<hr />
 
 ### getCurrentPointsOfInterest
 
 <b>ACPPlaces (Objective-c)</b>
 ```
-  + (void) getCurrentPointsOfInterest: (nullable void (^) (NSArray<ACPPlacesPoi*>* _Nullable userWithinPoi)) callback;
++ (void) getCurrentPointsOfInterest: (nullable void (^) (NSArray<ACPPlacesPoi*>* _Nullable userWithinPoi)) callback;
 ```
 
 <b>AEPPlaces (Objective-c)</b>
 ```
-  + (void) getCurrentPointsOfInterest: ^(NSArray<AEPPlacesPoi*>* _Nonnull pois)closure;
++ (void) getCurrentPointsOfInterest: ^(NSArray<AEPPlacesPoi*>* _Nonnull pois) closure;
 ```
 
 <b>AEPPlaces (Swift)</b>
 ```
-  static func getCurrentPointsOfInterest(_ closure: @escaping ([PointOfInterest]) -> Void)
+static func getCurrentPointsOfInterest(_ closure: @escaping ([PointOfInterest]) -> Void)
 ```
 
-## New APIs
-The table below shows each of the AEPPlaces APIs and the ACPPlaces API they are replacing:
-
-| ACPPlaces API (Objective-c)<br/><br/>class name: `ACPPlaces` | AEPPlaces API (Swift)<br/><br/>class name: `Places` | AEPPlaces API (Objective-c)<br/><br/>class name: `AEPMobilePlaces` |
-| ------------- | ------------- | ------------- |
-| `+ (void) clear;` | `static func clear()` | `+ (void) clear;` |
-| `+ (nonnull NSString*) extensionVersion;` | `static var extensionVersion: String` | `+ (nonnull NSString*) extensionVersion;` |
-| `+ (void) getCurrentPointsOfInterest: (nullable void (^) (NSArray<ACPPlacesPoi*>* _Nullable userWithinPoi)) callback;` | `static func getCurrentPointsOfInterest(_ closure: @escaping ([PointOfInterest]) -> Void)` | `+ (void) getCurrentPointsOfInterest: ^(NSArray<AEPPlacesPoi *> * _Nonnull pois)closure;` |
-| `+ (void) getLastKnownLocation: (nullable void (^) (CLLocation* _Nullable lastLocation)) callback;` | `static func getLastKnownLocation(_ closure: @escaping (CLLocation?) -> Void)` |
-| `+ (void) getNearbyPointsOfInterest: (nonnull CLLocation*) currentLocation limit: (NSUInteger) limit callback: (nullable void (^) (NSArray<ACPPlacesPoi*>* _Nullable nearbyPoi)) callback;` | `static func getNearbyPointsOfInterest(forLocation location: CLLocation, withLimit limit: UInt, closure: @escaping ([PointOfInterest], PlacesQueryResponseCode) -> Void)` |
-| `+ (void) getNearbyPointsOfInterest: (nonnull CLLocation*) currentLocation limit: (NSUInteger) limit callback: (nullable void (^) (NSArray<ACPPlacesPoi*>* _Nullable nearbyPoi)) callback errorCallback: (nullable void (^) (ACPPlacesRequestError result)) errorCallback;` | |
-| `+ (void) processRegionEvent: (nonnull CLRegion*) region forRegionEventType: (ACPRegionEventType) eventType;` | `static func processRegionEvent(_ regionEvent: PlacesRegionEvent, forRegion region: CLRegion)` |
-| `+ (void) registerExtension;` | Use `MobileCore.registerExtensions([Places.self])` |
-| `+ (void) setAuthorizationStatus: (CLAuthorizationStatus) status;` | `static func setAuthorizationStatus(status: CLAuthorizationStatus)` |
-
-Some of the APIs are similar but have slight changes in behavior. The sections below help highlight those changes.
-
-
+<hr />
 
 ### getLastKnownLocation
 
-##### AEPPlaces
-If the SDK has no last known location, it will pass `nil` to the closure.
+<b>ACPPlaces (Objective-c)</b>
 
-##### ACPPlaces
-If the SDK has no last known location, it will pass a `CLLocation` object with a value of `999.999` for latitude and longitude to the callback.
+> <b>Note</b>: If the SDK has no last known location, it will pass a `CLLocation` object with a value of `999.999` for latitude and longitude to the callback.
+
+```
++ (void) getLastKnownLocation: (nullable void (^) (CLLocation* _Nullable lastLocation)) callback;
+```
+
+<b>AEPPlaces (Objective-c)</b>
+```
++ (void) getLastKnownLocation: ^(CLLocation* _Nullable lastLocation) closure;
+```
+
+<b>AEPPlaces (Swift)</b>
+
+> <b>Note</b>: If the SDK has no last known location, it will pass `nil` to the closure.
+
+```
+static func getLastKnownLocation(_ closure: @escaping (CLLocation?) -> Void)
+```
+
+<hr />
 
 ### getNearbyPointsOfInterest
 
-##### AEPPlaces
-A single method supports retrieval of nearby Points of Interest. The provided closure accepts two parameters, representing the resulting nearby Points of Interest (if any) and the response code.
 
-##### ACPPlaces
-Two `getNearbyPointsOfInterest` methods exist. The overloaded version allows the caller to provide an `errorCallback` parameter in the case of failure.
+<b>ACPPlaces (Objective-c)</b>
+
+> <b>Note</b>: Two `getNearbyPointsOfInterest` methods exist. The overloaded version allows the caller to provide an `errorCallback` parameter in the case of failure.
+
+```
+// without error handling
++ (void) getNearbyPointsOfInterest: (nonnull CLLocation*) currentLocation
+                             limit: (NSUInteger) limit
+                          callback: (nullable void (^) (NSArray<ACPPlacesPoi*>* _Nullable nearbyPoi)) callback;
+
+// with error handling
++ (void) getNearbyPointsOfInterest: (nonnull CLLocation*) currentLocation
+                             limit: (NSUInteger) limit
+                          callback: (nullable void (^) (NSArray<ACPPlacesPoi*>* _Nullable nearbyPoi)) callback
+                     errorCallback: (nullable void (^) (ACPPlacesRequestError result)) errorCallback;
+```
+
+<b>AEPPlaces (Objective-c)</b>
+```
++ (void) getNearbyPointsOfInterest: (nonnull CLLocation*) currentLocation
+                             limit: (NSUInteger) limit
+                          callback: ^ (NSArray<AEPPlacesPoi*>* _Nonnull, AEPPlacesQueryResponseCode) closure;
+```
+
+<b>AEPPlaces (Swift)</b>
+
+> <b>Note</b>: Rather than providing an overloaded method, a single method supports retrieval of nearby Points of Interest. The provided closure accepts two parameters, representing the resulting nearby Points of Interest (if any) and the response code.
+
+```
+static func getNearbyPointsOfInterest(forLocation location: CLLocation,
+                                      withLimit limit: UInt,
+                                      closure: @escaping ([PointOfInterest], PlacesQueryResponseCode) -> Void)
+```
+
+<hr />
 
 ### processRegionEvent
 
-##### AEPPlaces
-The order of parameters has the `PlacesRegionEvent` first, and the `CLRegion` that triggered the event second.
+<b>ACPPlaces (Objective-c)</b>
 
-##### ACPPlaces
-The order of parameters has the `CLRegion` that triggered the event first, and the `ACPRegionEventType` second.
+> <b>Note</b>: The order of parameters has the `CLRegion` that triggered the event first, and the `ACPRegionEventType` second.
 
-### Class and Enum Name Changes
+```
++ (void) processRegionEvent: (nonnull CLRegion*) region
+         forRegionEventType: (ACPRegionEventType) eventType;
+```
 
-| AEPPlaces (Swift) | AEPPlaces (Objective-c) | ACPPlaces (Objective-c) |
-| ----------------- | ----------------------- | ----------------------- |
-| `PlacesQueryResponseCode` | `AEPlacesQueryResponseCode` | `ACPPlacesRequestError` |
-| `PointOfInterest` | `AEPPlacesPoi` | `ACPPlacesPoi` |
-| `PlacesRegionEvent` | `AEPPlacesRegionEvent` | `ACPRegionEventType` |
+<b>AEPPlaces (Objective-c)</b>
+```
++ (void) processRegionEvent: (AEPRegionEventType) eventType
+                  forRegion: (nonnull CLRegion*) region;
+```
+
+<b>AEPPlaces (Swift)</b>
+
+> <b>Note</b>: The order of parameters has the `PlacesRegionEvent` first, and the `CLRegion` that triggered the event second. This aligns better with Swift API naming conventions.
+
+```
+static func processRegionEvent(_ regionEvent: PlacesRegionEvent,
+                               forRegion region: CLRegion)
+```
+
+<hr />
+
+### registerExtension
+
+<b>ACPPlaces (Objective-c)</b>
+```
++ (void) registerExtension;
+```
+
+<b>AEPPlaces (Objective-c)</b>
+
+> <b>Note</b>: Registration occurs by passing `AEPMobilePlaces` to the `[AEPMobileCore registerExtensions:completion:]` API.
+
+```
+[AEPMobileCore registerExtensions:@[AEPMobilePlaces.class] completion:nil];
+```
+
+<b>AEPPlaces (Swift)</b>
+
+> <b>Note</b>: Registration occurs by passing `Places` to the `MobileCore.registerExtensions` API.
+
+```
+MobileCore.registerExtensions([Places.self])
+```
+
+<hr />
+
+### setAuthorizationStatus
+
+<b>ACPPlaces (Objective-c)</b>
+```
++ (void) setAuthorizationStatus: (CLAuthorizationStatus) status;
+```
+
+<b>AEPPlaces (Objective-c)</b>
+```
++ (void) setAuthorizationStatus: (CLAuthorizationStatus) status;
+```
+
+<b>AEPPlaces (Swift)</b>
+```
+static func setAuthorizationStatus(status: CLAuthorizationStatus)
+```
+
+<hr />
