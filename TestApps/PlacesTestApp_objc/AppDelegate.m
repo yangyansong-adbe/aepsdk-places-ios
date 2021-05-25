@@ -26,12 +26,10 @@
     // steve-places in Adobe Benedick Corp: launch-EN459260fc579a4dcbb2d1743947e65f09-development
     [AEPMobileCore configureWithAppId:@"launch-EN459260fc579a4dcbb2d1743947e65f09-development"];
     
-    [ACPCore registerExtension:AEPAssurance.class error:nil];
-    
-    
-    [AEPMobileCore registerExtensions:@[AEPMobilePlaces.class] completion:^{
+    [AEPMobileCore registerExtensions:@[AEPMobilePlaces.class, AEPAssurance.class] completion:^{
         // Griffon Session - AEPPlaces_objc in Adobe Benedick Corp
         [AEPAssurance startSession:[NSURL URLWithString:@"aepplaces://?adb_validation_sessionid=45028228-fc99-4865-87cb-99351de0c064"]];
+        NSLog(@"places version: %@", [AEPMobilePlaces extensionVersion]);
     }];
         
     return YES;

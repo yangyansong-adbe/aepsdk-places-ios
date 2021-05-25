@@ -65,7 +65,7 @@ public extension Places {
         }
     }
 
-    /// Returns the last latitude and longitude provided to the ACPPlaces Extension.
+    /// Returns the last latitude and longitude provided to the AEPPlaces Extension.
     ///
     /// If the Places Extension does not have a valid last known location for the user, the parameter passed
     /// in the closure will be `nil`.

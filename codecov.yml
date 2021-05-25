@@ -15,7 +15,7 @@ coverage:
   ignore:
     - "./AEPPlaces/Tests/**/*"
     - "./AEPPlaces/Tests/.*"
-    - "./SampleApps"
+    - "./TestApps"
 
 parsers:
   gcov:

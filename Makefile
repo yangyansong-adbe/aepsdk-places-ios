@@ -54,7 +54,7 @@ lint-autocorrect:
 	(swiftlint autocorrect --format)
 
 lint:
-	(swiftlint lint Sources SampleApps/$(APP_NAME))
+	(swiftlint lint Sources TestApps/$(APP_NAME))
 
 build-test-apps:
 	xcodebuild -workspace $(PROJECT_NAME).xcworkspace -scheme $(APP_NAME) -destination 'platform=iOS Simulator,name=iPhone 8'

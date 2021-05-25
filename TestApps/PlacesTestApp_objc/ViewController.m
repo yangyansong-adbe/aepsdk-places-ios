@@ -39,7 +39,7 @@
     [AEPMobilePlaces processRegionEvent:AEPPlacesRegionEventEntry forRegion:region];
 }
 
-- (IBAction) getCurrentPointsOfInterest:(id)sender {
+- (IBAction) getCurrentPointsOfInterest:(id)sender {    
     [AEPMobilePlaces getCurrentPointsOfInterest:^(NSArray<AEPPlacesPoi *> *pois) {
         NSLog(@"currentPois: %@", pois);
     }];
@@ -47,7 +47,9 @@
 
 - (IBAction) getLastKnownLocation:(id)sender {
     [AEPMobilePlaces getLastKnownLocation:^(CLLocation *location) {
-        NSLog(@"location returned from closure: (%f, %f)", location.coordinate.latitude, location.coordinate.longitude);
+        if (location) {
+            NSLog(@"location returned from closure: (%f, %f)", location.coordinate.latitude, location.coordinate.longitude);
+        }
     }];
 }
 

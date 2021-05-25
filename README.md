@@ -43,9 +43,6 @@ use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
       pod 'AEPPlaces', :git => 'git@github.com:adobe/aepsdk-places-ios.git', :branch => 'main'      
-      pod 'AEPCore'
-      pod 'AEPServices'
-      pod 'AEPRulesEngine'
 end
 ```
 
@@ -76,7 +73,7 @@ targets: [
 Additional documentation for configuration and SDK usage can be found under the [Documentation](Documentation/README.md) directory.
 
 ## PlacesTestApp & PlacesTestApp_objc
-Two sample apps are provided (one each for Swift and Objective-c) which demonstrate retrieving nearby Points of Interest and triggering region events. Their targets are in `AEPPlaces.xcodeproj`, runnable in `AEPPlaces.xcworkspace`. Sample app source code can be found in the `SampleApps` directory.
+Two sample apps are provided (one each for Swift and Objective-c) which demonstrate retrieving nearby Points of Interest and triggering region events. Their targets are in `AEPPlaces.xcodeproj`, runnable in `AEPPlaces.xcworkspace`. Sample app source code can be found in the `TestApps` directory.
 
 ## Contributing
 Looking to contribute to this project? Please review our [Contributing guidelines](.github/CONTRIBUTING.md) prior to opening a pull request.
