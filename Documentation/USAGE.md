@@ -235,7 +235,7 @@ Sets the authorization status in the Places extension.
 
 The status provided is stored in the Places shared state, and is for reference only. Calling this method does not impact the actual location authorization status for this device.
 
-> <B>Note</b>: This method should only be called from the `CLLocationManagerDelegate` protocol method  [locationManagerDidChangeAuthorization(_:)](https://developer.apple.com/documentation/corelocation/cllocationmanagerdelegate/3563956-locationmanagerdidchangeauthoriz).
+> <b>Note</b>: This method should only be called from the `CLLocationManagerDelegate` protocol method  [locationManagerDidChangeAuthorization(_:)](https://developer.apple.com/documentation/corelocation/cllocationmanagerdelegate/3563956-locationmanagerdidchangeauthoriz).
 
 ##### Swift
 <b>Signature:</b>

@@ -23,8 +23,7 @@ public class Places: NSObject, Extension {
     var currentPoi: PointOfInterest?
     var lastEnteredPoi: PointOfInterest?
     var lastExitedPoi: PointOfInterest?
-    var lastKnownLatitude: Double
-    var lastKnownLongitude: Double
+    var lastKnownCoordinate: CLLocationCoordinate2D
     var membershipTtl: TimeInterval
     var membershipValidUntil: TimeInterval?
     var authStatus: CLAuthorizationStatus
@@ -44,8 +43,8 @@ public class Places: NSObject, Extension {
     public required init?(runtime: ExtensionRuntime) {
         self.runtime = runtime
 
-        lastKnownLatitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
-        lastKnownLongitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
+        lastKnownCoordinate = CLLocationCoordinate2D(latitude: PlacesConstants.DefaultValues.INVALID_LAT_LON,
+                                                     longitude: PlacesConstants.DefaultValues.INVALID_LAT_LON)
         authStatus = .notDetermined
         privacyStatus = .unknown
         membershipTtl = PlacesConstants.DefaultValues.MEMBERSHIP_TTL
@@ -58,8 +57,8 @@ public class Places: NSObject, Extension {
         self.runtime = runtime
         self.placesQueryService = queryService
 
-        lastKnownLatitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
-        lastKnownLongitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
+        lastKnownCoordinate = CLLocationCoordinate2D(latitude: PlacesConstants.DefaultValues.INVALID_LAT_LON,
+                                                     longitude: PlacesConstants.DefaultValues.INVALID_LAT_LON)
         authStatus = .notDetermined
         privacyStatus = .unknown
         membershipTtl = PlacesConstants.DefaultValues.MEMBERSHIP_TTL
@@ -166,8 +165,8 @@ public class Places: NSObject, Extension {
         }
 
         // update some of our state values
-        lastKnownLatitude = latitude
-        lastKnownLongitude = longitude
+        lastKnownCoordinate.latitude = latitude
+        lastKnownCoordinate.longitude = longitude
         membershipTtl = placesConfig.membershipTtl
         updateMembershipValidUntil()
 
@@ -252,11 +251,8 @@ public class Places: NSObject, Extension {
         Log.trace(label: PlacesConstants.LOG_TAG, "Getting user-within Points of Interest.")
 
         // convert the map of userWithinPois to an array to put in the eventData
-        var userWithinPoiArray: [[String: Any]] = []
-        for poi in userWithinPois.values {
-            userWithinPoiArray.append(poi.mapValue)
-        }
-
+        let userWithinPoiArray = userWithinPois.values.map({$0.mapValue})
+        
         let eventData = [
             PlacesConstants.SharedStateKey.USER_WITHIN_POIS: userWithinPoiArray
         ]
@@ -271,8 +267,8 @@ public class Places: NSObject, Extension {
         Log.trace(label: PlacesConstants.LOG_TAG, "Getting last know user location.")
 
         let eventData = [
-            PlacesConstants.EventDataKey.Places.LATITUDE: lastKnownLatitude,
-            PlacesConstants.EventDataKey.Places.LONGITUDE: lastKnownLongitude
+            PlacesConstants.EventDataKey.Places.LATITUDE: lastKnownCoordinate.latitude,
+            PlacesConstants.EventDataKey.Places.LONGITUDE: lastKnownCoordinate.longitude
         ]
 
         dispatchResponseEventWith(name: PlacesConstants.EventName.Response.GET_LAST_KNOWN_LOCATION,

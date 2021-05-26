@@ -22,7 +22,7 @@ The class name containing public APIs is different depending on which SDK and la
 
 | ACPPlaces (Objective-c) | AEPPlaces (Objective-c) | AEPPlaces (Swift) |
 | ----------------------- | ----------------------- | ----------------- |
-| `ACPPlacesRequestError` | `AEPlacesQueryResponseCode` | `PlacesQueryResponseCode` |
+| `ACPPlacesRequestError` | `AEPPlacesQueryResponseCode` | `PlacesQueryResponseCode` |
 | `ACPPlacesPoi` | `AEPPlacesPoi` | `PointOfInterest` |
 | `ACPRegionEventType` | `AEPPlacesRegionEvent` | `PlacesRegionEvent` |
 

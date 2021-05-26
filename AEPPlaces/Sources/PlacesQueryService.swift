@@ -36,19 +36,25 @@ class PlacesQueryService {
         }
 
         // build the url to send to Places Query Service
-        let urlBase = "https://\(configuration.endpoint)/\(PlacesConstants.QueryService.PLACES_EDGE_QUERY)/"
-        let librariesVariable = "?\(getLibrariesUrlParameter(libraries: configuration.libraries))"
-        let latVariable = "&\(PlacesConstants.QueryService.Json.LATITUDE)=\(lat)"
-        let lonVariable = "&\(PlacesConstants.QueryService.Json.LONGITUDE)=\(lon)"
-        let limitVariable = "&\(PlacesConstants.QueryService.Json.LIMIT)=\(count)"
-        let urlString = urlBase + librariesVariable + latVariable + lonVariable + limitVariable
-        guard let url = URL(string: urlString) else {
-            Log.warning(label: PlacesConstants.LOG_TAG, "Unable to request nearby places from the Places Query Service - error creating a URL object from urlString: \(urlString)")
+        
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = configuration.endpoint
+        components.path = "/\(PlacesConstants.QueryService.PLACES_EDGE_QUERY)/"
+        components.queryItems = getURLQueryItemsFor(libraries: configuration.libraries)
+        components.queryItems?.append(contentsOf: [
+            URLQueryItem(name: PlacesConstants.QueryService.Json.LATITUDE, value: String(lat)),
+            URLQueryItem(name: PlacesConstants.QueryService.Json.LONGITUDE, value: String(lon)),
+            URLQueryItem(name: PlacesConstants.QueryService.Json.LIMIT, value: String(count))
+        ])
+        
+        guard let url = components.url else {
+            Log.warning(label: PlacesConstants.LOG_TAG, "Unable to request nearby places from the Places Query Service - error creating a URL object from components: \(components)")
             completion(PlacesQueryServiceResult(response: .configurationError))
             return
         }
-
-        Log.trace(label: PlacesConstants.LOG_TAG, "Making a request to Places Query Service: \(urlString)")
+        
+        Log.trace(label: PlacesConstants.LOG_TAG, "Making a request to Places Query Service: \(url.absoluteString)")
 
         let networkService = ServiceProvider.shared.networkService
         let request = NetworkRequest(url: url,
@@ -104,20 +110,16 @@ class PlacesQueryService {
         }
     }
 
-    /// Returns a `String` representation of Places libraries for use in a request to the Places Edge Query Service
+    /// Returns an array of `URLQueryItem`s representing Places libraries for use in a request to the Places Edge Query Service
     ///
     /// The Places Edge Query Service expects libraries to be passed into the URL with the following format:
     ///   "library=LIBRARY_ONE&library=LIBRARY_TWO&library=LIBRARY_THREE" and so on.
     ///
     /// - Parameter libraries: an array of `PlacesLibrary` objects from which the URL parameter will be generated
-    /// - Returns: a `String` of URL parameters representing the given Places Libraries
-    private func getLibrariesUrlParameter(libraries: [PlacesLibrary]) -> String {
-        var librariesString = ""
-        for library in libraries {
-            librariesString.append(librariesString.isEmpty ? "" : "&")
-            librariesString.append("library=\(library.id)")
+    /// - Returns: `[URLQueryItem]` containing Places Library IDs
+    private func getURLQueryItemsFor(libraries: [PlacesLibrary]) -> [URLQueryItem] {
+        return libraries.map {
+            URLQueryItem(name: "library", value: $0.id)
         }
-
-        return librariesString
     }
 }
