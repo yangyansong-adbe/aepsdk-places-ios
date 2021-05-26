@@ -27,6 +27,7 @@ public class Places: NSObject, Extension {
     var membershipTtl: TimeInterval
     var membershipValidUntil: TimeInterval?
     var authStatus: CLAuthorizationStatus
+    var accuracy: CLAccuracyAuthorization?
     var privacyStatus: PrivacyStatus
     var dataStore: NamedCollectionDataStore = NamedCollectionDataStore(name: PlacesConstants.UserDefaults.PLACES_DATA_STORE_NAME)
     var placesQueryService = PlacesQueryService()
@@ -45,7 +46,7 @@ public class Places: NSObject, Extension {
 
         lastKnownCoordinate = CLLocationCoordinate2D(latitude: PlacesConstants.DefaultValues.INVALID_LAT_LON,
                                                      longitude: PlacesConstants.DefaultValues.INVALID_LAT_LON)
-        authStatus = .notDetermined
+        authStatus = .notDetermined        
         privacyStatus = .unknown
         membershipTtl = PlacesConstants.DefaultValues.MEMBERSHIP_TTL
 
@@ -102,6 +103,8 @@ public class Places: NSObject, Extension {
             getLastKnownLocationFor(event: event)
         } else if event.isSetAuthorizationStatusRequestType {
             setAuthorizationStatusFrom(event: event)
+        } else if event.isSetAccuracyRequestType {
+            setAccuracyFrom(event: event)
         } else if event.isResetRequestType {
             reset()
         } else {
@@ -282,6 +285,14 @@ public class Places: NSObject, Extension {
             authStatus = CLAuthorizationStatus(fromString: status)
             createSharedState(data: getSharedStateData(), event: event)
             Log.debug(label: PlacesConstants.LOG_TAG, "Setting location authorization status for Places: \(authStatus.stringValue)")
+        }
+    }
+    
+    private func setAccuracyFrom(event: Event) {
+        if let eventAccuracy = event.locationAccuracy {
+            accuracy = CLAccuracyAuthorization(fromString: eventAccuracy)
+            createSharedState(data: getSharedStateData(), event: event)
+            Log.debug(label: PlacesConstants.LOG_TAG, "Setting location accuracy for Places: \(accuracy?.stringValue ?? "unknown")")
         }
     }
 

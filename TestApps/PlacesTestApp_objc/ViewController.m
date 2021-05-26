@@ -53,6 +53,10 @@
     }];
 }
 
+- (IBAction) setAccuracyAuthorization:(id)sender {
+    [AEPMobilePlaces setAccuracyAuthorization:CLAccuracyAuthorizationFullAccuracy];
+}
+
 - (IBAction) setAuthorizationStatus:(id)sender {
     [AEPMobilePlaces setAuthorizationStatus:kCLAuthorizationStatusAuthorizedAlways];
 }

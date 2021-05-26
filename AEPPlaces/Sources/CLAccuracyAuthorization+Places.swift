@@ -3,7 +3,7 @@
  This file is licensed to you under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0
-
+ 
  Unless required by applicable law or agreed to in writing, software distributed under
  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
  OF ANY KIND, either express or implied. See the License for the specific language
@@ -13,38 +13,26 @@
 import CoreLocation
 import Foundation
 
-extension CLAuthorizationStatus {
-    init(fromString: String) {
+extension CLAccuracyAuthorization {
+    init?(fromString: String) {
         switch fromString {
-        case "always":
-            self = .authorizedAlways
-        case "wheninuse":
-            self = .authorizedWhenInUse
-        case "denied":
-            self = .denied
-        case "restricted":
-            self = .restricted
-        case "unknown":
-            self = .notDetermined
+        case "full":
+            self = .fullAccuracy
+        case "reduced":
+            self = .reducedAccuracy
         default:
-            self = .notDetermined
+            return nil
         }
     }
-
-    /// Get the `String` representation of a `CLAuthorizationStatus`
+    
+    /// Get the `String` representation of a `CLAccuracyAuthorization`
     /// - Returns: the `String` representation of `self`
     var stringValue: String {
         switch self {
-        case .authorizedAlways:
-            return "always"
-        case .authorizedWhenInUse:
-            return "wheninuse"
-        case .denied:
-            return "denied"
-        case .notDetermined:
-            return "unknown"
-        case .restricted:
-            return "restricted"
+        case .fullAccuracy:
+            return "full"
+        case .reducedAccuracy:
+            return "reduced"
         @unknown default:
             return "unknown"
         }

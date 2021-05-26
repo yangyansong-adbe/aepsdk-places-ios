@@ -66,6 +66,14 @@ extension NamedCollectionDataStore {
         return getDouble(key: PlacesConstants.UserDefaults.PERSISTED_LONGITUDE) ?? PlacesConstants.DefaultValues.INVALID_LAT_LON
     }
 
+    var accuracy: CLAccuracyAuthorization? {
+        if let persistedAccuracy = getString(key: PlacesConstants.UserDefaults.PERSISTED_ACCURACY) {
+            return CLAccuracyAuthorization(fromString: persistedAccuracy)
+        }
+        
+        return nil        
+    }
+    
     var authStatus: CLAuthorizationStatus {
         return CLAuthorizationStatus.init(fromString: getString(key: PlacesConstants.UserDefaults.PERSISTED_AUTH_STATUS) ?? "")
     }
@@ -139,6 +147,14 @@ extension NamedCollectionDataStore {
         }
     }
 
+    func setAccuracy(_ accuracy: CLAccuracyAuthorization?) {
+        if let accuracy = accuracy {
+            set(key: PlacesConstants.UserDefaults.PERSISTED_ACCURACY, value: accuracy.stringValue)
+        } else {
+            remove(key: PlacesConstants.UserDefaults.PERSISTED_ACCURACY)
+        }
+    }
+    
     func setAuthStatus(_ status: CLAuthorizationStatus?) {
         if let status = status {
             set(key: PlacesConstants.UserDefaults.PERSISTED_AUTH_STATUS, value: status.stringValue)

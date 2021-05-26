@@ -27,6 +27,7 @@ extension Places {
         lastKnownCoordinate.latitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
         lastKnownCoordinate.longitude = PlacesConstants.DefaultValues.INVALID_LAT_LON
         authStatus = .notDetermined
+        accuracy = nil
         membershipValidUntil = nil
 
         updatePersistence()
@@ -78,6 +79,10 @@ extension Places {
             data[PlacesConstants.SharedStateKey.LAST_EXITED_POI] = lastExitedPoi.mapValue
         }
 
+        if let accuracy = accuracy {
+            data[PlacesConstants.SharedStateKey.ACCURACY] = accuracy.stringValue
+        }
+        
         // add location authorization status string
         data[PlacesConstants.SharedStateKey.AUTH_STATUS] = authStatus.stringValue
 
@@ -96,6 +101,7 @@ extension Places {
         lastExitedPoi = dataStore.lastExitedPoi
         lastKnownCoordinate.latitude = dataStore.lastKnownLatitude
         lastKnownCoordinate.longitude = dataStore.lastKnownLongitude
+        accuracy = dataStore.accuracy
         authStatus = dataStore.authStatus
         membershipValidUntil = dataStore.membershipValidUntil
     }
@@ -234,6 +240,7 @@ extension Places {
         dataStore.setLastKnownLatitude(lastKnownCoordinate.latitude)
         dataStore.setLastKnownLongitude(lastKnownCoordinate.longitude)
         dataStore.setAuthStatus(authStatus)
+        dataStore.setAccuracy(accuracy)
         dataStore.setMembershipValidUntil(membershipValidUntil)
     }
 }
