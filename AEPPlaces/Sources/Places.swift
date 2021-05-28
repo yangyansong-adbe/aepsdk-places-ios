@@ -122,7 +122,9 @@ public class Places: NSObject, Extension {
         } else if event.isSetAuthorizationStatusRequestType {
             setAuthorizationStatusFrom(event: event)
         } else if event.isSetAccuracyRequestType {
-            setAccuracyFrom(event: event)
+            if #available(iOS 14, *) {
+                setAccuracyFrom(event: event)
+            }
         } else if event.isResetRequestType {
             reset()
         } else {
@@ -293,6 +295,7 @@ public class Places: NSObject, Extension {
         }
     }
 
+    @available(iOS 14, *)
     private func setAccuracyFrom(event: Event) {
         if let eventAccuracy = event.locationAccuracy, let newAccuracy = CLAccuracyAuthorization(fromString: eventAccuracy) {
             accuracy = newAccuracy

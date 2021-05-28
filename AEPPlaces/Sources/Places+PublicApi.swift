@@ -170,7 +170,10 @@ public extension Places {
     /// The status provided is stored in the Places shared state, and is for reference only.
     /// Calling this method does not impact the actual location accuracy setting for this device.
     ///
+    /// This method is only available on iOS 14 and newer.
+    ///
     /// - Parameter accuracy: the CLAccuracyAuthorization to be set for this device
+    @available(iOS 14, *)
     @objc(setAccuracyAuthorization:)
     static func setAccuracyAuthorization(accuracy: CLAccuracyAuthorization) {
         let eventData: [String: Any] = [

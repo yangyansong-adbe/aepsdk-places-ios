@@ -132,6 +132,7 @@ class PlacesPlusPublicApiTests: XCTestCase {
     }
     
     // MARK: - setAccuracyAuthorization
+    @available(iOS 14, *)
     func testSetAccuracyAuthorization() throws {
         // setup
         let expectation = XCTestExpectation(description: "setAccuracyAuthorization should dispatch an event")
@@ -149,7 +150,7 @@ class PlacesPlusPublicApiTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
     
-    // MARK: - setAuthorizationStatus
+    // MARK: - setAuthorizationStatus    
     func testSetAuthorizationStatus() throws {
         // setup
         let expectation = XCTestExpectation(description: "setAuthorizationStatus should dispatch an event")

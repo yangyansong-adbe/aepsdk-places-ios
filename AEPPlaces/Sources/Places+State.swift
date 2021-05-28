@@ -79,7 +79,7 @@ extension Places {
             data[PlacesConstants.SharedStateKey.LAST_EXITED_POI] = lastExitedPoi.mapValue
         }
 
-        if let accuracy = accuracy {
+        if #available(iOS 14, *), let accuracy = accuracy {
             data[PlacesConstants.SharedStateKey.ACCURACY] = accuracy.stringValue
         }
 

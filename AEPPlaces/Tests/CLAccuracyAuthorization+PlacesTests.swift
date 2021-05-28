@@ -14,6 +14,7 @@ import CoreLocation
 import XCTest
 @testable import AEPPlaces
 
+@available(iOS 14, *)
 class CLAccuracyAuthorizationPlusPlacesTests: XCTestCase {
     // MARK: - Tests
     func testStringValueFull() throws {

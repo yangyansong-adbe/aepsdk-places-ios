@@ -13,6 +13,7 @@
 import CoreLocation
 import Foundation
 
+@available(iOS 14, *)
 extension CLAccuracyAuthorization {
     init?(fromString: String) {
         switch fromString {
