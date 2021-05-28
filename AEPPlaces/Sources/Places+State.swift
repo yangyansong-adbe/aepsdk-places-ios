@@ -82,7 +82,7 @@ extension Places {
         if let accuracy = accuracy {
             data[PlacesConstants.SharedStateKey.ACCURACY] = accuracy.stringValue
         }
-        
+
         // add location authorization status string
         data[PlacesConstants.SharedStateKey.AUTH_STATUS] = authStatus.stringValue
 

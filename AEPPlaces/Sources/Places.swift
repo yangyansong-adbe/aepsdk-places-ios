@@ -46,7 +46,7 @@ public class Places: NSObject, Extension {
 
         lastKnownCoordinate = CLLocationCoordinate2D(latitude: PlacesConstants.DefaultValues.INVALID_LAT_LON,
                                                      longitude: PlacesConstants.DefaultValues.INVALID_LAT_LON)
-        authStatus = .notDetermined        
+        authStatus = .notDetermined
         privacyStatus = .unknown
         membershipTtl = PlacesConstants.DefaultValues.MEMBERSHIP_TTL
 
@@ -86,27 +86,27 @@ public class Places: NSObject, Extension {
     }
 
     // MARK: - Listener Methods
-    
+
     /// Handles configuration updates, stopping event processing and clearing shared state if the user has opted-out.
     ///
     /// - Parameter event: the SharedState update `Event`
     private func handleSharedStateUpdate(_ event: Event) {
-        
+
         // for now, we are only handling configuration shared state updates
         if !event.isConfigSharedStateChange {
             return
         }
-        
+
         guard let configSharedState = getSharedState(extensionName: PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME, event: event) else {
             return
         }
-        
+
         if configSharedState.globalPrivacy == .optedOut {
             Log.debug(label: PlacesConstants.LOG_TAG, "Stopping Places processing due to privacy opt-out")
             stopEvents()
             createSharedState(data: [:], event: event)
         }
-        
+
         privacyStatus = configSharedState.globalPrivacy
     }
 
@@ -131,7 +131,7 @@ public class Places: NSObject, Extension {
     }
 
     // MARK: - Private Methods
-   
+
     private func handleGetNearbyPlacesRequest(event: Event) {
         // make sure the user isn't opted-out
         if privacyStatus == .optedOut {
@@ -260,7 +260,7 @@ public class Places: NSObject, Extension {
 
         // convert the map of userWithinPois to an array to put in the eventData
         let userWithinPoiArray = userWithinPois.values.map({$0.mapValue})
-        
+
         let eventData = [
             PlacesConstants.SharedStateKey.USER_WITHIN_POIS: userWithinPoiArray
         ]
@@ -292,7 +292,7 @@ public class Places: NSObject, Extension {
             Log.debug(label: PlacesConstants.LOG_TAG, "Setting location authorization status for Places: \(authStatus.stringValue)")
         }
     }
-    
+
     private func setAccuracyFrom(event: Event) {
         if let eventAccuracy = event.locationAccuracy, let newAccuracy = CLAccuracyAuthorization(fromString: eventAccuracy) {
             accuracy = newAccuracy

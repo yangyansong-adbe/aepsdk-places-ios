@@ -70,10 +70,10 @@ extension NamedCollectionDataStore {
         if let persistedAccuracy = getString(key: PlacesConstants.UserDefaults.PERSISTED_ACCURACY) {
             return CLAccuracyAuthorization(fromString: persistedAccuracy)
         }
-        
-        return nil        
+
+        return nil
     }
-    
+
     var authStatus: CLAuthorizationStatus {
         return CLAuthorizationStatus.init(fromString: getString(key: PlacesConstants.UserDefaults.PERSISTED_AUTH_STATUS) ?? "")
     }
@@ -154,7 +154,7 @@ extension NamedCollectionDataStore {
             remove(key: PlacesConstants.UserDefaults.PERSISTED_ACCURACY)
         }
     }
-    
+
     func setAuthStatus(_ status: CLAuthorizationStatus?) {
         if let status = status {
             set(key: PlacesConstants.UserDefaults.PERSISTED_AUTH_STATUS, value: status.stringValue)
