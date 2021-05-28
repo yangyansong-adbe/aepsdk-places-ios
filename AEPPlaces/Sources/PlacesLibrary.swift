@@ -18,17 +18,16 @@ struct PlacesLibrary: Codable {
     let name: String
 
     static func fromJsonString(_ jsonString: String) -> PlacesLibrary? {
-        if let jsonStringAsData = jsonString.data(using: .utf8) {
-            do {
-                return try JSONDecoder().decode(PlacesLibrary.self, from: jsonStringAsData)
-            } catch let error as NSError {
-                Log.warning(label: PlacesConstants.LOG_TAG, "Unable to parse Places Library JSON: \(error.localizedDescription)")
-            }
-        } else {
-            Log.warning(label: PlacesConstants.LOG_TAG, "Unable to parse Places Library JSON: missing library ID or Name.")
+        // because we are using .utf8 encoding, construction of this Data object should never return nil
+        guard let jsonStringAsData = jsonString.data(using: .utf8) else {
+            return nil
         }
-
-        return nil
+        do {
+            return try JSONDecoder().decode(PlacesLibrary.self, from: jsonStringAsData)
+        } catch let error as NSError {
+            Log.warning(label: PlacesConstants.LOG_TAG, "Unable to parse Places Library JSON: \(error.localizedDescription)")
+            return nil
+        }
     }
 
     func toJsonString() -> String? {

@@ -40,6 +40,10 @@ extension Event {
         return data?[PlacesConstants.EventDataKey.Places.AUTH_STATUS] as? String
     }
 
+    var locationAccuracy: String? {
+        return data?[PlacesConstants.EventDataKey.Places.ACCURACY] as? String
+    }
+
     // MARK: - Request Type handling
     var placesRequestType: String? {
         return data?[PlacesConstants.EventDataKey.Places.REQUEST_TYPE] as? String
@@ -67,6 +71,10 @@ extension Event {
 
     var isSetAuthorizationStatusRequestType: Bool {
         return placesRequestType == PlacesConstants.EventDataKey.Places.RequestType.SET_AUTHORIZATION_STATUS
+    }
+
+    var isSetAccuracyRequestType: Bool {
+        return placesRequestType == PlacesConstants.EventDataKey.Places.RequestType.SET_ACCURACY
     }
 
     // MARK: - Get Nearby Places

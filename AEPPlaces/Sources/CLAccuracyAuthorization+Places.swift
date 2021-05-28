@@ -13,38 +13,27 @@
 import CoreLocation
 import Foundation
 
-extension CLAuthorizationStatus {
-    init(fromString: String) {
+@available(iOS 14, *)
+extension CLAccuracyAuthorization {
+    init?(fromString: String) {
         switch fromString {
-        case "always":
-            self = .authorizedAlways
-        case "wheninuse":
-            self = .authorizedWhenInUse
-        case "denied":
-            self = .denied
-        case "restricted":
-            self = .restricted
-        case "unknown":
-            self = .notDetermined
+        case "full":
+            self = .fullAccuracy
+        case "reduced":
+            self = .reducedAccuracy
         default:
-            self = .notDetermined
+            return nil
         }
     }
 
-    /// Get the `String` representation of a `CLAuthorizationStatus`
+    /// Get the `String` representation of a `CLAccuracyAuthorization`
     /// - Returns: the `String` representation of `self`
     var stringValue: String {
         switch self {
-        case .authorizedAlways:
-            return "always"
-        case .authorizedWhenInUse:
-            return "wheninuse"
-        case .denied:
-            return "denied"
-        case .notDetermined:
-            return "unknown"
-        case .restricted:
-            return "restricted"
+        case .fullAccuracy:
+            return "full"
+        case .reducedAccuracy:
+            return "reduced"
         @unknown default:
             return "unknown"
         }

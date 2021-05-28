@@ -27,6 +27,7 @@ public class Places: NSObject, Extension {
     var membershipTtl: TimeInterval
     var membershipValidUntil: TimeInterval?
     var authStatus: CLAuthorizationStatus
+    var accuracy: CLAccuracyAuthorization?
     var privacyStatus: PrivacyStatus
     var dataStore: NamedCollectionDataStore = NamedCollectionDataStore(name: PlacesConstants.UserDefaults.PLACES_DATA_STORE_NAME)
     var placesQueryService = PlacesQueryService()
@@ -85,10 +86,28 @@ public class Places: NSObject, Extension {
     }
 
     // MARK: - Listener Methods
+
+    /// Handles configuration updates, stopping event processing and clearing shared state if the user has opted-out.
+    ///
+    /// - Parameter event: the SharedState update `Event`
     private func handleSharedStateUpdate(_ event: Event) {
-        if event.isConfigSharedStateChange {
-            processConfigurationSharedStateUpdate(event: event)
+
+        // for now, we are only handling configuration shared state updates
+        if !event.isConfigSharedStateChange {
+            return
         }
+
+        guard let configSharedState = getSharedState(extensionName: PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME, event: event) else {
+            return
+        }
+
+        if configSharedState.globalPrivacy == .optedOut {
+            Log.debug(label: PlacesConstants.LOG_TAG, "Stopping Places processing due to privacy opt-out")
+            stopEvents()
+            createSharedState(data: [:], event: event)
+        }
+
+        privacyStatus = configSharedState.globalPrivacy
     }
 
     private func handlePlacesRequest(_ event: Event) {
@@ -102,6 +121,10 @@ public class Places: NSObject, Extension {
             getLastKnownLocationFor(event: event)
         } else if event.isSetAuthorizationStatusRequestType {
             setAuthorizationStatusFrom(event: event)
+        } else if event.isSetAccuracyRequestType {
+            if #available(iOS 14, *) {
+                setAccuracyFrom(event: event)
+            }
         } else if event.isResetRequestType {
             reset()
         } else {
@@ -110,19 +133,6 @@ public class Places: NSObject, Extension {
     }
 
     // MARK: - Private Methods
-    private func processConfigurationSharedStateUpdate(event: Event) {
-        guard let configSharedState = getSharedState(extensionName: PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME, event: event) else {
-            return
-        }
-
-        if configSharedState.globalPrivacy == .optedOut {
-            Log.debug(label: PlacesConstants.LOG_TAG, "Stopping Places processing due to privacy opt-out")
-            stopEvents()
-            createSharedState(data: [:], event: event)
-        }
-
-        privacyStatus = configSharedState.globalPrivacy
-    }
 
     private func handleGetNearbyPlacesRequest(event: Event) {
         // make sure the user isn't opted-out
@@ -252,7 +262,7 @@ public class Places: NSObject, Extension {
 
         // convert the map of userWithinPois to an array to put in the eventData
         let userWithinPoiArray = userWithinPois.values.map({$0.mapValue})
-        
+
         let eventData = [
             PlacesConstants.SharedStateKey.USER_WITHIN_POIS: userWithinPoiArray
         ]
@@ -282,6 +292,15 @@ public class Places: NSObject, Extension {
             authStatus = CLAuthorizationStatus(fromString: status)
             createSharedState(data: getSharedStateData(), event: event)
             Log.debug(label: PlacesConstants.LOG_TAG, "Setting location authorization status for Places: \(authStatus.stringValue)")
+        }
+    }
+
+    @available(iOS 14, *)
+    private func setAccuracyFrom(event: Event) {
+        if let eventAccuracy = event.locationAccuracy, let newAccuracy = CLAccuracyAuthorization(fromString: eventAccuracy) {
+            accuracy = newAccuracy
+            createSharedState(data: getSharedStateData(), event: event)
+            Log.debug(label: PlacesConstants.LOG_TAG, "Setting location accuracy for Places: \(newAccuracy.stringValue)")
         }
     }
 

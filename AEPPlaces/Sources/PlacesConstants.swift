@@ -14,7 +14,7 @@ import Foundation
 
 enum PlacesConstants {
     static let EXTENSION_NAME = "com.adobe.module.places"
-    static let EXTENSION_VERSION = "3.0.0-alpha-1"
+    static let EXTENSION_VERSION = "3.0.0-beta-1"
     static let FRIENDLY_NAME = EXTENSION_NAME
     static let LOG_TAG = "Places"
 
@@ -28,6 +28,7 @@ enum PlacesConstants {
     enum UserDefaults {
         static let PLACES_DATA_STORE_NAME = "PlacesDataStore"
 
+        static let PERSISTED_ACCURACY = "places_accuracy"
         static let PERSISTED_AUTH_STATUS = "places_auth_status"
         static let PERSISTED_CURRENT_POI = "places_current_poi"
         static let PERSISTED_LAST_ENTERED_POI = "places_last_entered_poi"
@@ -68,6 +69,7 @@ enum PlacesConstants {
     }
 
     enum SharedStateKey {
+        static let ACCURACY = "accuracy"
         static let AUTH_STATUS = "authstatus"
         static let CURRENT_POI = "currentpoi"
         static let LAST_ENTERED_POI = "lastenteredpoi"
@@ -84,6 +86,7 @@ enum PlacesConstants {
             static let GET_USER_WITHIN_PLACES = "requestgetuserwithinplaces"
             static let PROCESS_REGION_EVENT = "requestprocessregionevent"
             static let RESET = "requestreset"
+            static let SET_ACCURACY = "requestsetaccuracy"
             static let SET_AUTHORIZATION_STATUS = "requestsetauthorizationstatus"
         }
 
@@ -114,6 +117,7 @@ enum PlacesConstants {
         enum Places {
             static let SHARED_STATE_NAME = "com.adobe.module.places"
 
+            static let ACCURACY = "accuracy"
             static let AUTH_STATUS = "authstatus"
             static let COUNT = "count"
             static let LATITUDE = "latitude"
@@ -137,6 +141,7 @@ enum PlacesConstants {
                 static let GET_USER_WITHIN_PLACES = "requestgetuserwithinplaces"
                 static let PROCESS_REGION_EVENT = "requestprocessregionevent"
                 static let RESET = "requestreset"
+                static let SET_ACCURACY = "requestsetaccuracy"
                 static let SET_AUTHORIZATION_STATUS = "requestsetauthorizationstatus"
             }
         }

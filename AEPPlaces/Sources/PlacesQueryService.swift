@@ -36,7 +36,7 @@ class PlacesQueryService {
         }
 
         // build the url to send to Places Query Service
-        
+
         var components = URLComponents()
         components.scheme = "https"
         components.host = configuration.endpoint
@@ -47,13 +47,13 @@ class PlacesQueryService {
             URLQueryItem(name: PlacesConstants.QueryService.Json.LONGITUDE, value: String(lon)),
             URLQueryItem(name: PlacesConstants.QueryService.Json.LIMIT, value: String(count))
         ])
-        
+
         guard let url = components.url else {
             Log.warning(label: PlacesConstants.LOG_TAG, "Unable to request nearby places from the Places Query Service - error creating a URL object from components: \(components)")
             completion(PlacesQueryServiceResult(response: .configurationError))
             return
         }
-        
+
         Log.trace(label: PlacesConstants.LOG_TAG, "Making a request to Places Query Service: \(url.absoluteString)")
 
         let networkService = ServiceProvider.shared.networkService

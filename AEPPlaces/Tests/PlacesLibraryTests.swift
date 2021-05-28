@@ -96,6 +96,17 @@ class PlacesLibraryTests: XCTestCase {
         XCTAssertNil(library)
     }
     
+    func testPlacesLibraryFromJsonStringEmptyString() throws {
+        // setup
+        let jsonString = ""
+        
+        // test
+        let library = PlacesLibrary.fromJsonString(jsonString)
+        
+        // verify
+        XCTAssertNil(library)
+    }
+    
     func testToJsonString() throws {
         // setup
         let library = getMockLibrary()
@@ -107,4 +118,6 @@ class PlacesLibraryTests: XCTestCase {
         // verify
         XCTAssertEqual(expectedString, jsonString)
     }
+    
+    
 }
