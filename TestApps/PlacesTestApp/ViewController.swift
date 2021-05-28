@@ -63,7 +63,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func setAccuracyAuthorization(_ sender: Any) {
-        Places.setAccuracyAuthorization(accuracy: .fullAccuracy)
+        if #available(iOS 14, *) {
+            Places.setAccuracyAuthorization(accuracy: .fullAccuracy)
+        }
     }
     
     @IBAction func setAuthorizationStatus(_ sender: Any) {

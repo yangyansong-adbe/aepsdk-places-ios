@@ -54,7 +54,9 @@
 }
 
 - (IBAction) setAccuracyAuthorization:(id)sender {
-    [AEPMobilePlaces setAccuracyAuthorization:CLAccuracyAuthorizationFullAccuracy];
+    if (@available(iOS 14, *)) {
+        [AEPMobilePlaces setAccuracyAuthorization:CLAccuracyAuthorizationFullAccuracy];
+    }    
 }
 
 - (IBAction) setAuthorizationStatus:(id)sender {
