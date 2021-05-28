@@ -813,6 +813,10 @@ class PlacesTests: XCTestCase {
     }
     
     func testSetAccuracyAuthorization() throws {
+        guard #available(iOS 14, *) else {
+            return
+        }
+        
         // setup
         prepareConfig(privacy: .optedIn)
         let requestingEvent = getSetAccuracyAuthorizationRequestEvent()
@@ -830,6 +834,10 @@ class PlacesTests: XCTestCase {
     }
     
     func testSetAccuracyAuthorizationNoAccuracyInEventData() throws {
+        guard #available(iOS 14, *) else {
+            return
+        }
+        
         // setup
         prepareConfig(privacy: .optedIn)
         let requestingEvent = getSetAccuracyAuthorizationRequestEvent()
