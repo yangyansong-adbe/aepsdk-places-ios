@@ -86,10 +86,28 @@ public class Places: NSObject, Extension {
     }
 
     // MARK: - Listener Methods
+    
+    /// Handles configuration updates, stopping event processing and clearing shared state if the user has opted-out.
+    ///
+    /// - Parameter event: the SharedState update `Event`
     private func handleSharedStateUpdate(_ event: Event) {
-        if event.isConfigSharedStateChange {
-            processConfigurationSharedStateUpdate(event: event)
+        
+        // for now, we are only handling configuration shared state updates
+        if !event.isConfigSharedStateChange {
+            return
         }
+        
+        guard let configSharedState = getSharedState(extensionName: PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME, event: event) else {
+            return
+        }
+        
+        if configSharedState.globalPrivacy == .optedOut {
+            Log.debug(label: PlacesConstants.LOG_TAG, "Stopping Places processing due to privacy opt-out")
+            stopEvents()
+            createSharedState(data: [:], event: event)
+        }
+        
+        privacyStatus = configSharedState.globalPrivacy
     }
 
     private func handlePlacesRequest(_ event: Event) {
@@ -113,20 +131,7 @@ public class Places: NSObject, Extension {
     }
 
     // MARK: - Private Methods
-    private func processConfigurationSharedStateUpdate(event: Event) {
-        guard let configSharedState = getSharedState(extensionName: PlacesConstants.EventDataKey.Configuration.SHARED_STATE_NAME, event: event) else {
-            return
-        }
-
-        if configSharedState.globalPrivacy == .optedOut {
-            Log.debug(label: PlacesConstants.LOG_TAG, "Stopping Places processing due to privacy opt-out")
-            stopEvents()
-            createSharedState(data: [:], event: event)
-        }
-
-        privacyStatus = configSharedState.globalPrivacy
-    }
-
+   
     private func handleGetNearbyPlacesRequest(event: Event) {
         // make sure the user isn't opted-out
         if privacyStatus == .optedOut {
@@ -289,10 +294,10 @@ public class Places: NSObject, Extension {
     }
     
     private func setAccuracyFrom(event: Event) {
-        if let eventAccuracy = event.locationAccuracy {
-            accuracy = CLAccuracyAuthorization(fromString: eventAccuracy)
+        if let eventAccuracy = event.locationAccuracy, let newAccuracy = CLAccuracyAuthorization(fromString: eventAccuracy) {
+            accuracy = newAccuracy
             createSharedState(data: getSharedStateData(), event: event)
-            Log.debug(label: PlacesConstants.LOG_TAG, "Setting location accuracy for Places: \(accuracy?.stringValue ?? "unknown")")
+            Log.debug(label: PlacesConstants.LOG_TAG, "Setting location accuracy for Places: \(newAccuracy.stringValue)")
         }
     }
 

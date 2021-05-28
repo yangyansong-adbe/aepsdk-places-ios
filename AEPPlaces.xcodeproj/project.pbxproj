@@ -85,6 +85,7 @@
 		243DB1702649930D00EF7956 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 243DB16E2649930D00EF7956 /* LaunchScreen.storyboard */; };
 		243DB1732649930D00EF7956 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 243DB1722649930D00EF7956 /* main.m */; };
 		24F2AED9265EACDE007C632F /* CLAccuracyAuthorization+Places.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F2AED8265EACDD007C632F /* CLAccuracyAuthorization+Places.swift */; };
+		24F2AEEF265EFA10007C632F /* CLAccuracyAuthorization+PlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F2AEEE265EFA10007C632F /* CLAccuracyAuthorization+PlacesTests.swift */; };
 		96F0168F41745525FCC42141 /* Pods_AEPPlacesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E23679BD14AB1EC601C35131 /* Pods_AEPPlacesTests.framework */; };
 		BDAE22A98F85E0362ACD4E65 /* Pods_PlacesTestApp_objc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF43F7AEBCA88F7C7D5F7F13 /* Pods_PlacesTestApp_objc.framework */; };
 		FC7363218D22005827E43CC5 /* Pods_PlacesTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DA43E9E97ADBA80419F896 /* Pods_PlacesTestApp.framework */; };
@@ -194,6 +195,7 @@
 		243DB1712649930D00EF7956 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		243DB1722649930D00EF7956 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		24F2AED8265EACDD007C632F /* CLAccuracyAuthorization+Places.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLAccuracyAuthorization+Places.swift"; sourceTree = "<group>"; };
+		24F2AEEE265EFA10007C632F /* CLAccuracyAuthorization+PlacesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLAccuracyAuthorization+PlacesTests.swift"; sourceTree = "<group>"; };
 		30BB65E08B61F324815FE3CB /* Pods-AEPPlacesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AEPPlacesTests.debug.xcconfig"; path = "Target Support Files/Pods-AEPPlacesTests/Pods-AEPPlacesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4DDA71EA0D7698085205ABC0 /* Pods-PlacesTestApp_objc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesTestApp_objc.release.xcconfig"; path = "Target Support Files/Pods-PlacesTestApp_objc/Pods-PlacesTestApp_objc.release.xcconfig"; sourceTree = "<group>"; };
 		6B49742CE92BC0602C8E1C39 /* Pods-AEPPlaces.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AEPPlaces.release.xcconfig"; path = "Target Support Files/Pods-AEPPlaces/Pods-AEPPlaces.release.xcconfig"; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 			children = (
 				243AC78626371FF2006501EC /* Assets */,
 				243AC76626371C7A006501EC /* Utils */,
+				24F2AEEE265EFA10007C632F /* CLAccuracyAuthorization+PlacesTests.swift */,
 				243AC7BF263B656A006501EC /* CLAuthorizationStatus+PlacesTests.swift */,
 				243AC714262A44EA006501EC /* Event+PlacesTests.swift */,
 				243AC7C3263B65DD006501EC /* NamedCollectionDataStore+PlacesTests.swift */,
@@ -799,6 +802,7 @@
 				243AC75F26337774006501EC /* PlacesQueryServiceResultTests.swift in Sources */,
 				243AC724262A450D006501EC /* PointOfInterestTests.swift in Sources */,
 				243AC6C9262A3F8B006501EC /* PlacesTests.swift in Sources */,
+				24F2AEEF265EFA10007C632F /* CLAccuracyAuthorization+PlacesTests.swift in Sources */,
 				2407DF50264C9396002B070F /* MockDataStore.swift in Sources */,
 				243AC732262A4553006501EC /* PlacesQueryServiceTests.swift in Sources */,
 				243AC7B026389870006501EC /* SharedStateResult+PlacesTests.swift in Sources */,
@@ -1170,6 +1174,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7EA8C982DA1B97E2E93F8C3F /* Pods-PlacesTestApp_objc.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -1190,6 +1195,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4DDA71EA0D7698085205ABC0 /* Pods-PlacesTestApp_objc.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;

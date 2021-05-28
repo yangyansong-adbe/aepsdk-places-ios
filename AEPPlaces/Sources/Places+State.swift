@@ -172,7 +172,7 @@ extension Places {
 
             // remove the poi from our userWithinPois list
             userWithinPois.removeValue(forKey: poi.identifier)
-        default:
+        @unknown default:
             Log.trace(label: PlacesConstants.LOG_TAG, "\(#function) processing unknown region event - you shouldn't ever see this!")
             return
         }

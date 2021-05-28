@@ -178,6 +178,16 @@ class PlacesTests: XCTestCase {
                      ])
     }
     
+    func getSetAccuracyAuthorizationRequestEvent() -> Event {
+        return Event(name: PlacesConstants.EventName.Request.SET_ACCURACY,
+                     type: EventType.places,
+                     source: EventSource.requestContent,
+                     data: [
+                        PlacesConstants.EventDataKey.Places.REQUEST_TYPE: PlacesConstants.EventDataKey.Places.RequestType.SET_ACCURACY,
+                        PlacesConstants.EventDataKey.Places.ACCURACY: "full"
+                     ])
+    }
+    
     func getResetEvent() -> Event {
         return Event(name: PlacesConstants.EventName.Request.RESET,
                      type: EventType.places,
@@ -264,6 +274,15 @@ class PlacesTests: XCTestCase {
         XCTAssertEqual(.unknown, places.privacyStatus)
     }
     
+    func testHandleShareStateUpdateNoSharedStateForConfig() throws {
+        // test
+        mockRuntime.simulateComingEvents(getConfigSharedStateEvent())
+        
+        // verify
+        // code to update privacy status shouldn't be called, default value is .unknown
+        XCTAssertEqual(.unknown, places.privacyStatus)
+    }
+    
     // MARK: - handleGetNearbyPlacesRequest
     
     func testHandleGetNearbyPlaces() throws {
@@ -313,6 +332,89 @@ class PlacesTests: XCTestCase {
         let grpoi2 = genericPois[1]
         XCTAssertEqual("2345", grpoi2[PlacesConstants.EventDataKey.Places.REGION_ID] as! String)
         
+        // validate shared state update
+        XCTAssertEqual(2, mockRuntime.createdSharedStates.count)  // first from onRegistered, second as result of this request
+    }
+    
+    func testHandleGetNearbyPlacesNoCountInData() throws {
+        // setup
+        prepareConfig(privacy: .optedIn)
+        mockQueryService.returnValue = PlacesQueryServiceResult(pois: [poi, poi2], response: .ok)
+        let requestingEvent = getGetNearbyPlacesRequestEvent()
+        requestingEvent.data?[PlacesConstants.EventDataKey.Places.COUNT] = nil
+        
+        // test
+        mockRuntime.simulateComingEvents(requestingEvent)
+        
+        // verify
+        XCTAssertEqual(12.34, mockQueryService.invokedLat)
+        XCTAssertEqual(23.45, mockQueryService.invokedLon)
+        XCTAssertEqual(10, mockQueryService.invokedCount, "Default value for count should be used")
+        XCTAssertEqual(2, mockRuntime.dispatchedEvents.count) // one responseEvent, one generic event
+        
+        // validate response event
+        let responseEvent = mockRuntime.firstEvent!
+        XCTAssertEqual(requestingEvent.id, responseEvent.responseID)
+        XCTAssertEqual(EventType.places, responseEvent.type)
+        XCTAssertEqual(EventSource.responseContent, responseEvent.source)
+        XCTAssertEqual(PlacesConstants.EventName.Response.GET_NEARBY_PLACES, responseEvent.name)
+        let dispatchedData = responseEvent.data!
+        let returnedPois = dispatchedData[PlacesConstants.SharedStateKey.NEARBY_POIS] as! [[String: Any]]
+        let returnedStatus = PlacesQueryResponseCode(fromRawValue: dispatchedData[PlacesConstants.EventDataKey.Places.RESPONSE_STATUS] as! Int)
+        XCTAssertEqual(.ok, returnedStatus)
+        XCTAssertEqual(2, returnedPois.count)
+        let rpoi1 = returnedPois[0]
+        XCTAssertEqual("1234", rpoi1[PlacesConstants.EventDataKey.Places.REGION_ID] as! String)
+        let rpoi2 = returnedPois[1]
+        XCTAssertEqual("2345", rpoi2[PlacesConstants.EventDataKey.Places.REGION_ID] as! String)
+        
+        // validate generic event
+        let genericEvent = mockRuntime.secondEvent!
+        XCTAssertNil(genericEvent.responseID)
+        XCTAssertEqual(EventType.places, genericEvent.type)
+        XCTAssertEqual(EventSource.responseContent, genericEvent.source)
+        XCTAssertEqual(PlacesConstants.EventName.Response.GET_NEARBY_PLACES, genericEvent.name)
+        let genericData = genericEvent.data!
+        let genericPois = genericData[PlacesConstants.SharedStateKey.NEARBY_POIS] as! [[String: Any]]
+        let genericStatus = PlacesQueryResponseCode(fromRawValue: genericData[PlacesConstants.EventDataKey.Places.RESPONSE_STATUS] as! Int)
+        XCTAssertEqual(.ok, genericStatus)
+        XCTAssertEqual(2, genericPois.count)
+        let grpoi1 = genericPois[0]
+        XCTAssertEqual("1234", grpoi1[PlacesConstants.EventDataKey.Places.REGION_ID] as! String)
+        let grpoi2 = genericPois[1]
+        XCTAssertEqual("2345", grpoi2[PlacesConstants.EventDataKey.Places.REGION_ID] as! String)
+        
+        // validate shared state update
+        XCTAssertEqual(2, mockRuntime.createdSharedStates.count)  // first from onRegistered, second as result of this request
+    }
+    
+    func testHandleGetNearbyPlacesNoPoisInResult() throws {
+        // setup
+        prepareConfig(privacy: .optedIn)
+        mockQueryService.returnValue = PlacesQueryServiceResult(pois: nil, response: .ok)
+        let requestingEvent = getGetNearbyPlacesRequestEvent()
+        
+        // test
+        mockRuntime.simulateComingEvents(requestingEvent)
+        
+        // verify
+        XCTAssertEqual(12.34, mockQueryService.invokedLat)
+        XCTAssertEqual(23.45, mockQueryService.invokedLon)
+        XCTAssertEqual(7, mockQueryService.invokedCount)
+        XCTAssertEqual(2, mockRuntime.dispatchedEvents.count) // one responseEvent, one generic event
+        
+        // validate response event
+        let responseEvent = mockRuntime.firstEvent!
+        XCTAssertEqual(requestingEvent.id, responseEvent.responseID)
+        XCTAssertEqual(EventType.places, responseEvent.type)
+        XCTAssertEqual(EventSource.responseContent, responseEvent.source)
+        XCTAssertEqual(PlacesConstants.EventName.Response.GET_NEARBY_PLACES, responseEvent.name)
+        let dispatchedData = responseEvent.data!
+        let returnedPois = dispatchedData[PlacesConstants.SharedStateKey.NEARBY_POIS] as! [[String: Any]]
+        let returnedStatus = PlacesQueryResponseCode(fromRawValue: dispatchedData[PlacesConstants.EventDataKey.Places.RESPONSE_STATUS] as! Int)
+        XCTAssertEqual(.ok, returnedStatus)
+        XCTAssertEqual(0, returnedPois.count)
+                
         // validate shared state update
         XCTAssertEqual(2, mockRuntime.createdSharedStates.count)  // first from onRegistered, second as result of this request
     }
@@ -466,6 +568,26 @@ class PlacesTests: XCTestCase {
                 
         // validate shared state update
         XCTAssertEqual(1, mockRuntime.createdSharedStates.count)  // first from onRegistered, no update as a result of this request
+    }
+    
+    func testHandleGetNearbyPlacesNoConfigSharedState() throws {
+        // setup
+        let requestingEvent = getGetNearbyPlacesRequestEvent()
+        
+        // test
+        mockRuntime.simulateComingEvents(requestingEvent)
+        
+        // verify
+        XCTAssertFalse(mockQueryService.getNearbyPlacesWasCalled)
+        XCTAssertEqual(1, mockRuntime.dispatchedEvents.count) // one responseEvent
+        let responseEvent = mockRuntime.firstEvent!
+        XCTAssertEqual(requestingEvent.id, responseEvent.responseID)
+        XCTAssertEqual(EventType.places, responseEvent.type)
+        XCTAssertEqual(EventSource.responseContent, responseEvent.source)
+        XCTAssertEqual(PlacesConstants.EventName.Response.GET_NEARBY_PLACES, responseEvent.name)
+        let dispatchedData = responseEvent.data!
+        XCTAssertEqual(1, dispatchedData.count)
+        XCTAssertEqual(.configurationError, dispatchedData[PlacesConstants.EventDataKey.Places.RESPONSE_STATUS] as? PlacesQueryResponseCode)
     }
     
     // MARK: - handleProcessRegionEventRequest
@@ -688,6 +810,39 @@ class PlacesTests: XCTestCase {
         let genericData = genericEvent.data!
         XCTAssertEqual(places.lastKnownCoordinate.latitude, genericData[PlacesConstants.EventDataKey.Places.LATITUDE] as? Double)
         XCTAssertEqual(places.lastKnownCoordinate.longitude, genericData[PlacesConstants.EventDataKey.Places.LONGITUDE] as? Double)
+    }
+    
+    func testSetAccuracyAuthorization() throws {
+        // setup
+        prepareConfig(privacy: .optedIn)
+        let requestingEvent = getSetAccuracyAuthorizationRequestEvent()
+        XCTAssertNil(places.accuracy)
+        
+        // test
+        mockRuntime.simulateComingEvents(requestingEvent)
+        
+        // verify
+        XCTAssertEqual(0, mockRuntime.dispatchedEvents.count)
+        XCTAssertEqual(.fullAccuracy, places.accuracy)
+        XCTAssertEqual(2, mockRuntime.createdSharedStates.count)  // first from onRegistered, second as result of this event
+        let sharedState = mockRuntime.secondSharedState
+        XCTAssertEqual("full", sharedState?[PlacesConstants.SharedStateKey.ACCURACY] as? String)
+    }
+    
+    func testSetAccuracyAuthorizationNoAccuracyInEventData() throws {
+        // setup
+        prepareConfig(privacy: .optedIn)
+        let requestingEvent = getSetAccuracyAuthorizationRequestEvent()
+        requestingEvent.data?[PlacesConstants.EventDataKey.Places.ACCURACY] = nil
+        XCTAssertNil(places.accuracy)
+        
+        // test
+        mockRuntime.simulateComingEvents(requestingEvent)
+        
+        // verify
+        XCTAssertEqual(0, mockRuntime.dispatchedEvents.count)
+        XCTAssertNil(places.accuracy)
+        XCTAssertEqual(1, mockRuntime.createdSharedStates.count)  // only from onRegistered
     }
     
     func testSetAuthorizationStatus() throws {

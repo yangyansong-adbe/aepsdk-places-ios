@@ -131,6 +131,24 @@ class PlacesPlusPublicApiTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
     
+    // MARK: - setAccuracyAuthorization
+    func testSetAccuracyAuthorization() throws {
+        // setup
+        let expectation = XCTestExpectation(description: "setAccuracyAuthorization should dispatch an event")
+        extensionContainer.registerListener(type: EventType.places, source: EventSource.requestContent) { (event) in
+            XCTAssertEqual(PlacesConstants.EventDataKey.Places.RequestType.SET_ACCURACY,
+                           event.data?[PlacesConstants.EventDataKey.Places.REQUEST_TYPE] as? String)
+            XCTAssertEqual("full", event.data?[PlacesConstants.EventDataKey.Places.ACCURACY] as? String)
+            expectation.fulfill()
+        }
+        
+        // test
+        Places.setAccuracyAuthorization(accuracy: .fullAccuracy)
+        
+        // verify
+        wait(for: [expectation], timeout: 1)
+    }
+    
     // MARK: - setAuthorizationStatus
     func testSetAuthorizationStatus() throws {
         // setup
